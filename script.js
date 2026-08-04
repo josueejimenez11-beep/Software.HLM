@@ -1382,8 +1382,9 @@ dom.k.addEventListener('input', () => marcarError(dom.k, false));
 /* ============================================================================
    9) LOGO INSTITUCIONAL
    ----------------------------------------------------------------------------
-   El recuadro de la izquierda del encabezado acepta una imagen (el logo de la
-   universidad). Se guarda en el navegador para que siga ahí al recargar.
+   El logo se toma del archivo logo-puce.png que acompaña al proyecto. Si no
+   está, el recuadro permite elegir una imagen a mano, que se reduce y se
+   guarda en el navegador para que siga ahí al recargar.
    ========================================================================== */
 
 const LOGO_CLAVE = 'softwareVectores.logo';
