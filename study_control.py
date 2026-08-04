@@ -3,7 +3,7 @@
 ===============================================================================
                         S I S T E M A   D E   E S T U D I O
 ===============================================================================
- Sistema Inteligente para la Gestion PUCE
+ Sistema de Gestion PUCE
  -----------------------------------------------------------------------------
  Institucion : Pontificia Universidad Catolica del Ecuador
  Autores     : Steveen Culquicondor - Angel Nunez
@@ -59,7 +59,7 @@ from tkinter import font as tkfont          # Manejo avanzado de tipografias
 # ----------------------------- Identidad visual ------------------------------
 APP_NOMBRE = "Sistema de Estudio"
 APP_VERSION = "1.0"
-APP_SUBTITULO = "Sistema Inteligente para la Gestion PUCE"
+APP_SUBTITULO = "Sistema de Gestion PUCE"
 APP_UNIVERSIDAD = "PONTIFICIA UNIVERSIDAD CATOLICA DEL ECUADOR"
 APP_AUTORES = "STEVEEN CULQUICONDOR  -  ANGEL NUNEZ"
 APP_CATEDRA = "FUNDAMENTOS DE PROGRAMACION"
@@ -101,9 +101,19 @@ COLORES = {
 }
 
 # --------------------------- Escala de calificacion --------------------------
+# La escala va de 0 a 50 y se traduce a una calificacion literal. Solo la
+# letra D reprueba; a partir de 21 puntos la materia queda aprobada.
 NOTA_MINIMA = 0.0                           # Nota mas baja posible
-NOTA_MAXIMA = 20.0                          # Nota mas alta posible (escala /20)
-NOTA_APROBACION = 14.0                      # Nota minima para aprobar la materia
+NOTA_MAXIMA = 50.0                          # Nota mas alta posible (escala /50)
+NOTA_APROBACION = 20.0                      # Hay que superar este valor para aprobar
+
+# Cada tramo indica: limite superior, letra, si aprueba y su comentario.
+ESCALA_LITERAL = [
+    (20.0, "D", False, "Reprueba"),
+    (30.0, "C", True, "Aprobado, estudia mas"),
+    (40.0, "B", True, "Aprobado"),
+    (50.0, "A", True, "Aprobado"),
+]
 
 # ------------------------------ Archivos JSON --------------------------------
 # Se guardan en la misma carpeta del script para que el proyecto sea portable.
@@ -497,6 +507,23 @@ def hora_a_minutos(hora):
         return int(horas) * 60 + int(minutos)
     except (ValueError, AttributeError):
         return 0
+
+
+def evaluar_nota(nota):
+    """
+    Traduce una calificacion numerica a su equivalente literal.
+
+    Devuelve la tupla (letra, aprobado, comentario) segun ESCALA_LITERAL:
+        0 a 20  -> D  Reprueba
+        21 a 30 -> C  Aprobado (estudia mas)
+        31 a 40 -> B  Aprobado
+        41 a 50 -> A  Aprobado
+    """
+    for limite, letra, aprobado, comentario in ESCALA_LITERAL:
+        if nota <= limite:
+            return letra, aprobado, comentario
+    limite, letra, aprobado, comentario = ESCALA_LITERAL[-1]
+    return letra, aprobado, comentario
 
 
 def promedio_de(lista_numeros):
@@ -2164,6 +2191,7 @@ class VentanaPromedios(VentanaModulo):
         )
         self.notas_calculadas = []               # Ultimo calculo realizado
         self.promedio_calculado = 0.0
+        self.letra_calculada = ""
         self.construir_interfaz()
         self.refrescar_historial()
 
@@ -2186,7 +2214,7 @@ class VentanaPromedios(VentanaModulo):
         tk.Label(encabezado, text="🔢 INGRESO DE NOTAS", bg=COLORES["superficie"],
                  fg=COLORES["texto"], font=FUENTES["seccion"]).pack(anchor="w")
         tk.Label(encabezado,
-                 text="Escriba las notas separadas por comas.\nEjemplo:  15, 18.5, 12, 20",
+                 text="Escriba las notas separadas por comas.\nEjemplo:  35, 42, 28, 50",
                  bg=COLORES["superficie"], fg=COLORES["texto_tenue"],
                  font=FUENTES["pequena"], justify="left").pack(anchor="w", pady=(3, 0))
 
@@ -2212,12 +2240,32 @@ class VentanaPromedios(VentanaModulo):
             valores=MATERIAS_DISPONIBLES, icono="📘", fila=0,
         )
 
-        tk.Label(panel,
-                 text="Escala vigente: %s a %s   |   Nota minima de aprobacion: %s"
-                      % (formato_numero(NOTA_MINIMA, 0), formato_numero(NOTA_MAXIMA, 0),
-                         formato_numero(NOTA_APROBACION)),
+        # ------------------- Leyenda de la escala literal --------------------
+        leyenda = tk.Frame(panel, bg=COLORES["superficie"])
+        leyenda.pack(fill="x", padx=18, pady=(8, 0))
+
+        tk.Label(leyenda, text="ESCALA DE CALIFICACION  (0 a %s)"
+                                % formato_numero(NOTA_MAXIMA, 0),
                  bg=COLORES["superficie"], fg=COLORES["celeste_claro"],
-                 font=FUENTES["micro"], wraplength=310, justify="left").pack(anchor="w", padx=20)
+                 font=FUENTES["pequena_bold"]).pack(anchor="w", pady=(0, 4))
+
+        # Cada fila de la leyenda se construye a partir de ESCALA_LITERAL, de
+        # modo que si la escala cambia el texto se actualiza solo.
+        desde = NOTA_MINIMA
+        for limite, letra, aprobado, comentario in ESCALA_LITERAL:
+            fila_escala = tk.Frame(leyenda, bg=COLORES["superficie"])
+            fila_escala.pack(fill="x")
+            color = COLORES["exito"] if aprobado else COLORES["error"]
+            tk.Label(fila_escala, text="%s - %s" % (formato_numero(desde, 0),
+                                                    formato_numero(limite, 0)),
+                     bg=COLORES["superficie"], fg=COLORES["texto_suave"],
+                     font=FUENTES["micro"], width=8, anchor="w").pack(side="left")
+            tk.Label(fila_escala, text=letra, bg=COLORES["superficie"], fg=color,
+                     font=FUENTES["pequena_bold"], width=3,
+                     anchor="w").pack(side="left")
+            tk.Label(fila_escala, text=comentario, bg=COLORES["superficie"],
+                     fg=color, font=FUENTES["micro"], anchor="w").pack(side="left")
+            desde = limite + 1
 
         # ----------------------------- Botonera ------------------------------
         botonera = tk.Frame(panel, bg=COLORES["superficie"])
@@ -2288,8 +2336,8 @@ class VentanaPromedios(VentanaModulo):
 
         contenedor_tabla, self.tabla_notas = crear_tabla(
             columna_izquierda,
-            columnas=["Pos", "Nota", "Estado", "Diferencia"],
-            anchos=[46, 62, 88, 100],
+            columnas=["Pos", "Nota", "Letra", "Resultado"],
+            anchos=[40, 52, 60, 166],
             alineaciones=["center", "center", "center", "center"],
             altura=7,
         )
@@ -2304,8 +2352,8 @@ class VentanaPromedios(VentanaModulo):
 
         contenedor_historial, self.tabla_historial = crear_tabla(
             columna_derecha,
-            columnas=["Materia", "Notas", "Prom.", "Estado"],
-            anchos=[132, 58, 52, 76],
+            columnas=["Materia", "Prom.", "Letra", "Estado"],
+            anchos=[112, 58, 60, 84],
             alineaciones=["w", "w", "center", "center"],
             altura=7,
             columna_elastica=0,
@@ -2342,43 +2390,46 @@ class VentanaPromedios(VentanaModulo):
         mayor = max(notas)
         menor = min(notas)
         cantidad = len(notas)
-        aprueba = promedio >= NOTA_APROBACION
+        letra, aprueba, comentario = evaluar_nota(promedio)
 
         self.notas_calculadas = notas
         self.promedio_calculado = promedio
+        self.letra_calculada = letra
 
         # --------------------------- Tarjetas KPI ----------------------------
         color_promedio = COLORES["exito"] if aprueba else COLORES["error"]
-        self.tarjeta_promedio.actualizar(formato_numero(promedio), color_promedio)
-        self.tarjeta_mayor.actualizar(formato_numero(mayor), COLORES["exito"])
-        self.tarjeta_menor.actualizar(formato_numero(menor), COLORES["error"])
+        self.tarjeta_promedio.actualizar("%s   %s" % (formato_numero(promedio), letra),
+                                         color_promedio)
+        self.tarjeta_mayor.actualizar("%s   %s" % (formato_numero(mayor),
+                                                   evaluar_nota(mayor)[0]),
+                                      COLORES["exito"])
+        self.tarjeta_menor.actualizar("%s   %s" % (formato_numero(menor),
+                                                   evaluar_nota(menor)[0]),
+                                      COLORES["error"])
         self.tarjeta_cantidad.actualizar(str(cantidad), COLORES["cian"])
 
         # ------------------------- Franja de veredicto -----------------------
         if aprueba:
-            mensaje = ("✅  APROBADO   |   Promedio %s   |   Supera el minimo por %s puntos"
-                       % (formato_numero(promedio),
-                          formato_numero(promedio - NOTA_APROBACION)))
+            matiz = "" if comentario == "Aprobado" else "   |   %s" % comentario
+            mensaje = ("APROBADO   |   Promedio %s   |   Calificacion %s%s"
+                       % (formato_numero(promedio), letra, matiz))
             self.pintar_estado(mensaje, COLORES["exito"])
         else:
-            mensaje = ("❌  REPROBADO   |   Promedio %s   |   Le faltan %s puntos para aprobar"
-                       % (formato_numero(promedio),
-                          formato_numero(NOTA_APROBACION - promedio)))
+            mensaje = ("REPROBADO   |   Promedio %s   |   Calificacion %s   |   "
+                       "Le faltan %s puntos para superar %s y llegar a C"
+                       % (formato_numero(promedio), letra,
+                          formato_numero(NOTA_APROBACION - promedio),
+                          formato_numero(NOTA_APROBACION)))
             self.pintar_estado(mensaje, COLORES["error"])
 
         # ------------------------ Tabla de notas ordenadas -------------------
         ordenadas = sorted(notas, reverse=True)
         filas = []
         for posicion, nota in enumerate(ordenadas, start=1):
-            diferencia = nota - NOTA_APROBACION
-            if nota >= NOTA_APROBACION:
-                condicion, etiqueta = "Aprobada", "exito"
-                texto_diferencia = "+%s puntos" % formato_numero(diferencia)
-            else:
-                condicion, etiqueta = "Reprobada", "error"
-                texto_diferencia = "-%s puntos" % formato_numero(abs(diferencia))
-            filas.append((posicion, (posicion, formato_numero(nota), condicion,
-                                     texto_diferencia), etiqueta))
+            letra_nota, nota_aprueba, comentario_nota = evaluar_nota(nota)
+            etiqueta = "exito" if nota_aprueba else "error"
+            filas.append((posicion, (posicion, formato_numero(nota), letra_nota,
+                                     comentario_nota), etiqueta))
         llenar_tabla(self.tabla_notas, filas)
 
         self.actualizar_mensaje(
@@ -2430,7 +2481,8 @@ class VentanaPromedios(VentanaModulo):
             "materia": materia,
             "notas": self.notas_calculadas,
             "promedio": round(self.promedio_calculado, 2),
-            "estado": "Aprobado" if self.promedio_calculado >= NOTA_APROBACION else "Reprobado",
+            "letra": self.letra_calculada,
+            "estado": "Aprobado" if evaluar_nota(self.promedio_calculado)[1] else "Reprobado",
             "fecha": datetime.date.today().strftime("%d/%m/%Y"),
         })
         DATOS.guardar_notas()
@@ -2438,9 +2490,10 @@ class VentanaPromedios(VentanaModulo):
         self.refrescar_historial()
         self.actualizar_mensaje("💾 Promedio de '%s' guardado" % materia, COLORES["exito"])
         self.informar("Promedio guardado",
-                      "El promedio de '%s' (%s) fue guardado correctamente.\n\n"
-                      "Quedara guardado junto a los demas promedios del semestre."
-                      % (materia, formato_numero(self.promedio_calculado)))
+                      "El promedio de '%s' fue guardado correctamente.\n\n"
+                      "Promedio: %s     Calificacion: %s"
+                      % (materia, formato_numero(self.promedio_calculado),
+                         self.letra_calculada))
 
     @manejar_errores
     def eliminar_del_historial(self):
@@ -2466,20 +2519,17 @@ class VentanaPromedios(VentanaModulo):
                            key=lambda r: float(r.get("promedio", 0)), reverse=True)
         filas = []
         for registro in registros:
-            notas = registro.get("notas", [])
-            texto_notas = ", ".join(formato_numero(n, 1) for n in notas)
-            if len(texto_notas) > 9:
-                texto_notas = texto_notas[:6] + "..."
             nombre_materia = registro.get("materia", "")
-            if len(nombre_materia) > 17:
-                nombre_materia = nombre_materia[:16] + "..."
-            aprobado = float(registro.get("promedio", 0)) >= NOTA_APROBACION
+            if len(nombre_materia) > 15:
+                nombre_materia = nombre_materia[:14] + "..."
+            promedio = float(registro.get("promedio", 0))
+            letra, aprobado, _comentario = evaluar_nota(promedio)
             filas.append((
                 registro.get("id"),
                 (
                     nombre_materia,
-                    texto_notas,
-                    formato_numero(registro.get("promedio", 0)),
+                    formato_numero(promedio),
+                    letra,
                     "Aprobado" if aprobado else "Reprobado",
                 ),
                 "exito" if aprobado else "error",
@@ -2493,6 +2543,7 @@ class VentanaPromedios(VentanaModulo):
         self.campo_materia.limpiar()
         self.notas_calculadas = []
         self.promedio_calculado = 0.0
+        self.letra_calculada = ""
 
         self.tarjeta_promedio.actualizar("0.00", COLORES["texto"])
         self.tarjeta_mayor.actualizar("0.00", COLORES["texto"])
