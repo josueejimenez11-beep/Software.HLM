@@ -14,10 +14,18 @@
 <header class="cabecera">
   <div class="cabecera-contenido">
 
-    <!-- Espacio para el logo institucional: clic para cargar una imagen -->
+    <!-- Logo institucional.
+         Por defecto se toma el archivo "logo-puce.png" que debe estar en la
+         misma carpeta que este index.html. Si no se encuentra, aparece un
+         recuadro para cargar una imagen a mano; con un clic siempre se puede
+         cambiar por otra. -->
     <div class="logo-slot" id="logoSlot" role="button" tabindex="0"
-         title="Clic para cargar el logo institucional">
-      <div class="logo-vacio" id="logoVacio">
+         title="Clic para cambiar el logo">
+
+      <img class="logo-img" id="logoImg" src="logo-puce.png" alt="PUCE Ambato">
+
+      <!-- Solo se ve si no se encuentra logo-puce.png -->
+      <div class="logo-vacio oculto" id="logoVacio">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="1.5" aria-hidden="true">
           <path d="M12 3l8 3.5v5c0 4.6-3.2 8.6-8 9.5-4.8-.9-8-4.9-8-9.5v-5L12 3z"/>
           <path d="M12 8v6M9 11h6"/>
@@ -25,7 +33,8 @@
         LOGO
         <span class="logo-pista">cargar</span>
       </div>
-      <button type="button" class="logo-quitar" id="logoQuitar" title="Quitar el logo">×</button>
+
+      <button type="button" class="logo-quitar" id="logoQuitar" title="Volver al logo original">×</button>
       <input type="file" id="logoArchivo" accept="image/*" hidden>
     </div>
 

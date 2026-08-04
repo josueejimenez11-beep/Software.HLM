@@ -122,18 +122,22 @@ body::before{
   outline: none;
 }
 
-/* Estado con imagen cargada */
+/* Con el logo puesto: borde continuo y sin relleno propio, para que la
+   imagen ocupe todo el recuadro redondeado. */
 .logo-slot.con-logo{
   border-style: solid;
-  border-color: rgba(125,211,252,.45);
-  background: rgba(255,255,255,.04);
+  border-color: rgba(125,211,252,.40);
+  background: transparent;
 }
 
+/* Sin padding: un logo cuadrado (como el del PUCE, que ya trae su propio
+   fondo azul) llena el recuadro exacto; uno de otra proporción se ajusta
+   dentro sin recortarse. */
 .logo-slot img{
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 6px;
+  display: block;
 }
 
 .logo-vacio{
@@ -171,7 +175,8 @@ body::before{
   transition: background var(--transicion);
 }
 
-.logo-slot.con-logo .logo-quitar{ display: block; }
+/* La × solo aparece cuando hay un logo cargado a mano, para volver al original */
+.logo-slot.personalizado .logo-quitar{ display: block; }
 .logo-quitar:hover{ background: var(--rojo); }
 
 /* ---------- Títulos institucionales ---------- */
