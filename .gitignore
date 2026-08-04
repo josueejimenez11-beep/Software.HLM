@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+
+# Datos generados automaticamente por Study Control
+materias.json
+tareas.json
+horario.json
+notas.json
