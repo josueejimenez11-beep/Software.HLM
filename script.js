@@ -40,6 +40,12 @@ function fmt(valor, decimales = 3) {
   if (!isFinite(valor)) return '—';
   let n = redondear(valor, decimales);
   if (Object.is(n, -0)) n = 0;            // evita mostrar "-0"
+
+  // Un valor muy pequeño pero distinto de cero no puede mostrarse como "0":
+  // con vectores como (0.002, 0.003) el área es 0.000002, no cero. En ese caso
+  // se muestran cifras significativas en lugar de decimales fijos.
+  if (n === 0 && valor !== 0) return String(Number(valor.toPrecision(3)));
+
   return String(n);
 }
 
