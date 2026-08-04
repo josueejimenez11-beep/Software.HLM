@@ -651,7 +651,6 @@ const ctx = dom.lienzo.getContext('2d');
 const COLOR = {
   fondo:      '#050a14',
   rejilla:    'rgba(56, 189, 248, 0.10)',
-  rejillaFuerte: 'rgba(56, 189, 248, 0.18)',
   eje:        'rgba(125, 211, 252, 0.75)',
   texto:      '#9db3d4',
   A:          '#38bdf8',   // celeste
@@ -720,6 +719,10 @@ function redimensionarLienzo() {
  * en función de cuántas unidades son visibles.
  */
 function pasoBonito(unidadesVisibles, divisionesObjetivo = 10) {
+  // Sin este resguardo, un ancho de 0 daría paso = 0 y el bucle de la
+  // cuadrícula no terminaría nunca (la pestaña se congelaría).
+  if (!isFinite(unidadesVisibles) || unidadesVisibles <= 0) return 1;
+
   const bruto = unidadesVisibles / divisionesObjetivo;
   const exponente = Math.floor(Math.log10(bruto));
   const base = Math.pow(10, exponente);
@@ -729,7 +732,9 @@ function pasoBonito(unidadesVisibles, divisionesObjetivo = 10) {
   else if (f <= 2) mult = 2;
   else if (f <= 5) mult = 5;
   else             mult = 10;
-  return mult * base;
+
+  const paso = mult * base;
+  return (isFinite(paso) && paso > 0) ? paso : 1;
 }
 
 /** Reúne todos los puntos relevantes para el ajuste automático de escala. */
@@ -859,36 +864,43 @@ function dibujarPlano() {
   const unidadesX = max.x - min.x;
   const paso = pasoBonito(unidadesX, 12);
 
+  // El origen y la escala se calculan una sola vez y las posiciones se obtienen
+  // con una multiplicación, en lugar de llamar a aPantalla() por cada línea.
+  const origen = aPantalla({ x: 0, y: 0 });
+  const medioPaso = paso / 2;
+
   ctx.save();
   ctx.font = '11px "Segoe UI", Arial, sans-serif';
   ctx.textBaseline = 'top';
+  ctx.lineWidth = 1;
 
-  // --- Cuadrícula vertical ---
+  // --- Cuadrícula completa en un solo trazo ---
+  // Todas las líneas comparten color, así que se acumulan en un único path y se
+  // pintan con un solo stroke() en vez de uno por línea.
+  // Se recorren con un contador entero (iniX + i·paso) para que los valores no
+  // se desvíen al acumular sumas de decimales.
   const iniX = Math.ceil(min.x / paso) * paso;
-  for (let x = iniX; x <= max.x; x += paso) {
-    const p = aPantalla({ x: x, y: 0 });
-    ctx.strokeStyle = Math.abs(x) < paso / 2 ? COLOR.rejillaFuerte : COLOR.rejilla;
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(p.x, 0);
-    ctx.lineTo(p.x, grafica.alto);
-    ctx.stroke();
+  const lineasX = Math.floor((max.x - iniX) / paso);
+  const iniY = Math.ceil(min.y / paso) * paso;
+  const lineasY = Math.floor((max.y - iniY) / paso);
+
+  ctx.strokeStyle = COLOR.rejilla;
+  ctx.beginPath();
+
+  for (let i = 0; i <= lineasX; i++) {
+    const px = origen.x + (iniX + i * paso) * e;
+    ctx.moveTo(px, 0);
+    ctx.lineTo(px, grafica.alto);
+  }
+  for (let i = 0; i <= lineasY; i++) {
+    const py = origen.y - (iniY + i * paso) * e;
+    ctx.moveTo(0, py);
+    ctx.lineTo(grafica.ancho, py);
   }
 
-  // --- Cuadrícula horizontal ---
-  const iniY = Math.ceil(min.y / paso) * paso;
-  for (let y = iniY; y <= max.y; y += paso) {
-    const p = aPantalla({ x: 0, y: y });
-    ctx.strokeStyle = Math.abs(y) < paso / 2 ? COLOR.rejillaFuerte : COLOR.rejilla;
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(0, p.y);
-    ctx.lineTo(grafica.ancho, p.y);
-    ctx.stroke();
-  }
+  ctx.stroke();
 
   // --- Ejes ---
-  const origen = aPantalla({ x: 0, y: 0 });
   const ejeY = Math.min(Math.max(origen.y, 0), grafica.alto);
   const ejeX = Math.min(Math.max(origen.x, 0), grafica.ancho);
 
@@ -907,22 +919,20 @@ function dibujarPlano() {
   ctx.fillStyle = COLOR.texto;
   ctx.textAlign = 'center';
   const saltar = e * paso < 30 ? 2 : 1;   // evita amontonar los números
-  let i = 0;
-  for (let x = iniX; x <= max.x; x += paso, i++) {
-    if (Math.abs(x) < paso / 2) continue;
+  for (let i = 0; i <= lineasX; i++) {
     if (i % saltar !== 0) continue;
-    const p = aPantalla({ x: x, y: 0 });
-    ctx.fillText(fmt(x), p.x, ejeY + 5);
+    const x = iniX + i * paso;
+    if (Math.abs(x) < medioPaso) continue;
+    ctx.fillText(fmt(x), origen.x + x * e, ejeY + 5);
   }
 
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
-  i = 0;
-  for (let y = iniY; y <= max.y; y += paso, i++) {
-    if (Math.abs(y) < paso / 2) continue;
+  for (let i = 0; i <= lineasY; i++) {
     if (i % saltar !== 0) continue;
-    const p = aPantalla({ x: 0, y: y });
-    ctx.fillText(fmt(y), ejeX - 6, p.y);
+    const y = iniY + i * paso;
+    if (Math.abs(y) < medioPaso) continue;
+    ctx.fillText(fmt(y), ejeX - 6, origen.y - y * e);
   }
 
   // --- Nombres de los ejes y origen ---
@@ -1068,6 +1078,23 @@ function dibujar() {
   }
 }
 
+/* ---------- Redibujado sincronizado con la pantalla ---------- */
+
+/**
+ * Los eventos de arrastre y de rueda se disparan muchas más veces por segundo
+ * que los fotogramas que el monitor puede mostrar. En lugar de repintar en cada
+ * evento, se agenda un único repintado por fotograma con requestAnimationFrame.
+ */
+let cuadroPendiente = 0;
+
+function solicitarDibujo() {
+  if (cuadroPendiente) return;             // ya hay un repintado agendado
+  cuadroPendiente = requestAnimationFrame(() => {
+    cuadroPendiente = 0;
+    dibujar();
+  });
+}
+
 /* ---------- Controles de la gráfica ---------- */
 
 function aplicarZoom(factor, centroPantalla) {
@@ -1083,7 +1110,7 @@ function aplicarZoom(factor, centroPantalla) {
     grafica.centro.x = antes.x - (centroPantalla.x - grafica.ancho / 2) / e;
     grafica.centro.y = antes.y + (centroPantalla.y - grafica.alto  / 2) / e;
   }
-  dibujar();
+  solicitarDibujo();
 }
 
 dom.btnZoomIn.addEventListener('click',  () => aplicarZoom(1.25));
@@ -1113,18 +1140,30 @@ dom.lienzo.addEventListener('pointermove', (ev) => {
   const e = escala();
   grafica.centro.x -= (ev.clientX - ultimoPunto.x) / e;
   grafica.centro.y += (ev.clientY - ultimoPunto.y) / e;
-  ultimoPunto = { x: ev.clientX, y: ev.clientY };
-  dibujar();
+  ultimoPunto.x = ev.clientX;      // se reutiliza el objeto en vez de crear otro
+  ultimoPunto.y = ev.clientY;
+  solicitarDibujo();
 });
 
-['pointerup', 'pointercancel', 'pointerleave'].forEach(evento => {
-  dom.lienzo.addEventListener(evento, () => { arrastrando = false; });
+['pointerup', 'pointercancel'].forEach(evento => {
+  dom.lienzo.addEventListener(evento, (ev) => {
+    arrastrando = false;
+    if (dom.lienzo.hasPointerCapture(ev.pointerId)) {
+      dom.lienzo.releasePointerCapture(ev.pointerId);
+    }
+  });
 });
 
-// Redibuja al cambiar el tamaño de la ventana
+// Redibuja al cambiar el tamaño de la ventana (también agrupado por fotograma:
+// evita medir el lienzo decenas de veces mientras se arrastra el borde)
+let cuadroTamano = 0;
 window.addEventListener('resize', () => {
-  redimensionarLienzo();
-  dibujar();
+  if (cuadroTamano) return;
+  cuadroTamano = requestAnimationFrame(() => {
+    cuadroTamano = 0;
+    redimensionarLienzo();
+    dibujar();
+  });
 });
 
 /* ============================================================================
@@ -1348,6 +1387,43 @@ dom.k.addEventListener('input', () => marcarError(dom.k, false));
 
 const LOGO_CLAVE = 'softwareVectores.logo';
 
+/** Lado máximo del logo. El recuadro mide 96 px, así que 256 basta y sobra. */
+const LOGO_LADO_MAX = 256;
+
+/**
+ * Reduce la imagen antes de mostrarla y guardarla.
+ * Una foto de varios megabytes en base64 no cabe en localStorage (el límite
+ * ronda los 5 MB) y además tarda en pintarse; redimensionada pesa unos pocos
+ * kilobytes y se ve igual dentro del recuadro.
+ * Si algo falla, devuelve la imagen original sin tocar.
+ */
+function reducirImagen(dataURL) {
+  return new Promise((resolve) => {
+    const img = new Image();
+
+    img.onload = () => {
+      const ladoMayor = Math.max(img.width, img.height);
+      if (!ladoMayor || ladoMayor <= LOGO_LADO_MAX) { resolve(dataURL); return; }
+
+      const factor = LOGO_LADO_MAX / ladoMayor;
+      const lienzo = document.createElement('canvas');
+      lienzo.width  = Math.round(img.width  * factor);
+      lienzo.height = Math.round(img.height * factor);
+
+      const c = lienzo.getContext('2d');
+      c.imageSmoothingEnabled = true;
+      c.imageSmoothingQuality = 'high';
+      c.drawImage(img, 0, 0, lienzo.width, lienzo.height);
+
+      try { resolve(lienzo.toDataURL('image/png')); }
+      catch (e) { resolve(dataURL); }
+    };
+
+    img.onerror = () => resolve(dataURL);
+    img.src = dataURL;
+  });
+}
+
 /** Coloca la imagen dentro del recuadro del encabezado. */
 function pintarLogo(datosImagen) {
   dom.logoVacio.classList.add('oculto');
@@ -1400,8 +1476,10 @@ dom.logoArchivo.addEventListener('change', (ev) => {
 
   const lector = new FileReader();
   lector.onload = (e) => {
-    pintarLogo(e.target.result);
-    try { localStorage.setItem(LOGO_CLAVE, e.target.result); } catch (err) { /* imagen muy pesada o sin permiso */ }
+    reducirImagen(e.target.result).then((imagen) => {
+      pintarLogo(imagen);
+      try { localStorage.setItem(LOGO_CLAVE, imagen); } catch (err) { /* sin espacio o sin permiso */ }
+    });
   };
   lector.readAsDataURL(archivo);
 });
