@@ -43,13 +43,27 @@ body{
   min-height: 100vh;
   font-family: var(--fuente);
   color: var(--blanco);
+  background: var(--fondo);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * El degradado del fondo vive en su propia capa fija.
+ * Antes se lograba con background-attachment: fixed sobre el body, que obliga
+ * al navegador a repintar los tres degradados en cada fotograma del scroll.
+ * Así se compone una sola vez y el aspecto es idéntico.
+ */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background:
     radial-gradient(1100px 620px at 12% -10%, rgba(56,189,248,.10), transparent 62%),
     radial-gradient(900px 520px at 100% 0%,  rgba(239,68,68,.07),  transparent 60%),
     linear-gradient(180deg, var(--fondo-2) 0%, var(--fondo) 55%, #03060d 100%);
-  background-attachment: fixed;
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
 }
 
 /* ============================================================
@@ -60,7 +74,8 @@ body{
   top: 0;
   z-index: 20;
   overflow: hidden;
-  backdrop-filter: blur(10px);
+  /* Sin backdrop-filter: el degradado de abajo es opaco, así que el desenfoque
+     no se veía y aun así obligaba a recalcularlo en cada fotograma del scroll. */
   background: linear-gradient(135deg, #071229 0%, #0b1c3d 55%, #0a1830 100%);
   border-bottom: 1px solid rgba(56,189,248,.28);
   box-shadow: 0 6px 26px rgba(0,0,0,.50);
@@ -445,7 +460,7 @@ body{
   border: 1px solid rgba(56,189,248,.35);
   border-radius: 9px;
   cursor: pointer;
-  transition: all var(--transicion);
+  transition: background var(--transicion), border-color var(--transicion), transform var(--transicion);
 }
 .btn-mini:hover{
   background: rgba(56,189,248,.20);
@@ -480,7 +495,8 @@ body{
   background: rgba(10,20,38,.75);
   color: var(--blanco);
   cursor: pointer;
-  transition: all var(--transicion);
+  transition: transform var(--transicion), border-color var(--transicion),
+              background var(--transicion), box-shadow var(--transicion);
 }
 
 .ejemplo:hover{
@@ -666,7 +682,7 @@ body{
   border: 1px solid rgba(56,189,248,.20);
   background: rgba(9,18,34,.8);
   box-shadow: var(--sombra-suave);
-  transition: all var(--transicion);
+  transition: transform var(--transicion), border-color var(--transicion);
 }
 
 .caracteristica:hover{
