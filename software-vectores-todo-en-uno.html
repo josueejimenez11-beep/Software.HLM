@@ -1,3 +1,994 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software de Vectores — PUCE · Álgebra Lineal</title>
+<!-- VERSION DE UN SOLO ARCHIVO: el CSS y el JavaScript van incrustados aqui
+     mismo, asi que este archivo funciona solo. El logo sigue leyendose de
+     logo-puce.png si esta en la misma carpeta. -->
+<style>
+/* ============================================================
+   SOFTWARE DE VECTORES — Hoja de estilos
+   Paleta: fondo negro/azul muy oscuro, bordes celestes,
+           texto blanco y detalles/botones rojos.
+   ============================================================ */
+
+/* ---------- Variables globales ---------- */
+:root{
+  --fondo:          #04070f;   /* negro azulado */
+  --fondo-2:        #070d1b;   /* azul muy oscuro */
+  --panel:          #0a1324;   /* tarjetas */
+  --panel-2:        #0d1a30;   /* campos */
+  --celeste:        #38bdf8;
+  --celeste-claro:  #7dd3fc;
+  --celeste-tenue:  rgba(56, 189, 248, .28);
+  --rojo:           #ef4444;
+  --rojo-claro:     #f87171;
+  --amarillo:       #fde68a;
+  --blanco:         #f2f7ff;
+  --gris:           #9db3d4;
+  --gris-2:         #6f88ad;
+  --verde:          #34d399;
+
+  --radio:          16px;
+  --radio-chico:    10px;
+  --sombra:         0 12px 34px rgba(0, 0, 0, .55);
+  --sombra-suave:   0 6px 18px rgba(0, 0, 0, .40);
+  --borde:          1px solid rgba(56, 189, 248, .22);
+  --transicion:     .22s ease;
+
+  --fuente: "Segoe UI", "Inter", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Cascadia Code", "Fira Code", "Consolas", "SF Mono", monospace;
+}
+
+/* ---------- Reinicio básico ---------- */
+*,
+*::before,
+*::after{ box-sizing: border-box; }
+
+html, body{ margin: 0; padding: 0; }
+
+body{
+  min-height: 100vh;
+  font-family: var(--fuente);
+  color: var(--blanco);
+  background: var(--fondo);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * El degradado del fondo vive en su propia capa fija.
+ * Antes se lograba con background-attachment: fixed sobre el body, que obliga
+ * al navegador a repintar los tres degradados en cada fotograma del scroll.
+ * Así se compone una sola vez y el aspecto es idéntico.
+ */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(1100px 620px at 12% -10%, rgba(56,189,248,.10), transparent 62%),
+    radial-gradient(900px 520px at 100% 0%,  rgba(239,68,68,.07),  transparent 60%),
+    linear-gradient(180deg, var(--fondo-2) 0%, var(--fondo) 55%, #03060d 100%);
+}
+
+/* ============================================================
+   ENCABEZADO
+   ============================================================ */
+.cabecera{
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  overflow: hidden;
+  /* Sin backdrop-filter: el degradado de abajo es opaco, así que el desenfoque
+     no se veía y aun así obligaba a recalcularlo en cada fotograma del scroll. */
+  background: linear-gradient(135deg, #071229 0%, #0b1c3d 55%, #0a1830 100%);
+  border-bottom: 1px solid rgba(56,189,248,.28);
+  box-shadow: 0 6px 26px rgba(0,0,0,.50);
+}
+
+/* Filo celeste degradado en la base del encabezado */
+.cabecera::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--celeste), #bae6fd, var(--celeste), transparent);
+  opacity: .85;
+}
+
+.cabecera-contenido{
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 18px 22px 20px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+/* ---------- Espacio para el logo institucional ---------- */
+.logo-slot{
+  position: relative;
+  width: 96px; height: 96px;
+  flex: 0 0 96px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  background: linear-gradient(160deg, rgba(56,189,248,.12), rgba(255,255,255,.03));
+  border: 1.5px dashed rgba(125,211,252,.45);
+  transition: border-color var(--transicion), box-shadow var(--transicion), background var(--transicion);
+}
+
+.logo-slot:hover,
+.logo-slot:focus-visible{
+  border-color: var(--celeste);
+  box-shadow: 0 0 0 4px rgba(56,189,248,.10);
+  outline: none;
+}
+
+/* Con el logo puesto: borde continuo y sin relleno propio, para que la
+   imagen ocupe todo el recuadro redondeado. */
+.logo-slot.con-logo{
+  border-style: solid;
+  border-color: rgba(125,211,252,.40);
+  background: transparent;
+}
+
+/* Sin padding: un logo cuadrado (como el del PUCE, que ya trae su propio
+   fondo azul) llena el recuadro exacto; uno de otra proporción se ajusta
+   dentro sin recortarse. */
+.logo-slot img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.logo-vacio{
+  text-align: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  line-height: 1.35;
+  color: var(--celeste-claro);
+}
+
+.logo-vacio svg{ display: block; margin: 0 auto 4px; opacity: .85; }
+
+.logo-pista{
+  display: block;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  color: var(--gris-2);
+}
+
+.logo-quitar{
+  position: absolute;
+  top: 5px; right: 5px;
+  display: none;
+  width: 20px; height: 20px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(239,68,68,.55);
+  background: rgba(239,68,68,.22);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--transicion);
+}
+
+/* La × solo aparece cuando hay un logo cargado a mano, para volver al original */
+.logo-slot.personalizado .logo-quitar{ display: block; }
+.logo-quitar:hover{ background: var(--rojo); }
+
+/* ---------- Títulos institucionales ---------- */
+.titulos{ min-width: 0; }
+
+.titulos .rotulo{
+  margin: 0 0 3px;
+  font-size: clamp(10px, 1vw, 12.5px);
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--celeste-claro);
+}
+
+.titulos h1{
+  margin: 0;
+  font-family: Georgia, "Times New Roman", Cambria, serif;
+  font-size: clamp(20px, 2.6vw, 34px);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: .01em;
+  color: #fdf4d3;
+  text-shadow: 0 2px 20px rgba(253, 230, 138, .30);
+}
+
+.titulos .subtitulo{
+  margin: 7px 0 0;
+  font-size: clamp(12.5px, 1.45vw, 16px);
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--celeste-claro);
+}
+
+.titulos .subtitulo::before{ content: "▸ "; color: var(--celeste); opacity: .85; }
+
+/* ============================================================
+   ESTRUCTURA
+   ============================================================ */
+.contenedor{
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 26px 22px 40px;
+}
+
+.rejilla{
+  display: grid;
+  grid-template-columns: minmax(320px, 400px) 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.columna-izquierda,
+.columna-derecha{
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+
+/* ============================================================
+   TARJETAS
+   ============================================================ */
+.tarjeta{
+  background: linear-gradient(170deg, var(--panel) 0%, #08101f 100%);
+  border: var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  transition: border-color var(--transicion), transform var(--transicion), box-shadow var(--transicion);
+}
+
+.tarjeta:hover{
+  border-color: rgba(56,189,248,.45);
+  box-shadow: 0 16px 40px rgba(0,0,0,.6), 0 0 0 1px rgba(56,189,248,.10);
+}
+
+.tarjeta-encabezado{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(56,189,248,.16);
+  background: linear-gradient(90deg, rgba(56,189,248,.10), transparent 70%);
+}
+
+.tarjeta-encabezado h2{
+  margin: 0;
+  font-size: 1.02rem;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--celeste-claro);
+}
+
+.tarjeta-cuerpo{ padding: 18px; }
+
+.etiqueta-tenue{
+  font-size: .76rem;
+  color: var(--gris-2);
+  letter-spacing: .4px;
+}
+
+/* ============================================================
+   CAMPOS DE ENTRADA
+   ============================================================ */
+.bloque-vector{
+  border: 1px solid rgba(56,189,248,.18);
+  border-radius: var(--radio-chico);
+  padding: 12px 12px 14px;
+  margin-bottom: 14px;
+  background: rgba(8,16,30,.6);
+  transition: border-color var(--transicion), opacity var(--transicion);
+}
+
+.bloque-vector:hover{ border-color: rgba(56,189,248,.38); }
+
+.bloque-vector.inactivo{ opacity: .45; }
+
+.bloque-titulo{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: .92rem;
+}
+
+.bloque-titulo .mini{
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: .78rem;
+  color: var(--gris);
+}
+
+.punto{
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex: none;
+}
+.punto-celeste{ background: var(--celeste); box-shadow: 0 0 10px rgba(56,189,248,.8); }
+.punto-rojo{    background: var(--rojo);    box-shadow: 0 0 10px rgba(239,68,68,.8); }
+
+.fila-campos{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.campo{ margin-bottom: 12px; }
+.fila-campos .campo{ margin-bottom: 0; }
+
+.campo label{
+  display: block;
+  font-size: .78rem;
+  letter-spacing: .5px;
+  color: var(--gris);
+  margin-bottom: 6px;
+}
+
+.campo input,
+.campo select{
+  width: 100%;
+  padding: 11px 12px;
+  font-family: var(--fuente);
+  font-size: .95rem;
+  color: var(--blanco);
+  background: var(--panel-2);
+  border: 1px solid rgba(56,189,248,.24);
+  border-radius: var(--radio-chico);
+  outline: none;
+  transition: border-color var(--transicion), box-shadow var(--transicion), background var(--transicion);
+}
+
+.campo input::placeholder{ color: #4f6a92; }
+
+.campo input:hover,
+.campo select:hover{ border-color: rgba(56,189,248,.45); }
+
+.campo input:focus,
+.campo select:focus{
+  border-color: var(--celeste);
+  box-shadow: 0 0 0 3px rgba(56,189,248,.18);
+  background: #0f1e37;
+}
+
+.campo input.error{
+  border-color: var(--rojo);
+  box-shadow: 0 0 0 3px rgba(239,68,68,.18);
+}
+
+.campo select{
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--celeste) 50%),
+                    linear-gradient(135deg, var(--celeste) 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% + 2px), calc(100% - 12px) calc(50% + 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 34px;
+  cursor: pointer;
+}
+
+.campo select option{ background: #0b1526; color: var(--blanco); }
+
+/* Interruptor (checkbox) */
+.interruptor{
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: .84rem;
+  color: var(--gris);
+  margin-bottom: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.interruptor input{
+  width: 16px; height: 16px;
+  accent-color: var(--rojo);
+  cursor: pointer;
+}
+
+.interruptor:hover{ color: var(--celeste-claro); }
+
+/* Utilitario */
+.oculto{ display: none !important; }
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+.fila-botones{
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn{
+  font-family: var(--fuente);
+  font-size: .95rem;
+  font-weight: 600;
+  letter-spacing: .5px;
+  padding: 12px 16px;
+  border-radius: var(--radio-chico);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform var(--transicion), box-shadow var(--transicion),
+              background var(--transicion), border-color var(--transicion), color var(--transicion);
+}
+
+.btn-rojo{
+  color: #fff;
+  background: linear-gradient(160deg, var(--rojo) 0%, #b91c1c 100%);
+  border-color: rgba(248,113,113,.55);
+  box-shadow: 0 8px 20px rgba(239,68,68,.28);
+}
+.btn-rojo:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(239,68,68,.42);
+}
+.btn-rojo:active{ transform: translateY(0); }
+
+.btn-contorno{
+  color: var(--celeste-claro);
+  background: rgba(56,189,248,.06);
+  border-color: rgba(56,189,248,.40);
+}
+.btn-contorno:hover{
+  transform: translateY(-2px);
+  background: rgba(56,189,248,.14);
+  border-color: var(--celeste);
+  box-shadow: 0 10px 22px rgba(56,189,248,.20);
+}
+.btn-contorno:active{ transform: translateY(0); }
+
+.controles-grafica{ display: flex; gap: 8px; }
+
+.btn-mini{
+  font-family: var(--fuente);
+  font-size: .82rem;
+  font-weight: 600;
+  min-width: 36px;
+  padding: 6px 12px;
+  color: var(--celeste-claro);
+  background: rgba(56,189,248,.08);
+  border: 1px solid rgba(56,189,248,.35);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background var(--transicion), border-color var(--transicion), transform var(--transicion);
+}
+.btn-mini:hover{
+  background: rgba(56,189,248,.20);
+  border-color: var(--celeste);
+  transform: translateY(-1px);
+}
+.btn-mini-rojo{
+  color: var(--rojo-claro);
+  border-color: rgba(239,68,68,.45);
+  background: rgba(239,68,68,.08);
+}
+.btn-mini-rojo:hover{
+  background: rgba(239,68,68,.20);
+  border-color: var(--rojo);
+}
+
+/* ============================================================
+   EJEMPLOS RÁPIDOS
+   ============================================================ */
+.rejilla-ejemplos{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.ejemplo{
+  text-align: left;
+  font-family: var(--fuente);
+  padding: 10px 12px;
+  border-radius: var(--radio-chico);
+  border: 1px solid rgba(56,189,248,.22);
+  background: rgba(10,20,38,.75);
+  color: var(--blanco);
+  cursor: pointer;
+  transition: transform var(--transicion), border-color var(--transicion),
+              background var(--transicion), box-shadow var(--transicion);
+}
+
+.ejemplo:hover{
+  transform: translateY(-3px);
+  border-color: var(--celeste);
+  background: rgba(56,189,248,.12);
+  box-shadow: 0 10px 22px rgba(0,0,0,.45);
+}
+
+.ejemplo b{
+  display: block;
+  font-size: .85rem;
+  color: var(--celeste-claro);
+  margin-bottom: 3px;
+}
+
+.ejemplo span{
+  display: block;
+  font-family: var(--mono);
+  font-size: .74rem;
+  color: var(--gris);
+}
+
+/* ============================================================
+   ALERTAS
+   ============================================================ */
+.alerta{
+  margin-top: 14px;
+  padding: 11px 13px;
+  border-radius: var(--radio-chico);
+  font-size: .86rem;
+  color: #ffe4e6;
+  background: rgba(239,68,68,.12);
+  border: 1px solid rgba(239,68,68,.50);
+  border-left: 4px solid var(--rojo);
+}
+
+.alerta ul{ margin: 6px 0 0; padding-left: 18px; }
+.alerta li{ margin: 2px 0; }
+
+/* ============================================================
+   GRÁFICA
+   ============================================================ */
+.lienzo-caja{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 300px;
+  border-radius: var(--radio-chico);
+  border: 1px solid rgba(56,189,248,.30);
+  background: #050a14;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(56,189,248,.06);
+}
+
+#lienzo{
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+#lienzo:active{ cursor: grabbing; }
+
+.leyenda{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+  font-size: .8rem;
+  color: var(--gris);
+}
+
+.leyenda-item{ display: inline-flex; align-items: center; gap: 7px; }
+
+.leyenda-ayuda{ margin-left: auto; color: var(--gris-2); font-style: italic; }
+
+.muestra{
+  width: 18px; height: 3px;
+  border-radius: 2px;
+  display: inline-block;
+}
+.muestra-celeste{  background: var(--celeste); }
+.muestra-rojo{     background: var(--rojo); }
+.muestra-amarillo{ background: var(--amarillo); }
+
+/* ============================================================
+   PROCEDIMIENTO
+   ============================================================ */
+.procedimiento .vacio,
+.resultado .vacio{
+  margin: 0;
+  color: var(--gris-2);
+  font-size: .9rem;
+}
+
+.paso{
+  border-left: 3px solid var(--celeste);
+  background: rgba(56,189,248,.05);
+  border-radius: 0 var(--radio-chico) var(--radio-chico) 0;
+  padding: 11px 14px;
+  margin-bottom: 12px;
+  transition: background var(--transicion), border-color var(--transicion);
+}
+
+.paso:hover{ background: rgba(56,189,248,.10); }
+
+.paso:last-child{ margin-bottom: 0; }
+
+.paso.paso-final{
+  border-left-color: var(--rojo);
+  background: rgba(239,68,68,.08);
+}
+.paso.paso-final:hover{ background: rgba(239,68,68,.14); }
+
+.paso h3{
+  margin: 0 0 6px;
+  font-size: .76rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--celeste-claro);
+  font-weight: 700;
+}
+
+.paso.paso-final h3{ color: var(--rojo-claro); }
+
+.paso pre{
+  margin: 0;
+  font-family: var(--mono);
+  font-size: .92rem;
+  color: var(--blanco);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.paso p{
+  margin: 0;
+  font-size: .89rem;
+  color: var(--gris);
+}
+
+/* ============================================================
+   RESULTADO
+   ============================================================ */
+.resultado-principal{
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  border-radius: var(--radio-chico);
+  border: 1px solid rgba(56,189,248,.35);
+  background: linear-gradient(120deg, rgba(56,189,248,.12), rgba(239,68,68,.08));
+}
+
+.resultado-principal .rp-etiqueta{
+  font-size: .76rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--gris);
+}
+
+.resultado-principal .rp-valor{
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--amarillo);
+  word-break: break-word;
+}
+
+.rejilla-caracteristicas{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.caracteristica{
+  padding: 12px 14px;
+  border-radius: var(--radio-chico);
+  border: 1px solid rgba(56,189,248,.20);
+  background: rgba(9,18,34,.8);
+  box-shadow: var(--sombra-suave);
+  transition: transform var(--transicion), border-color var(--transicion);
+}
+
+.caracteristica:hover{
+  transform: translateY(-3px);
+  border-color: rgba(56,189,248,.50);
+}
+
+.caracteristica dt{
+  font-size: .72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gris-2);
+  margin-bottom: 5px;
+}
+
+.caracteristica dd{
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 1.02rem;
+  color: var(--blanco);
+  word-break: break-word;
+}
+
+.nota-interpretacion{
+  margin: 14px 0 0;
+  padding: 11px 13px;
+  font-size: .87rem;
+  color: var(--gris);
+  border-radius: var(--radio-chico);
+  border: 1px dashed rgba(56,189,248,.30);
+  background: rgba(56,189,248,.04);
+}
+
+/* ============================================================
+   PIE
+   ============================================================ */
+.pie{
+  border-top: 1px solid rgba(56,189,248,.16);
+  margin-top: 10px;
+  padding: 18px 22px 28px;
+  text-align: center;
+}
+
+.pie p{
+  margin: 0;
+  font-size: .8rem;
+  color: var(--gris-2);
+  letter-spacing: .4px;
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+@media (max-width: 1024px){
+  .rejilla{ grid-template-columns: 1fr; }
+  .columna-izquierda{ order: 1; }
+  .columna-derecha{ order: 2; }
+}
+
+@media (max-width: 640px){
+  .contenedor{ padding: 18px 14px 30px; }
+  .cabecera-contenido{ padding: 14px 14px 16px; gap: 14px; }
+  .logo-slot{ width: 66px; height: 66px; flex-basis: 66px; border-radius: 14px; }
+  .logo-vacio{ font-size: 9px; letter-spacing: .10em; }
+  .logo-vacio svg{ width: 22px; height: 22px; margin-bottom: 2px; }
+  .logo-pista{ display: none; }
+  .titulos .rotulo{ letter-spacing: .16em; }
+  .fila-campos{ grid-template-columns: 1fr; }
+  .fila-botones{ grid-template-columns: 1fr; }
+  .lienzo-caja{ aspect-ratio: 1 / 1; }
+  .leyenda-ayuda{ display: none; }
+  .rejilla-ejemplos{ grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .resultado-principal .rp-valor{ font-size: 1.25rem; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     ENCABEZADO
+     ============================================================ -->
+<header class="cabecera">
+  <div class="cabecera-contenido">
+
+    <!-- Logo institucional.
+         Por defecto se toma el archivo "logo-puce.png" que debe estar en la
+         misma carpeta que este index.html. Si no se encuentra, aparece un
+         recuadro para cargar una imagen a mano; con un clic siempre se puede
+         cambiar por otra. -->
+    <div class="logo-slot" id="logoSlot" role="button" tabindex="0"
+         title="Clic para cambiar el logo">
+
+      <img class="logo-img" id="logoImg" src="logo-puce.png" alt="PUCE Ambato">
+
+      <!-- Solo se ve si no se encuentra logo-puce.png -->
+      <div class="logo-vacio oculto" id="logoVacio">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 3l8 3.5v5c0 4.6-3.2 8.6-8 9.5-4.8-.9-8-4.9-8-9.5v-5L12 3z"/>
+          <path d="M12 8v6M9 11h6"/>
+        </svg>
+        LOGO
+        <span class="logo-pista">cargar</span>
+      </div>
+
+      <button type="button" class="logo-quitar" id="logoQuitar" title="Volver al logo original">×</button>
+      <input type="file" id="logoArchivo" accept="image/*" hidden>
+    </div>
+
+    <!-- Títulos institucionales -->
+    <div class="titulos">
+      <p class="rotulo">Software - Vectores</p>
+      <h1>Pontificia Universidad Católica del Ecuador</h1>
+      <p class="subtitulo">Álgebra - Vectores</p>
+    </div>
+
+  </div>
+</header>
+
+<!-- ============================================================
+     CONTENIDO PRINCIPAL
+     ============================================================ -->
+<main class="contenedor">
+
+  <div class="rejilla">
+
+    <!-- ---------- COLUMNA IZQUIERDA: ENTRADA DE DATOS ---------- -->
+    <section class="columna-izquierda">
+
+      <article class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h2>Datos de entrada</h2>
+          <span class="etiqueta-tenue">Acepta decimales y negativos</span>
+        </div>
+
+        <div class="tarjeta-cuerpo">
+
+          <!-- Vector A -->
+          <div class="bloque-vector" id="bloqueA">
+            <div class="bloque-titulo">
+              <span class="punto punto-celeste"></span>
+              <strong>Vector A</strong>
+              <span class="mini" id="previewA">A = (0, 0)</span>
+            </div>
+            <div class="fila-campos">
+              <div class="campo">
+                <label for="ax">Componente X (a₁)</label>
+                <input type="text" id="ax" inputmode="decimal" autocomplete="off" placeholder="Ej: 5" value="4">
+              </div>
+              <div class="campo">
+                <label for="ay">Componente Y (a₂)</label>
+                <input type="text" id="ay" inputmode="decimal" autocomplete="off" placeholder="Ej: -1" value="3">
+              </div>
+            </div>
+          </div>
+
+          <!-- Vector B -->
+          <div class="bloque-vector" id="bloqueB">
+            <div class="bloque-titulo">
+              <span class="punto punto-rojo"></span>
+              <strong>Vector B</strong>
+              <span class="mini" id="previewB">B = (0, 0)</span>
+            </div>
+            <div class="fila-campos">
+              <div class="campo">
+                <label for="bx">Componente X (b₁)</label>
+                <input type="text" id="bx" inputmode="decimal" autocomplete="off" placeholder="Ej: 2" value="-2">
+              </div>
+              <div class="campo">
+                <label for="by">Componente Y (b₂)</label>
+                <input type="text" id="by" inputmode="decimal" autocomplete="off" placeholder="Ej: 2" value="5">
+              </div>
+            </div>
+          </div>
+
+          <!-- Operación -->
+          <div class="campo">
+            <label for="operacion">Operación</label>
+            <select id="operacion">
+              <option value="suma">1 · Suma  A + B</option>
+              <option value="resta">2 · Resta  A − B</option>
+              <option value="escalar">3 · Multiplicación escalar  K·A</option>
+              <option value="magnitudA">4 · Magnitud de A  |A|</option>
+              <option value="magnitudB">5 · Magnitud de B  |B|</option>
+              <option value="punto">6 · Producto punto  A · B</option>
+              <option value="angulo">7 · Ángulo entre A y B</option>
+              <option value="cruz">8 · Producto cruz en 2D</option>
+              <option value="area">9 · Área del paralelogramo</option>
+              <option value="proyeccion">10 · Proyección de A sobre B</option>
+              <option value="unitario">11 · Vector unitario de A</option>
+              <option value="distancia">12 · Distancia entre extremos de A y B</option>
+            </select>
+          </div>
+
+          <!-- Escalar K (solo visible en multiplicación escalar) -->
+          <div class="campo oculto" id="campoK">
+            <label for="k">Escalar K</label>
+            <input type="text" id="k" inputmode="decimal" autocomplete="off" placeholder="Ej: 3" value="3">
+          </div>
+
+          <!-- Opción del paralelogramo (solo visible en suma) -->
+          <label class="interruptor oculto" id="campoParalelogramo">
+            <input type="checkbox" id="verParalelogramo" checked>
+            <span>Mostrar método del paralelogramo en la gráfica</span>
+          </label>
+
+          <!-- Botones -->
+          <div class="fila-botones">
+            <button type="button" class="btn btn-rojo" id="btnResolver">Resolver</button>
+            <button type="button" class="btn btn-contorno" id="btnLimpiar">Limpiar</button>
+          </div>
+
+          <!-- Mensajes de validación -->
+          <div class="alerta oculto" id="alerta" role="alert"></div>
+
+        </div>
+      </article>
+
+      <!-- Ejemplos rápidos -->
+      <article class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h2>Ejemplos rápidos</h2>
+          <span class="etiqueta-tenue">Se resuelven al instante</span>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <div class="rejilla-ejemplos" id="ejemplos"><!-- generado por JavaScript --></div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ---------- COLUMNA DERECHA: GRÁFICA Y RESULTADOS ---------- -->
+    <section class="columna-derecha">
+
+      <!-- Gráfica -->
+      <article class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h2>Plano cartesiano</h2>
+          <div class="controles-grafica">
+            <button type="button" class="btn-mini" id="btnZoomIn"  title="Acercar">＋</button>
+            <button type="button" class="btn-mini" id="btnZoomOut" title="Alejar">－</button>
+            <button type="button" class="btn-mini btn-mini-rojo" id="btnCentrar" title="Centrar y ajustar">Centrar</button>
+          </div>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <div class="lienzo-caja">
+            <canvas id="lienzo"></canvas>
+          </div>
+          <div class="leyenda">
+            <span class="leyenda-item"><i class="muestra muestra-celeste"></i> Vector A</span>
+            <span class="leyenda-item"><i class="muestra muestra-rojo"></i> Vector B</span>
+            <span class="leyenda-item"><i class="muestra muestra-amarillo"></i> Resultante R</span>
+            <span class="leyenda-item leyenda-ayuda">Arrastra para mover · Rueda para zoom</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Procedimiento -->
+      <article class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h2>Procedimiento</h2>
+          <span class="etiqueta-tenue" id="nombreOperacion">—</span>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <div id="procedimiento" class="procedimiento">
+            <p class="vacio">Ingresa los datos y presiona <strong>Resolver</strong> para ver el desarrollo paso a paso.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Resultado y características -->
+      <article class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h2>Resultado y características</h2>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <div id="resultado" class="resultado">
+            <p class="vacio">Aquí aparecerán el resultado final y sus características.</p>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </div>
+</main>
+
+<footer class="pie">
+  <p>Pontificia Universidad Católica del Ecuador · Software de Vectores — Álgebra · HTML + CSS + JavaScript</p>
+</footer>
+
+<script>
 /* ============================================================================
    SOFTWARE DE VECTORES — Álgebra Lineal (vectores en el plano)
    ----------------------------------------------------------------------------
@@ -1557,3 +2548,7 @@ window.addEventListener('DOMContentLoaded', iniciar);
 if (document.readyState === 'interactive' || document.readyState === 'complete') {
   iniciar();
 }
+
+</script>
+</body>
+</html>
