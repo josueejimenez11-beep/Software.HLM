@@ -4,7 +4,7 @@
 
 **Pontificia Universidad Católica del Ecuador**
 Cátedra: Fundamentos de Programación
-Autores: Steveen Culquicondor — Ángel Núñez
+Autores: Steveen Culquicondor — Ángel Núñez — Ricardo Garrido
 Tecnología: Python 3 · Tkinter · ttk
 Archivo: `study_control.py`
 

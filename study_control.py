@@ -6,7 +6,7 @@
  Sistema de Gestion PUCE
  -----------------------------------------------------------------------------
  Institucion : Pontificia Universidad Catolica del Ecuador
- Autores     : Steveen Culquicondor - Angel Nunez
+ Autores     : Steveen Culquicondor - Angel Nunez - Ricardo Garrido
  Catedra     : Fundamentos de Programacion
  Version     : 1.0
  Tecnologia  : Python 3 + Tkinter + ttk
@@ -61,7 +61,7 @@ APP_NOMBRE = "Sistema de Estudio"
 APP_VERSION = "1.0"
 APP_SUBTITULO = "Sistema de Gestion PUCE"
 APP_UNIVERSIDAD = "PONTIFICIA UNIVERSIDAD CATOLICA DEL ECUADOR"
-APP_AUTORES = "STEVEEN CULQUICONDOR  -  ANGEL NUNEZ"
+APP_AUTORES = "STEVEEN CULQUICONDOR  -  ANGEL NUNEZ  -  RICARDO GARRIDO"
 APP_CATEDRA = "FUNDAMENTOS DE PROGRAMACION"
 
 # ------------------------- Dimensiones de ventanas ---------------------------
@@ -2578,7 +2578,8 @@ def mostrar_informacion(ventana_padre):
         "Pontificia Universidad Catolica del Ecuador\n\n"
         "DESARROLLADO POR:\n"
         "   •  Steveen Culquicondor\n"
-        "   •  Angel Nunez\n\n"
+        "   •  Angel Nunez\n"
+        "   •  Ricardo Garrido\n\n"
         "CATEDRA:\n"
         "   Fundamentos de Programacion\n\n"
         "TECNOLOGIA:\n"
