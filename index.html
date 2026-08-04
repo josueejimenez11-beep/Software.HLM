@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software de Vectores — Álgebra Lineal</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============================================================
+     ENCABEZADO
+     ============================================================ -->
+<header class="cabecera">
+  <div class="cabecera-contenido">
+    <div class="marca">
+      <div class="marca-icono" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="34" height="34">
+          <line x1="6" y1="42" x2="42" y2="42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="6" y1="42" x2="6" y2="6"  stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="6" y1="42" x2="36" y2="14" stroke="#f43f5e" stroke-width="3.5" stroke-linecap="round"/>
+          <polygon points="40,10 30,13 34,19" fill="#f43f5e"/>
+        </svg>
+      </div>
+      <div class="marca-texto">
+        <h1>Software de Vectores</h1>
+        <p>Álgebra Lineal — Vectores en el plano</p>
+      </div>
+    </div>
+    <div class="cabecera-chip">R² · Plano cartesiano</div>
+  </div>
+</header>
+
+<!-- ============================================================
+     CONTENIDO PRINCIPAL
+     ============================================================ -->
+<main class="contenedor">
+
+  <div class="rejilla">
+
+    <!-- ---------- COLUMNA IZQUIERDA: ENTRADA DE DATOS ---------- -->
+    <section class="columna-izquierda">
+
+      <article class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h2>Datos de entrada</h2>
+          <span class="etiqueta-tenue">Acepta decimales y negativos</span>
+        </div>
+
+        <div class="tarjeta-cuerpo">
+
+          <!-- Vector A -->
+          <div class="bloque-vector" id="bloqueA">
+            <div class="bloque-titulo">
+              <span class="punto punto-celeste"></span>
+              <strong>Vector A</strong>
+              <span class="mini" id="previewA">A = (0, 0)</span>
+            </div>
+            <div class="fila-campos">
+              <div class="campo">
+                <label for="ax">Componente X (a₁)</label>
+                <input type="text" id="ax" inputmode="decimal" autocomplete="off" placeholder="Ej: 5" value="4">
+              </div>
+              <div class="campo">
+                <label for="ay">Componente Y (a₂)</label>
+                <input type="text" id="ay" inputmode="decimal" autocomplete="off" placeholder="Ej: -1" value="3">
+              </div>
+            </div>
+          </div>
+
+          <!-- Vector B -->
+          <div class="bloque-vector" id="bloqueB">
+            <div class="bloque-titulo">
+              <span class="punto punto-rojo"></span>
+              <strong>Vector B</strong>
+              <span class="mini" id="previewB">B = (0, 0)</span>
+            </div>
+            <div class="fila-campos">
+              <div class="campo">
+                <label for="bx">Componente X (b₁)</label>
+                <input type="text" id="bx" inputmode="decimal" autocomplete="off" placeholder="Ej: 2" value="-2">
+              </div>
+              <div class="campo">
+                <label for="by">Componente Y (b₂)</label>
+                <input type="text" id="by" inputmode="decimal" autocomplete="off" placeholder="Ej: 2" value="5">
+              </div>
+            </div>
+          </div>
+
+          <!-- Operación -->
+          <div class="campo">
+            <label for="operacion">Operación</label>
+            <select id="operacion">
+              <option value="suma">1 · Suma  A + B</option>
+              <option value="resta">2 · Resta  A − B</option>
+              <option value="escalar">3 · Multiplicación escalar  K·A</option>
+              <option value="magnitudA">4 · Magnitud de A  |A|</option>
+              <option value="magnitudB">5 · Magnitud de B  |B|</option>
+              <option value="punto">6 · Producto punto  A · B</option>
+              <option value="angulo">7 · Ángulo entre A y B</option>
+              <option value="cruz">8 · Producto cruz en 2D</option>
+              <option value="area">9 · Área del paralelogramo</option>
+              <option value="proyeccion">10 · Proyección de A sobre B</option>
+              <option value="unitario">11 · Vector unitario de A</option>
+              <option value="distancia">12 · Distancia entre extremos de A y B</option>
+            </select>
+          </div>
+
+          <!-- Escalar K (solo visible en multiplicación escalar) -->
+          <div class="campo oculto" id="campoK">
+            <label for="k">Escalar K</label>
+            <input type="text" id="k" inputmode="decimal" autocomplete="off" placeholder="Ej: 3" value="3">
+          </div>
+
+          <!-- Opción del paralelogramo (solo visible en suma) -->
+          <label class="interruptor oculto" id="campoParalelogramo">
+            <input type="checkbox" id="verParalelogramo" checked>
+            <span>Mostrar método del paralelogramo en la gráfica</span>
+          </label>
+
+          <!-- Botones -->
+          <div class="fila-botones">
+            <button type="button" class="btn btn-rojo" id="btnResolver">Resolver</button>
+            <button type="button" class="btn btn-contorno" id="btnLimpiar">Limpiar</button>
+          </div>
+
+          <!-- Mensajes de validación -->
+          <div class="alerta oculto" id="alerta" role="alert"></div>
+
+        </div>
+      </article>
+
+      <!-- Ejemplos rápidos -->
+      <article class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h2>Ejemplos rápidos</h2>
+          <span class="etiqueta-tenue">Se resuelven al instante</span>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <div class="rejilla-ejemplos" id="ejemplos"><!-- generado por JavaScript --></div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ---------- COLUMNA DERECHA: GRÁFICA Y RESULTADOS ---------- -->
+    <section class="columna-derecha">
+
+      <!-- Gráfica -->
+      <article class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h2>Plano cartesiano</h2>
+          <div class="controles-grafica">
+            <button type="button" class="btn-mini" id="btnZoomIn"  title="Acercar">＋</button>
+            <button type="button" class="btn-mini" id="btnZoomOut" title="Alejar">－</button>
+            <button type="button" class="btn-mini btn-mini-rojo" id="btnCentrar" title="Centrar y ajustar">Centrar</button>
+          </div>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <div class="lienzo-caja">
+            <canvas id="lienzo"></canvas>
+          </div>
+          <div class="leyenda">
+            <span class="leyenda-item"><i class="muestra muestra-celeste"></i> Vector A</span>
+            <span class="leyenda-item"><i class="muestra muestra-rojo"></i> Vector B</span>
+            <span class="leyenda-item"><i class="muestra muestra-amarillo"></i> Resultante R</span>
+            <span class="leyenda-item leyenda-ayuda">Arrastra para mover · Rueda para zoom</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Procedimiento -->
+      <article class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h2>Procedimiento</h2>
+          <span class="etiqueta-tenue" id="nombreOperacion">—</span>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <div id="procedimiento" class="procedimiento">
+            <p class="vacio">Ingresa los datos y presiona <strong>Resolver</strong> para ver el desarrollo paso a paso.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Resultado y características -->
+      <article class="tarjeta">
+        <div class="tarjeta-encabezado">
+          <h2>Resultado y características</h2>
+        </div>
+        <div class="tarjeta-cuerpo">
+          <div id="resultado" class="resultado">
+            <p class="vacio">Aquí aparecerán el resultado final y sus características.</p>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </div>
+</main>
+
+<footer class="pie">
+  <p>Software de Vectores · Álgebra Lineal — Vectores en el plano · HTML + CSS + JavaScript</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
