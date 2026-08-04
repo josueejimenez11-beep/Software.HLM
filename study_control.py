@@ -3,7 +3,7 @@
 ===============================================================================
                         S I S T E M A   D E   E S T U D I O
 ===============================================================================
- Sistema Inteligente para la Gestion Academica de Estudiantes
+ Sistema Inteligente para la Gestion PUCE
  -----------------------------------------------------------------------------
  Institucion : Pontificia Universidad Catolica del Ecuador
  Autores     : Steveen Culquicondor - Angel Nunez
@@ -59,7 +59,7 @@ from tkinter import font as tkfont          # Manejo avanzado de tipografias
 # ----------------------------- Identidad visual ------------------------------
 APP_NOMBRE = "Sistema de Estudio"
 APP_VERSION = "1.0"
-APP_SUBTITULO = "Sistema Inteligente para la Gestion Academica de Estudiantes"
+APP_SUBTITULO = "Sistema Inteligente para la Gestion PUCE"
 APP_UNIVERSIDAD = "PONTIFICIA UNIVERSIDAD CATOLICA DEL ECUADOR"
 APP_AUTORES = "STEVEEN CULQUICONDOR  -  ANGEL NUNEZ"
 APP_CATEDRA = "FUNDAMENTOS DE PROGRAMACION"
@@ -68,35 +68,36 @@ APP_CATEDRA = "FUNDAMENTOS DE PROGRAMACION"
 VENTANA_ANCHO = 1100                        # Ancho solicitado en el requisito
 VENTANA_ALTO = 700                          # Alto solicitado en el requisito
 
-# ------------------------- Paleta: negro, blanco y celeste -------------------
-# Fondo negro, textos blancos y bordes en celeste claro. Los tres colores
-# semaforo (verde, rojo y naranja) se reservan para el significado de las
-# acciones y de los resultados academicos.
+# ---------------------- Paleta: gris 18%, blanco y celeste ------------------
+# El fondo general usa el gris medio fotografico (gris 18 %). Sobre el se
+# apoyan paneles de gris mas oscuro, para que el texto blanco conserve
+# contraste, y todos los bordes van en celeste claro.
 COLORES = {
-    "fondo":           "#000000",           # Fondo principal (negro)
-    "fondo_alt":       "#05080B",           # Fondo de franjas y paneles
-    "superficie":      "#0A1017",           # Tarjetas y contenedores
-    "superficie_alt":  "#10181F",           # Campos de texto y zonas activas
+    "fondo":           "#808080",           # Gris 18 % (fondo de la interfaz)
+    "fondo_alt":       "#707070",           # Franjas de titulo y zonas de apoyo
+    "superficie":      "#4A4A4A",           # Tarjetas, paneles y tablas
+    "superficie_alt":  "#3C3C3C",           # Campos de texto y filas alternas
     "borde":           "#7DD3FC",           # Borde celeste claro (toda la interfaz)
-    "borde_suave":     "#1F3A4A",           # Borde interno discreto
+    "borde_suave":     "#9AA3A8",           # Borde interno discreto
     "celeste":         "#7DD3FC",           # Acento principal (celeste claro)
     "celeste_claro":   "#BAE6FD",           # Celeste muy claro para destacados
-    "celeste_oscuro":  "#0284C7",           # Celeste profundo (encabezados)
+    "celeste_oscuro":  "#0369A1",           # Celeste profundo (encabezados)
     "celeste_hover":   "#38BDF8",           # Celeste para el efecto hover
     "azul":            "#0369A1",           # Azul de apoyo (boton editar)
-    "azul_claro":      "#38BDF8",           # Azul claro informativo
+    "azul_claro":      "#93C5FD",           # Azul claro informativo
     "cian":            "#BAE6FD",           # Detalles y separadores
     "texto":           "#FFFFFF",           # Texto principal (blanco)
-    "texto_suave":     "#CBD9E3",           # Texto secundario
-    "texto_tenue":     "#8296A5",           # Texto muy secundario
-    "exito":           "#22C55E",           # Verde (aprobado / guardar)
-    "exito_hover":     "#16A34A",           # Verde oscuro para hover
-    "error":           "#EF4444",           # Rojo (reprobado / eliminar)
-    "error_hover":     "#DC2626",           # Rojo oscuro para hover
-    "alerta":          "#F59E0B",           # Naranja (advertencias)
-    "alerta_hover":    "#D97706",           # Naranja oscuro para hover
+    "texto_suave":     "#E9EDEF",           # Texto secundario
+    "texto_tenue":     "#CBD2D6",           # Texto muy secundario (sobre paneles)
+    "texto_sobre_gris": "#1F2A2F",          # Texto secundario sobre el gris 18 %
+    "exito":           "#4ADE80",           # Verde (aprobado / guardar)
+    "exito_hover":     "#22C55E",           # Verde intenso para hover
+    "error":           "#F87171",           # Rojo (reprobado / eliminar)
+    "error_hover":     "#EF4444",           # Rojo intenso para hover
+    "alerta":          "#FBBF24",           # Naranja (advertencias)
+    "alerta_hover":    "#F59E0B",           # Naranja intenso para hover
     "blanco":          "#FFFFFF",           # Blanco puro
-    "negro":           "#000000",           # Negro de la barra superior
+    "negro":           "#333333",           # Gris oscuro de la barra superior
 }
 
 # --------------------------- Escala de calificacion --------------------------
@@ -118,6 +119,19 @@ NOMBRES_LOGO = ("logo_puce.png", "logo.png", "puce.png", "logo_puce.PNG")
 
 # ------------------------------ Listas fijas ---------------------------------
 DIAS_SEMANA = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
+
+# Asignaturas del semestre. El estudiante las escoge de esta lista en los tres
+# modulos, de modo que el nombre de la materia siempre se escribe igual.
+MATERIAS_DISPONIBLES = [
+    "SISTEMAS OPERATIVOS",
+    "HABILIDADES LOGICO MATEMATICAS",
+    "SEGUNDA LENGUA",
+    "INTRODUCCION AL DESARROLLO WEB",
+    "ALGEBRA",
+    "FUNDAMENTOS DE PROGRAMACION",
+    "HERRAMIENTAS DIGITALES APLICADAS",
+    "COMUNICACION ORAL Y ESCRITA",
+]
 
 # --------------------- Diccionario global de tipografias ---------------------
 # Se llena en configurar_fuentes() una vez que la ventana raiz existe, porque
@@ -325,17 +339,6 @@ class BaseDeDatos:
             return True
         return False
 
-    def nombres_de_materias(self):
-        """
-        Lista ordenada con los nombres de las materias registradas.
-
-        Se usa para llenar los combobox de horario y de promedios,
-        evitando que el usuario escriba el nombre de la materia a mano.
-        """
-        nombres = sorted({str(m.get("materia", "")).strip()
-                          for m in self.materias if str(m.get("materia", "")).strip()})
-        return nombres
-
 
 # Instancia unica utilizada por toda la aplicacion.
 DATOS = BaseDeDatos()
@@ -439,30 +442,6 @@ def validar_hora(valor, nombre_campo):
     if not (0 <= minutos <= 59):
         return False, "Los minutos del campo '%s' deben estar entre 00 y 59." % nombre_campo
     return True, "%02d:%02d" % (horas, minutos)
-
-
-def validar_fecha(valor, nombre_campo):
-    """
-    Valida una fecha en formato DD/MM/AAAA usando el modulo datetime.
-
-    Acepta separadores '/', '-' y '.' para que el usuario escriba con comodidad.
-    """
-    texto = str(valor).strip().replace("-", "/").replace(".", "/")
-    if not texto:
-        return False, "El campo '%s' no puede estar vacio." % nombre_campo
-    partes = texto.split("/")
-    if len(partes) != 3:
-        return False, "El campo '%s' debe tener el formato DD/MM/AAAA." % nombre_campo
-    if not all(parte.isdigit() for parte in partes):
-        return False, "El campo '%s' solo acepta numeros en formato DD/MM/AAAA." % nombre_campo
-    dia, mes, anio = int(partes[0]), int(partes[1]), int(partes[2])
-    if anio < 100:                                # Permite escribir 26 en vez de 2026
-        anio += 2000
-    try:
-        fecha = datetime.date(anio, mes, dia)
-    except ValueError:
-        return False, "La fecha ingresada en '%s' no existe en el calendario." % nombre_campo
-    return True, fecha.strftime("%d/%m/%Y")
 
 
 def validar_lista_de_notas(valor):
@@ -747,6 +726,17 @@ def aplicar_estilos():
 
     # ------------------------------ Separadores ------------------------------
     estilo.configure("Study.TSeparator", background=COLORES["borde"])
+
+    # --------- Lista desplegable de los combobox (es un widget Tk clasico) ---
+    # Sin esto la lista de materias se abriria con los colores blancos del
+    # sistema operativo y rompería la estetica de la aplicacion.
+    raiz = tk._default_root
+    if raiz is not None:
+        raiz.option_add("*TCombobox*Listbox.background", COLORES["superficie_alt"])
+        raiz.option_add("*TCombobox*Listbox.foreground", COLORES["texto"])
+        raiz.option_add("*TCombobox*Listbox.selectBackground", COLORES["celeste"])
+        raiz.option_add("*TCombobox*Listbox.selectForeground", COLORES["negro"])
+        raiz.option_add("*TCombobox*Listbox.borderWidth", 0)
 
     return estilo
 
@@ -1042,7 +1032,7 @@ def crear_titulo_seccion(padre, icono, texto, descripcion=""):
 
     if descripcion:
         tk.Label(contenedor, text=descripcion, bg=COLORES["fondo"],
-                 fg=COLORES["texto_tenue"], font=FUENTES["pequena"],
+                 fg=COLORES["texto_sobre_gris"], font=FUENTES["pequena"],
                  anchor="w", justify="left").pack(anchor="w", pady=(2, 0))
 
     return contenedor
@@ -1187,12 +1177,12 @@ def crear_espacio_logo(padre, tamano=70):
     return marco
 
 
-def crear_barra_institucional(padre, mostrar_reloj=True):
+def crear_barra_institucional(padre):
     """
-    Barra superior negra comun a TODAS las ventanas del sistema.
+    Barra superior comun a TODAS las ventanas del sistema.
 
     Contiene el espacio del logo, el nombre de la universidad, la catedra y
-    un reloj digital en el extremo derecho.
+    los autores del proyecto.
     """
     barra = tk.Frame(padre, bg=COLORES["negro"], height=86)
     barra.pack_propagate(False)
@@ -1213,38 +1203,7 @@ def crear_barra_institucional(padre, mostrar_reloj=True):
     tk.Label(textos, text=APP_AUTORES, bg=COLORES["negro"], fg=COLORES["texto_tenue"],
              font=FUENTES["micro"]).pack(anchor="w")
 
-    # ------------------------------ Lado derecho -----------------------------
-    derecha = tk.Frame(barra, bg=COLORES["negro"])
-    derecha.pack(side="right", fill="y", padx=20)
-
-    etiqueta_reloj = None
-    if mostrar_reloj:
-        etiqueta_reloj = tk.Label(derecha, text="", bg=COLORES["negro"],
-                                  fg=COLORES["cian"], font=FUENTES["mono"])
-        etiqueta_reloj.pack(anchor="e", pady=(22, 0))
-        tk.Label(derecha, text="SISTEMA ACADEMICO v%s" % APP_VERSION, bg=COLORES["negro"],
-                 fg=COLORES["texto_tenue"], font=FUENTES["micro"]).pack(anchor="e")
-
-    return barra, etiqueta_reloj
-
-
-def iniciar_reloj(ventana, etiqueta):
-    """
-    Actualiza cada segundo la etiqueta con la fecha y hora del sistema.
-
-    Se protege con try/except porque la ventana puede cerrarse mientras el
-    temporizador esta programado.
-    """
-    def actualizar():
-        try:
-            if not etiqueta.winfo_exists():
-                return
-            ahora = datetime.datetime.now()
-            etiqueta.configure(text=ahora.strftime("%d/%m/%Y   %H:%M:%S"))
-            ventana.after(1000, actualizar)
-        except tk.TclError:
-            return
-    actualizar()
+    return barra
 
 
 # =============================================================================
@@ -1256,7 +1215,7 @@ class VentanaModulo(tk.Toplevel):
     Plantilla comun de todas las ventanas de modulo.
 
     Garantiza que cada modulo tenga exactamente el mismo diseno:
-        - Barra institucional negra con logo y reloj
+        - Barra institucional con el logo y los datos de la universidad
         - Franja de titulo del modulo con icono y descripcion
         - Area de contenido (self.cuerpo) que llena cada modulo
         - Pie de ventana con el boton REGRESAR al menu principal
@@ -1285,10 +1244,7 @@ class VentanaModulo(tk.Toplevel):
         aplicacion.raiz.withdraw()
 
         # --------------------------- Barra superior --------------------------
-        barra, etiqueta_reloj = crear_barra_institucional(self)
-        barra.pack(fill="x")
-        if etiqueta_reloj is not None:
-            iniciar_reloj(self, etiqueta_reloj)
+        crear_barra_institucional(self).pack(fill="x")
 
         tk.Frame(self, bg=self.color_acento, height=3).pack(fill="x")
 
@@ -1420,7 +1376,7 @@ class VentanaMaterias(VentanaModulo):
         encabezado.pack(fill="x", padx=16, pady=(14, 4))
         tk.Label(encabezado, text="📝 DATOS DE LA MATERIA", bg=COLORES["superficie"],
                  fg=COLORES["texto"], font=FUENTES["seccion"]).pack(anchor="w")
-        tk.Label(encabezado, text="Complete todos los campos obligatorios",
+        tk.Label(encabezado, text="Escoja la materia y complete los datos",
                  bg=COLORES["superficie"], fg=COLORES["texto_tenue"],
                  font=FUENTES["pequena"]).pack(anchor="w", pady=(2, 0))
 
@@ -1430,7 +1386,8 @@ class VentanaMaterias(VentanaModulo):
         formulario.grid_columnconfigure(1, weight=1)
 
         # ------------------------- Campos del formulario ---------------------
-        self.campo_materia = CampoFormulario(formulario, "Materia", icono="📘",
+        self.campo_materia = CampoFormulario(formulario, "Materia", tipo="combo",
+                                             valores=MATERIAS_DISPONIBLES, icono="📘",
                                              fila=0, columnas_ocupadas=2)
         self.campo_docente = CampoFormulario(formulario, "Docente", icono="👨‍🏫",
                                              fila=1, columnas_ocupadas=2)
@@ -1481,14 +1438,14 @@ class VentanaMaterias(VentanaModulo):
 
         self.etiqueta_contador = tk.Label(
             cabecera_tabla, text="0 materias", bg=COLORES["fondo"],
-            fg=COLORES["celeste_claro"], font=FUENTES["texto_bold"],
+            fg=COLORES["celeste_oscuro"], font=FUENTES["texto_bold"],
         )
         self.etiqueta_contador.pack(side="right", pady=6)
 
         contenedor_tabla, self.tabla = crear_tabla(
             panel_tabla,
             columnas=["#", "Materia", "Docente", "Aula", "Horario"],
-            anchos=[38, 172, 150, 74, 180],
+            anchos=[30, 238, 122, 58, 216],
             alineaciones=["center", "w", "w", "center", "w"],
             altura=11,
         )
@@ -1544,7 +1501,8 @@ class VentanaMaterias(VentanaModulo):
         Devuelve un diccionario listo para guardar, o None si alguna
         validacion fallo (en ese caso ya se mostro el messagebox).
         """
-        valido, materia = validar_texto(self.campo_materia.obtener(), "Materia", minimo=3)
+        valido, materia = validar_opcion(self.campo_materia.obtener(), "Materia",
+                                         MATERIAS_DISPONIBLES)
         if not valido:
             self.advertir("Validacion", materia)
             self.campo_materia.enfocar()
@@ -1787,7 +1745,7 @@ class VentanaHorario(VentanaModulo):
         formulario.grid_columnconfigure(1, weight=1)
 
         self.campo_materia = CampoFormulario(formulario, "Materia", tipo="combo",
-                                             valores=DATOS.nombres_de_materias(),
+                                             valores=MATERIAS_DISPONIBLES,
                                              icono="📘", fila=0, columnas_ocupadas=2)
         self.campo_dia = CampoFormulario(formulario, "Dia", tipo="combo",
                                          valores=DIAS_SEMANA, icono="📆",
@@ -1838,7 +1796,7 @@ class VentanaHorario(VentanaModulo):
 
         filtros = tk.Frame(cabecera, bg=COLORES["fondo"])
         filtros.pack(side="right", pady=4)
-        tk.Label(filtros, text="DIA:", bg=COLORES["fondo"], fg=COLORES["texto_tenue"],
+        tk.Label(filtros, text="DIA:", bg=COLORES["fondo"], fg=COLORES["texto_sobre_gris"],
                  font=FUENTES["micro"]).pack(side="left", padx=(0, 6))
         combo = ttk.Combobox(filtros, textvariable=self.filtro_dia, state="readonly",
                              values=["Todos"] + DIAS_SEMANA, style="Study.TCombobox",
@@ -1849,8 +1807,9 @@ class VentanaHorario(VentanaModulo):
         contenedor_tabla, self.tabla = crear_tabla(
             derecha,
             columnas=["#", "Materia", "Dia", "Inicio", "Fin", "Dur.", "Docente"],
-            anchos=[34, 140, 84, 68, 62, 74, 148],
+            anchos=[30, 190, 74, 56, 52, 78, 142],
             alineaciones=["center", "w", "center", "center", "center", "center", "w"],
+            columna_elastica=1,
             altura=7,
         )
         contenedor_tabla.pack(fill="both", expand=True)
@@ -1868,7 +1827,7 @@ class VentanaHorario(VentanaModulo):
 
         # Resumen numerico de la carga semanal (se actualiza automaticamente).
         self.etiqueta_carga = tk.Label(
-            derecha, text="", bg=COLORES["fondo"], fg=COLORES["texto_suave"],
+            derecha, text="", bg=COLORES["fondo"], fg=COLORES["texto_sobre_gris"],
             font=FUENTES["pequena"], anchor="w",
         )
         self.etiqueta_carga.pack(fill="x", pady=(6, 0))
@@ -1884,8 +1843,6 @@ class VentanaHorario(VentanaModulo):
 
     def refrescar_tabla(self):
         """Actualiza la tabla, el resumen de carga y el grafico semanal."""
-        self.campo_materia.actualizar_valores(DATOS.nombres_de_materias())
-
         filtro = self.filtro_dia.get()
         filas = []
         contador = 0
@@ -1924,7 +1881,7 @@ class VentanaHorario(VentanaModulo):
                  "📘  Materias: %d      ⚠  Cruces detectados: %d"
                  % (total_bloques, minutos_totales // 60, minutos_totales % 60,
                     materias_distintas, cruces),
-            fg=COLORES["alerta"] if cruces else COLORES["texto_suave"],
+            fg=COLORES["error_hover"] if cruces else COLORES["texto_sobre_gris"],
         )
 
         self.dibujar_semana()
@@ -2018,7 +1975,8 @@ class VentanaHorario(VentanaModulo):
 
     def leer_formulario(self):
         """Valida el formulario del bloque de clase."""
-        valido, materia = validar_texto(self.campo_materia.obtener(), "Materia", minimo=2)
+        valido, materia = validar_opcion(self.campo_materia.obtener(), "Materia",
+                                         MATERIAS_DISPONIBLES)
         if not valido:
             self.advertir("Validacion", materia)
             self.campo_materia.enfocar()
@@ -2076,11 +2034,6 @@ class VentanaHorario(VentanaModulo):
     @manejar_errores
     def guardar_bloque(self):
         """Registra un nuevo bloque en horario.json."""
-        if not DATOS.materias:
-            self.advertir("Sin materias",
-                          "Primero registre sus materias en el Modulo 1 (Registrar Materias).")
-            return
-
         datos = self.leer_formulario()
         if datos is None:
             return
@@ -2256,7 +2209,7 @@ class VentanaPromedios(VentanaModulo):
         formulario.grid_columnconfigure(0, weight=1)
         self.campo_materia = CampoFormulario(
             formulario, "Materia asociada (opcional)", tipo="combo",
-            valores=DATOS.nombres_de_materias(), icono="📘", fila=0,
+            valores=MATERIAS_DISPONIBLES, icono="📘", fila=0,
         )
 
         tk.Label(panel,
@@ -2352,7 +2305,7 @@ class VentanaPromedios(VentanaModulo):
         contenedor_historial, self.tabla_historial = crear_tabla(
             columna_derecha,
             columnas=["Materia", "Notas", "Prom.", "Estado"],
-            anchos=[100, 70, 56, 86],
+            anchos=[132, 58, 52, 76],
             alineaciones=["w", "w", "center", "center"],
             altura=7,
             columna_elastica=0,
@@ -2509,20 +2462,22 @@ class VentanaPromedios(VentanaModulo):
 
     def refrescar_historial(self):
         """Vuelve a dibujar la tabla de promedios guardados."""
-        self.campo_materia.actualizar_valores(DATOS.nombres_de_materias())
         registros = sorted(DATOS.notas,
                            key=lambda r: float(r.get("promedio", 0)), reverse=True)
         filas = []
         for registro in registros:
             notas = registro.get("notas", [])
             texto_notas = ", ".join(formato_numero(n, 1) for n in notas)
-            if len(texto_notas) > 11:
-                texto_notas = texto_notas[:8] + "..."
+            if len(texto_notas) > 9:
+                texto_notas = texto_notas[:6] + "..."
+            nombre_materia = registro.get("materia", "")
+            if len(nombre_materia) > 17:
+                nombre_materia = nombre_materia[:16] + "..."
             aprobado = float(registro.get("promedio", 0)) >= NOTA_APROBACION
             filas.append((
                 registro.get("id"),
                 (
-                    registro.get("materia", ""),
+                    nombre_materia,
                     texto_notas,
                     formato_numero(registro.get("promedio", 0)),
                     "Aprobado" if aprobado else "Reprobado",
@@ -2637,10 +2592,8 @@ class AplicacionStudyControl:
         el nombre de la universidad, el titulo grande del sistema, el subtitulo,
         los autores y la catedra.
         """
-        # ------------------- Barra negra superior (institucional) ------------
-        barra, self.etiqueta_reloj = crear_barra_institucional(self.raiz)
-        barra.pack(fill="x")
-        iniciar_reloj(self.raiz, self.etiqueta_reloj)
+        # ---------------- Barra superior institucional (sin reloj) -----------
+        crear_barra_institucional(self.raiz).pack(fill="x")
 
         # Linea degradada simulada con tres franjas de color.
         franja = tk.Frame(self.raiz, bg=COLORES["fondo"], height=4)
@@ -2678,7 +2631,7 @@ class AplicacionStudyControl:
         tk.Label(contenido, text=APP_AUTORES, bg=COLORES["fondo_alt"],
                  fg=COLORES["texto"], font=FUENTES["etiqueta_bold"]).pack()
         tk.Label(contenido, text=APP_CATEDRA, bg=COLORES["fondo_alt"],
-                 fg=COLORES["texto_tenue"], font=FUENTES["pequena"]).pack(pady=(2, 0))
+                 fg=COLORES["texto_sobre_gris"], font=FUENTES["pequena"]).pack(pady=(2, 0))
 
     # =========================================================================
     # MENU PRINCIPAL
@@ -2711,12 +2664,12 @@ class AplicacionStudyControl:
         cabecera = tk.Frame(contenedor, bg=COLORES["fondo"])
         cabecera.pack(fill="x", pady=(0, 12))
         tk.Label(cabecera, text="MENU PRINCIPAL", bg=COLORES["fondo"],
-                 fg=COLORES["texto_suave"], font=FUENTES["pequena_bold"]).pack(side="left")
+                 fg=COLORES["texto"], font=FUENTES["pequena_bold"]).pack(side="left")
         tk.Label(cabecera, text="Seleccione un modulo para comenzar",
-                 bg=COLORES["fondo"], fg=COLORES["texto_tenue"],
+                 bg=COLORES["fondo"], fg=COLORES["texto_sobre_gris"],
                  font=FUENTES["pequena"]).pack(side="left", padx=(12, 0))
         tk.Label(cabecera, text="F1: Informacion    ·    Esc: Salir",
-                 bg=COLORES["fondo"], fg=COLORES["texto_tenue"],
+                 bg=COLORES["fondo"], fg=COLORES["texto_sobre_gris"],
                  font=FUENTES["micro"]).pack(side="right")
 
         rejilla = tk.Frame(contenedor, bg=COLORES["fondo"])
