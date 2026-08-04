@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software de Vectores — Álgebra Lineal | PUCE Ambato</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<!-- ==================== ENCABEZADO ==================== -->
+<header class="top">
+  <div class="wrap head-inner">
+    <div class="logo-slot" id="logoSlot" title="Clic para cargar el logo institucional">
+      <div class="logo-ph" id="logoPh">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="1.5">
+          <path d="M12 3l8 3.5v5c0 4.6-3.2 8.6-8 9.5-4.8-.9-8-4.9-8-9.5v-5L12 3z"/>
+          <path d="M12 8v6M9 11h6"/>
+        </svg>
+        LOGO
+        <div class="logo-hint">cargar</div>
+      </div>
+      <input type="file" id="logoFile" accept="image/*" hidden>
+    </div>
+
+    <div class="titles">
+      <div class="kicker">Software de Vectores</div>
+      <h1>Pontificia Universidad Católica del Ecuador</h1>
+      <div class="sub">Habilidades Lógico Matemáticas — Álgebra: <b>Vectores en el plano</b></div>
+      <div class="badge-row">
+        <span class="badge rojo">Procedimiento paso a paso</span>
+        <span class="badge">Gráfica interactiva</span>
+        <span class="badge rojo">Ejemplos resueltos</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ==================== ENTRADA ==================== -->
+  <section class="card">
+    <div class="card-head"><span class="dot"></span><h2>Ingreso de los vectores</h2><span class="tag">escribe las componentes y presiona resolver</span></div>
+    <div class="card-body">
+
+      <div class="vec-inputs">
+        <div class="vec-box a">
+          <div class="nombre">A&#8407; <span class="mini">vector A (celeste)</span></div>
+          <div class="comp-row">
+            <div class="comp"><label>Componente x</label><input id="ax" type="number" step="any" value="4"></div>
+            <div class="comp"><label>Componente y</label><input id="ay" type="number" step="any" value="3"></div>
+          </div>
+        </div>
+
+        <div class="vec-box b">
+          <div class="nombre">B&#8407; <span class="mini">vector B (rojo)</span></div>
+          <div class="comp-row">
+            <div class="comp"><label>Componente x</label><input id="bx" type="number" step="any" value="-2"></div>
+            <div class="comp"><label>Componente y</label><input id="by" type="number" step="any" value="5"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="op-row">
+        <div class="op-sel">
+          <label>Operación a resolver</label>
+          <select id="op">
+            <option value="suma">Suma:  A⃗ + B⃗</option>
+            <option value="resta">Resta:  A⃗ − B⃗</option>
+            <option value="escalar">Multiplicación por escalar:  k · A⃗</option>
+            <option value="punto">Producto punto (escalar):  A⃗ · B⃗</option>
+            <option value="angulo">Ángulo entre A⃗ y B⃗</option>
+            <option value="magnitud">Magnitud y dirección de A⃗</option>
+            <option value="unitario">Vector unitario de A⃗</option>
+            <option value="proyeccion">Proyección de A⃗ sobre B⃗</option>
+            <option value="cruz">Producto cruz (área):  A⃗ × B⃗</option>
+          </select>
+        </div>
+        <div class="esc-wrap">
+          <label>Escalar k</label>
+          <input class="esc-in" id="k" type="number" step="any" value="2">
+        </div>
+        <button class="btn btn-main" id="btnResolver">Resolver</button>
+      </div>
+
+      <div class="ejemplos">
+        <div class="lbl">Ejemplos rápidos (clic para cargar)</div>
+        <div class="chips" id="chips">
+          <button class="chip" data-a="4,3"  data-b="-2,5" data-op="suma">A(4,3) + B(−2,5)</button>
+          <button class="chip" data-a="6,2"  data-b="1,4"  data-op="resta">A(6,2) − B(1,4)</button>
+          <button class="chip" data-a="3,4"  data-b="1,1"  data-op="magnitud">|A| con A(3,4)</button>
+          <button class="chip" data-a="2,3"  data-b="4,-1" data-op="punto">A·B con A(2,3), B(4,−1)</button>
+          <button class="chip" data-a="1,0"  data-b="1,1"  data-op="angulo">Ángulo A(1,0), B(1,1)</button>
+          <button class="chip" data-a="3,1"  data-b="1,1"  data-op="escalar" data-k="2">2·A con A(3,1)</button>
+          <button class="chip" data-a="5,0"  data-b="0,4"  data-op="cruz">Área A(5,0), B(0,4)</button>
+          <button class="chip" data-a="4,2"  data-b="3,0"  data-op="proyeccion">Proy. de A(4,2) sobre B(3,0)</button>
+        </div>
+      </div>
+
+      <div class="ayuda">
+        Un vector en el plano se escribe <code>A⃗ = (a₁, a₂)</code> o en forma canónica <code>A⃗ = a₁î + a₂ĵ</code>.
+        Se admiten valores negativos y decimales (usa punto: <code>2.5</code>).
+        El escalar <code>k</code> solo se usa en la operación <code>k · A⃗</code>.
+      </div>
+
+      <div id="msg"></div>
+    </div>
+  </section>
+
+  <!-- ==================== GRÁFICA + PROCEDIMIENTO ==================== -->
+  <div class="grid-2 dual">
+
+    <section class="card">
+      <div class="card-head"><span class="dot"></span><h2>1 · Gráfica</h2><span class="tag" id="tagGraf">plano cartesiano</span></div>
+      <div class="card-body">
+        <div class="canvas-box">
+          <canvas id="lienzo"></canvas>
+          <div id="tooltip"></div>
+        </div>
+
+        <div class="controles">
+          <label class="switch"><input type="checkbox" id="chkParalelo" checked> Método del paralelogramo</label>
+          <label class="switch"><input type="checkbox" id="chkComp"> Mostrar componentes</label>
+          <label class="switch"><input type="checkbox" id="chkGrid" checked> Cuadrícula</label>
+          <div class="btn-group">
+            <button class="btn btn-ghost" id="btnOut">Alejar −</button>
+            <button class="btn btn-ghost" id="btnIn">Acercar +</button>
+            <button class="btn btn-ghost" id="btnCentrar">Centrar</button>
+          </div>
+        </div>
+
+        <div class="leyenda">
+          <span><i class="key" style="background:#38bdf8"></i> A⃗ (vector A)</span>
+          <span><i class="key" style="background:#ef4444"></i> B⃗ (vector B)</span>
+          <span><i class="key" style="background:#ffffff"></i> Resultante</span>
+          <span><i class="key" style="background:#fbbf24"></i> Auxiliar / proyección</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><span class="dot"></span><h2>2 · Procedimiento</h2><span class="tag">desarrollo paso a paso</span></div>
+      <div class="card-body">
+        <ol class="pasos" id="pasos"></ol>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== RESULTADO ==================== -->
+  <section class="card">
+    <div class="card-head"><span class="dot"></span><h2>3 · Resultado y características</h2><span class="tag">valores calculados</span></div>
+    <div class="card-body">
+      <div class="props" id="props"></div>
+      <div class="resultado" id="resultado"></div>
+    </div>
+  </section>
+
+  <!-- ==================== TABLA RESUMEN ==================== -->
+  <section class="card">
+    <div class="card-head"><span class="dot"></span><h2>4 · Tabla resumen de operaciones</h2><span class="tag">todas las operaciones con A⃗ y B⃗</span></div>
+    <div class="card-body">
+      <div class="tabla-scroll">
+        <table>
+          <thead>
+            <tr><th style="text-align:left">Operación</th><th>Fórmula</th><th>Sustitución</th><th>Resultado</th></tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== EJEMPLOS RESUELTOS ==================== -->
+  <section class="card">
+    <div class="card-head"><span class="dot"></span><h2>5 · Ejemplos resueltos</h2><span class="tag">para explicar en clase</span></div>
+    <div class="card-body">
+      <div class="ej-grid">
+
+        <div class="ej">
+          <div class="n">Ejemplo 1 — Suma</div>
+          <h4>A⃗ = (4, 3) &nbsp;·&nbsp; B⃗ = (−2, 5)</h4>
+          <ul>
+            <li><b>1.</b> Se suman componente a componente</li>
+            <li><b>2.</b> R⃗ₓ = 4 + (−2) = 2</li>
+            <li><b>3.</b> R⃗ᵧ = 3 + 5 = 8</li>
+            <li><b>4.</b> |R⃗| = √(2² + 8²) = √68 ≈ 8.25</li>
+          </ul>
+          <div class="final">R⃗ = (2, 8)</div>
+          <button class="btn btn-ghost cargar" data-a="4,3" data-b="-2,5" data-op="suma">Cargar en el software</button>
+        </div>
+
+        <div class="ej">
+          <div class="n">Ejemplo 2 — Resta</div>
+          <h4>A⃗ = (6, 2) &nbsp;·&nbsp; B⃗ = (1, 4)</h4>
+          <ul>
+            <li><b>1.</b> A⃗ − B⃗ = A⃗ + (−B⃗)</li>
+            <li><b>2.</b> R⃗ₓ = 6 − 1 = 5</li>
+            <li><b>3.</b> R⃗ᵧ = 2 − 4 = −2</li>
+            <li><b>4.</b> |R⃗| = √(25 + 4) = √29 ≈ 5.39</li>
+          </ul>
+          <div class="final">R⃗ = (5, −2)</div>
+          <button class="btn btn-ghost cargar" data-a="6,2" data-b="1,4" data-op="resta">Cargar en el software</button>
+        </div>
+
+        <div class="ej">
+          <div class="n">Ejemplo 3 — Magnitud y dirección</div>
+          <h4>A⃗ = (3, 4)</h4>
+          <ul>
+            <li><b>1.</b> |A⃗| = √(a₁² + a₂²)</li>
+            <li><b>2.</b> |A⃗| = √(3² + 4²) = √25</li>
+            <li><b>3.</b> θ = arctan(4 / 3)</li>
+            <li><b>4.</b> θ ≈ 53.13°</li>
+          </ul>
+          <div class="final">|A⃗| = 5 ; θ ≈ 53.13°</div>
+          <button class="btn btn-ghost cargar" data-a="3,4" data-b="1,1" data-op="magnitud">Cargar en el software</button>
+        </div>
+
+        <div class="ej">
+          <div class="n">Ejemplo 4 — Producto punto</div>
+          <h4>A⃗ = (2, 3) &nbsp;·&nbsp; B⃗ = (4, −1)</h4>
+          <ul>
+            <li><b>1.</b> A⃗ · B⃗ = a₁b₁ + a₂b₂</li>
+            <li><b>2.</b> = (2)(4) + (3)(−1)</li>
+            <li><b>3.</b> = 8 − 3</li>
+          </ul>
+          <div class="final">A⃗ · B⃗ = 5</div>
+          <button class="btn btn-ghost cargar" data-a="2,3" data-b="4,-1" data-op="punto">Cargar en el software</button>
+        </div>
+
+        <div class="ej">
+          <div class="n">Ejemplo 5 — Ángulo entre vectores</div>
+          <h4>A⃗ = (1, 0) &nbsp;·&nbsp; B⃗ = (1, 1)</h4>
+          <ul>
+            <li><b>1.</b> cos θ = (A⃗·B⃗) / (|A⃗||B⃗|)</li>
+            <li><b>2.</b> A⃗·B⃗ = 1 ; |A⃗| = 1 ; |B⃗| = √2</li>
+            <li><b>3.</b> cos θ = 1/√2 = 0.7071</li>
+          </ul>
+          <div class="final">θ = 45°</div>
+          <button class="btn btn-ghost cargar" data-a="1,0" data-b="1,1" data-op="angulo">Cargar en el software</button>
+        </div>
+
+        <div class="ej">
+          <div class="n">Ejemplo 6 — Escalar</div>
+          <h4>k = 2 &nbsp;·&nbsp; A⃗ = (3, 1)</h4>
+          <ul>
+            <li><b>1.</b> k·A⃗ = (k·a₁, k·a₂)</li>
+            <li><b>2.</b> = (2·3, 2·1)</li>
+            <li><b>3.</b> El vector conserva su dirección</li>
+            <li><b>4.</b> Su magnitud se duplica</li>
+          </ul>
+          <div class="final">2A⃗ = (6, 2)</div>
+          <button class="btn btn-ghost cargar" data-a="3,1" data-b="1,1" data-op="escalar" data-k="2">Cargar en el software</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TEORÍA ==================== -->
+  <section class="card">
+    <div class="card-head"><span class="dot"></span><h2>6 · Fundamento teórico</h2><span class="tag">fórmulas del tema</span></div>
+    <div class="card-body">
+      <div class="teoria">
+        <div class="teo">
+          <h4>¿Qué es un vector?</h4>
+          <p>Es un segmento orientado que posee <b>magnitud</b> (tamaño), <b>dirección</b> (ángulo) y <b>sentido</b>. Se representa por sus componentes rectangulares.</p>
+          <span class="f">A⃗ = (a₁, a₂) = a₁î + a₂ĵ</span>
+        </div>
+        <div class="teo">
+          <h4>Magnitud o módulo</h4>
+          <p>Se obtiene con el teorema de Pitágoras aplicado a las componentes.</p>
+          <span class="f">|A⃗| = √(a₁² + a₂²)</span>
+        </div>
+        <div class="teo">
+          <h4>Dirección</h4>
+          <p>Ángulo medido desde el eje x positivo, en sentido antihorario.</p>
+          <span class="f">θ = arctan(a₂ / a₁)</span>
+        </div>
+        <div class="teo">
+          <h4>Suma y resta</h4>
+          <p>Se operan las componentes correspondientes. Gráficamente se usa el método del paralelogramo o del triángulo.</p>
+          <span class="f">A⃗ ± B⃗ = (a₁ ± b₁, a₂ ± b₂)</span>
+        </div>
+        <div class="teo">
+          <h4>Producto por un escalar</h4>
+          <p>Cambia la magnitud. Si k &lt; 0 además invierte el sentido del vector.</p>
+          <span class="f">k·A⃗ = (k·a₁, k·a₂)</span>
+        </div>
+        <div class="teo">
+          <h4>Producto punto</h4>
+          <p>Da como resultado un número real. Si es cero, los vectores son perpendiculares.</p>
+          <span class="f">A⃗·B⃗ = a₁b₁ + a₂b₂ = |A⃗||B⃗|cos θ</span>
+        </div>
+        <div class="teo">
+          <h4>Ángulo entre vectores</h4>
+          <p>Se despeja del producto punto.</p>
+          <span class="f">θ = arccos( (A⃗·B⃗) / (|A⃗|·|B⃗|) )</span>
+        </div>
+        <div class="teo">
+          <h4>Vector unitario</h4>
+          <p>Vector de magnitud 1 con la misma dirección que A⃗.</p>
+          <span class="f">û = A⃗ / |A⃗|</span>
+        </div>
+        <div class="teo">
+          <h4>Producto cruz en el plano</h4>
+          <p>Su valor absoluto es el área del paralelogramo formado por A⃗ y B⃗.</p>
+          <span class="f">A⃗ × B⃗ = a₁b₂ − a₂b₁</span>
+        </div>
+        <div class="teo">
+          <h4>Proyección</h4>
+          <p>Sombra de A⃗ sobre la dirección de B⃗.</p>
+          <span class="f">proy_B A⃗ = [(A⃗·B⃗)/|B⃗|²] · B⃗</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>SOFTWARE DE VECTORES</span> · Álgebra — Habilidades Lógico Matemáticas<br>
+    Pontificia Universidad Católica del Ecuador · Sede Ambato
+  </footer>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
