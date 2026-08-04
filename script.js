@@ -152,7 +152,11 @@ const dom = {
   lienzo: document.getElementById('lienzo'),
   btnZoomIn: document.getElementById('btnZoomIn'),
   btnZoomOut: document.getElementById('btnZoomOut'),
-  btnCentrar: document.getElementById('btnCentrar')
+  btnCentrar: document.getElementById('btnCentrar'),
+  logoSlot: document.getElementById('logoSlot'),
+  logoVacio: document.getElementById('logoVacio'),
+  logoQuitar: document.getElementById('logoQuitar'),
+  logoArchivo: document.getElementById('logoArchivo')
 };
 
 /**
@@ -1335,6 +1339,78 @@ dom.k.addEventListener('input', () => marcarError(dom.k, false));
   });
 });
 
+/* ============================================================================
+   9) LOGO INSTITUCIONAL
+   ----------------------------------------------------------------------------
+   El recuadro de la izquierda del encabezado acepta una imagen (el logo de la
+   universidad). Se guarda en el navegador para que siga ahí al recargar.
+   ========================================================================== */
+
+const LOGO_CLAVE = 'softwareVectores.logo';
+
+/** Coloca la imagen dentro del recuadro del encabezado. */
+function pintarLogo(datosImagen) {
+  dom.logoVacio.classList.add('oculto');
+
+  let img = dom.logoSlot.querySelector('img');
+  if (!img) {
+    img = document.createElement('img');
+    img.alt = 'Logo institucional';
+    dom.logoSlot.insertBefore(img, dom.logoQuitar);
+  }
+  img.src = datosImagen;
+  dom.logoSlot.classList.add('con-logo');
+}
+
+/** Devuelve el recuadro a su estado de marcador de posición. */
+function borrarLogo() {
+  const img = dom.logoSlot.querySelector('img');
+  if (img) img.remove();
+  dom.logoVacio.classList.remove('oculto');
+  dom.logoSlot.classList.remove('con-logo');
+  dom.logoArchivo.value = '';
+  try { localStorage.removeItem(LOGO_CLAVE); } catch (e) { /* almacenamiento no disponible */ }
+}
+
+/** Recupera el logo guardado en una sesión anterior, si existe. */
+function recuperarLogo() {
+  try {
+    const guardado = localStorage.getItem(LOGO_CLAVE);
+    if (guardado) pintarLogo(guardado);
+  } catch (e) { /* almacenamiento no disponible (modo privado, etc.) */ }
+}
+
+// Clic o Enter sobre el recuadro: abre el selector de archivos
+dom.logoSlot.addEventListener('click', (ev) => {
+  if (ev.target === dom.logoQuitar) return;   // la × no debe abrir el selector
+  dom.logoArchivo.click();
+});
+
+dom.logoSlot.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Enter' || ev.key === ' ') {
+    ev.preventDefault();
+    dom.logoArchivo.click();
+  }
+});
+
+// Lectura de la imagen elegida
+dom.logoArchivo.addEventListener('change', (ev) => {
+  const archivo = ev.target.files && ev.target.files[0];
+  if (!archivo) return;
+
+  const lector = new FileReader();
+  lector.onload = (e) => {
+    pintarLogo(e.target.result);
+    try { localStorage.setItem(LOGO_CLAVE, e.target.result); } catch (err) { /* imagen muy pesada o sin permiso */ }
+  };
+  lector.readAsDataURL(archivo);
+});
+
+dom.logoQuitar.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  borrarLogo();
+});
+
 /* ---------- Arranque ---------- */
 
 let yaIniciado = false;
@@ -1343,6 +1419,7 @@ function iniciar() {
   if (yaIniciado) return;          // evita una doble inicialización
   yaIniciado = true;
 
+  recuperarLogo();
   construirEjemplos();
   redimensionarLienzo();
   actualizarInterfaz();

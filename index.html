@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Software de Vectores — Álgebra Lineal</title>
+<title>Software de Vectores — PUCE · Álgebra Lineal</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,21 +13,29 @@
      ============================================================ -->
 <header class="cabecera">
   <div class="cabecera-contenido">
-    <div class="marca">
-      <div class="marca-icono" aria-hidden="true">
-        <svg viewBox="0 0 48 48" width="34" height="34">
-          <line x1="6" y1="42" x2="42" y2="42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="6" y1="42" x2="6" y2="6"  stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="6" y1="42" x2="36" y2="14" stroke="#f43f5e" stroke-width="3.5" stroke-linecap="round"/>
-          <polygon points="40,10 30,13 34,19" fill="#f43f5e"/>
+
+    <!-- Espacio para el logo institucional: clic para cargar una imagen -->
+    <div class="logo-slot" id="logoSlot" role="button" tabindex="0"
+         title="Clic para cargar el logo institucional">
+      <div class="logo-vacio" id="logoVacio">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 3l8 3.5v5c0 4.6-3.2 8.6-8 9.5-4.8-.9-8-4.9-8-9.5v-5L12 3z"/>
+          <path d="M12 8v6M9 11h6"/>
         </svg>
+        LOGO
+        <span class="logo-pista">cargar</span>
       </div>
-      <div class="marca-texto">
-        <h1>Software de Vectores</h1>
-        <p>Álgebra Lineal — Vectores en el plano</p>
-      </div>
+      <button type="button" class="logo-quitar" id="logoQuitar" title="Quitar el logo">×</button>
+      <input type="file" id="logoArchivo" accept="image/*" hidden>
     </div>
-    <div class="cabecera-chip">R² · Plano cartesiano</div>
+
+    <!-- Títulos institucionales -->
+    <div class="titulos">
+      <p class="rotulo">Software - Vectores</p>
+      <h1>Pontificia Universidad Católica del Ecuador</h1>
+      <p class="subtitulo">Álgebra - Vectores</p>
+    </div>
+
   </div>
 </header>
 
@@ -199,7 +207,7 @@
 </main>
 
 <footer class="pie">
-  <p>Software de Vectores · Álgebra Lineal — Vectores en el plano · HTML + CSS + JavaScript</p>
+  <p>Pontificia Universidad Católica del Ecuador · Software de Vectores — Álgebra · HTML + CSS + JavaScript</p>
 </footer>
 
 <script src="script.js"></script>

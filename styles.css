@@ -59,64 +59,138 @@ body{
   position: sticky;
   top: 0;
   z-index: 20;
+  overflow: hidden;
   backdrop-filter: blur(10px);
-  background: linear-gradient(180deg, rgba(7,13,27,.94), rgba(7,13,27,.78));
+  background: linear-gradient(135deg, #071229 0%, #0b1c3d 55%, #0a1830 100%);
   border-bottom: 1px solid rgba(56,189,248,.28);
-  box-shadow: 0 6px 26px rgba(0,0,0,.45);
+  box-shadow: 0 6px 26px rgba(0,0,0,.50);
+}
+
+/* Filo celeste degradado en la base del encabezado */
+.cabecera::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--celeste), #bae6fd, var(--celeste), transparent);
+  opacity: .85;
 }
 
 .cabecera-contenido{
   max-width: 1340px;
   margin: 0 auto;
-  padding: 14px 22px;
+  padding: 18px 22px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 22px;
 }
 
-.marca{ display: flex; align-items: center; gap: 14px; }
-
-.marca-icono{
+/* ---------- Espacio para el logo institucional ---------- */
+.logo-slot{
+  position: relative;
+  width: 96px; height: 96px;
+  flex: 0 0 96px;
+  border-radius: 18px;
   display: grid;
   place-items: center;
-  width: 54px; height: 54px;
-  border-radius: 14px;
-  color: var(--celeste);
-  background: linear-gradient(160deg, rgba(56,189,248,.16), rgba(239,68,68,.10));
-  border: 1px solid var(--celeste-tenue);
-  box-shadow: inset 0 0 22px rgba(56,189,248,.14);
+  overflow: hidden;
+  cursor: pointer;
+  background: linear-gradient(160deg, rgba(56,189,248,.12), rgba(255,255,255,.03));
+  border: 1.5px dashed rgba(125,211,252,.45);
+  transition: border-color var(--transicion), box-shadow var(--transicion), background var(--transicion);
 }
 
-.marca-texto h1{
-  margin: 0;
-  font-size: 1.55rem;
-  letter-spacing: .4px;
+.logo-slot:hover,
+.logo-slot:focus-visible{
+  border-color: var(--celeste);
+  box-shadow: 0 0 0 4px rgba(56,189,248,.10);
+  outline: none;
+}
+
+/* Estado con imagen cargada */
+.logo-slot.con-logo{
+  border-style: solid;
+  border-color: rgba(125,211,252,.45);
+  background: rgba(255,255,255,.04);
+}
+
+.logo-slot img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+}
+
+.logo-vacio{
+  text-align: center;
+  font-size: 10.5px;
   font-weight: 700;
-  background: linear-gradient(90deg, #ffffff 0%, var(--celeste-claro) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  letter-spacing: .14em;
+  line-height: 1.35;
+  color: var(--celeste-claro);
 }
 
-.marca-texto p{
-  margin: 2px 0 0;
-  font-size: .88rem;
-  color: var(--gris);
-  letter-spacing: .6px;
+.logo-vacio svg{ display: block; margin: 0 auto 4px; opacity: .85; }
+
+.logo-pista{
+  display: block;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  color: var(--gris-2);
 }
 
-.cabecera-chip{
-  font-size: .78rem;
-  letter-spacing: .8px;
+.logo-quitar{
+  position: absolute;
+  top: 5px; right: 5px;
+  display: none;
+  width: 20px; height: 20px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(239,68,68,.55);
+  background: rgba(239,68,68,.22);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--transicion);
+}
+
+.logo-slot.con-logo .logo-quitar{ display: block; }
+.logo-quitar:hover{ background: var(--rojo); }
+
+/* ---------- Títulos institucionales ---------- */
+.titulos{ min-width: 0; }
+
+.titulos .rotulo{
+  margin: 0 0 3px;
+  font-size: clamp(10px, 1vw, 12.5px);
+  font-weight: 700;
+  letter-spacing: .22em;
   text-transform: uppercase;
   color: var(--celeste-claro);
-  padding: 7px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--celeste-tenue);
-  background: rgba(56,189,248,.08);
 }
+
+.titulos h1{
+  margin: 0;
+  font-family: Georgia, "Times New Roman", Cambria, serif;
+  font-size: clamp(20px, 2.6vw, 34px);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: .01em;
+  color: #fdf4d3;
+  text-shadow: 0 2px 20px rgba(253, 230, 138, .30);
+}
+
+.titulos .subtitulo{
+  margin: 7px 0 0;
+  font-size: clamp(12.5px, 1.45vw, 16px);
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--celeste-claro);
+}
+
+.titulos .subtitulo::before{ content: "▸ "; color: var(--celeste); opacity: .85; }
 
 /* ============================================================
    ESTRUCTURA
@@ -654,10 +728,12 @@ body{
 
 @media (max-width: 640px){
   .contenedor{ padding: 18px 14px 30px; }
-  .cabecera-contenido{ padding: 12px 14px; }
-  .marca-texto h1{ font-size: 1.25rem; }
-  .marca-texto p{ font-size: .8rem; }
-  .cabecera-chip{ display: none; }
+  .cabecera-contenido{ padding: 14px 14px 16px; gap: 14px; }
+  .logo-slot{ width: 66px; height: 66px; flex-basis: 66px; border-radius: 14px; }
+  .logo-vacio{ font-size: 9px; letter-spacing: .10em; }
+  .logo-vacio svg{ width: 22px; height: 22px; margin-bottom: 2px; }
+  .logo-pista{ display: none; }
+  .titulos .rotulo{ letter-spacing: .16em; }
   .fila-campos{ grid-template-columns: 1fr; }
   .fila-botones{ grid-template-columns: 1fr; }
   .lienzo-caja{ aspect-ratio: 1 / 1; }
