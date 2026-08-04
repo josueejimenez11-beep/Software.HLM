@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 ===============================================================================
-                              S T U D Y   C O N T R O L
+                        S I S T E M A   D E   E S T U D I O
 ===============================================================================
  Sistema Inteligente para la Gestion Academica de Estudiantes
  -----------------------------------------------------------------------------
@@ -13,16 +13,13 @@
  -----------------------------------------------------------------------------
  DESCRIPCION GENERAL
  -----------------------------------------------------------------------------
- Study Control es una aplicacion de escritorio disenada para que un estudiante
- universitario administre por completo su vida academica desde un solo lugar:
+ Sistema de Estudio es una aplicacion de escritorio disenada para que un
+ estudiante universitario organice su semestre desde un solo lugar:
 
    Modulo 1 -> Registro de Materias        (materias.json)
-   Modulo 2 -> Control de Tareas           (tareas.json)
+   Modulo 2 -> Horario Semanal             (horario.json)
    Modulo 3 -> Calculadora de Promedios    (notas.json)
-   Modulo 4 -> Nota Necesaria              (calculo en tiempo real)
-   Modulo 5 -> Horario Semanal             (horario.json)
-   Modulo 6 -> Estadisticas Generales      (calculo automatico)
-   Modulo 7 -> Informacion del Sistema     (messagebox)
+   Modulo 4 -> Informacion del Sistema     (messagebox)
 
  La informacion se guarda automaticamente en archivos JSON ubicados junto al
  script y se carga de forma automatica cada vez que el programa inicia.
@@ -60,7 +57,7 @@ from tkinter import font as tkfont          # Manejo avanzado de tipografias
 # =============================================================================
 
 # ----------------------------- Identidad visual ------------------------------
-APP_NOMBRE = "Study Control"
+APP_NOMBRE = "Sistema de Estudio"
 APP_VERSION = "1.0"
 APP_SUBTITULO = "Sistema Inteligente para la Gestion Academica de Estudiantes"
 APP_UNIVERSIDAD = "PONTIFICIA UNIVERSIDAD CATOLICA DEL ECUADOR"
@@ -71,33 +68,35 @@ APP_CATEDRA = "FUNDAMENTOS DE PROGRAMACION"
 VENTANA_ANCHO = 1100                        # Ancho solicitado en el requisito
 VENTANA_ALTO = 700                          # Alto solicitado en el requisito
 
-# ------------------------------ Paleta oscura --------------------------------
-# Estilo moderno: azul muy oscuro / negro con acentos morados y violetas.
+# ------------------------- Paleta: negro, blanco y celeste -------------------
+# Fondo negro, textos blancos y bordes en celeste claro. Los tres colores
+# semaforo (verde, rojo y naranja) se reservan para el significado de las
+# acciones y de los resultados academicos.
 COLORES = {
-    "fondo":          "#0A0E1A",            # Fondo principal (casi negro azulado)
-    "fondo_alt":      "#0F1526",            # Fondo secundario de paneles
-    "superficie":     "#151C31",            # Tarjetas y contenedores
-    "superficie_alt": "#1C2540",            # Tarjetas resaltadas / hover suave
-    "borde":          "#26314F",            # Lineas divisorias y bordes
-    "borde_activo":   "#7C3AED",            # Borde cuando un control esta activo
-    "morado":         "#7C3AED",            # Acento principal (morado)
-    "morado_claro":   "#A78BFA",            # Acento claro (textos destacados)
-    "morado_oscuro":  "#5B21B6",            # Acento profundo (sombras)
-    "morado_hover":   "#8B5CF6",            # Acento para efecto hover
-    "azul":           "#2563EB",            # Azul de apoyo
-    "azul_claro":     "#60A5FA",            # Azul claro informativo
-    "cian":           "#22D3EE",            # Detalles y separadores
-    "texto":          "#EDF0FA",            # Texto principal (blanco frio)
-    "texto_suave":    "#98A3C4",            # Texto secundario
-    "texto_tenue":    "#5F6B8C",            # Texto muy secundario
-    "exito":          "#22C55E",            # Verde (aprobado / completado)
-    "exito_hover":    "#16A34A",            # Verde oscuro para hover
-    "error":          "#EF4444",            # Rojo (reprobado / eliminar)
-    "error_hover":    "#DC2626",            # Rojo oscuro para hover
-    "alerta":         "#F59E0B",            # Naranja (advertencias)
-    "alerta_hover":   "#D97706",            # Naranja oscuro para hover
-    "blanco":         "#FFFFFF",            # Blanco puro
-    "negro":          "#05070F",            # Negro de la barra superior
+    "fondo":           "#000000",           # Fondo principal (negro)
+    "fondo_alt":       "#05080B",           # Fondo de franjas y paneles
+    "superficie":      "#0A1017",           # Tarjetas y contenedores
+    "superficie_alt":  "#10181F",           # Campos de texto y zonas activas
+    "borde":           "#7DD3FC",           # Borde celeste claro (toda la interfaz)
+    "borde_suave":     "#1F3A4A",           # Borde interno discreto
+    "celeste":         "#7DD3FC",           # Acento principal (celeste claro)
+    "celeste_claro":   "#BAE6FD",           # Celeste muy claro para destacados
+    "celeste_oscuro":  "#0284C7",           # Celeste profundo (encabezados)
+    "celeste_hover":   "#38BDF8",           # Celeste para el efecto hover
+    "azul":            "#0369A1",           # Azul de apoyo (boton editar)
+    "azul_claro":      "#38BDF8",           # Azul claro informativo
+    "cian":            "#BAE6FD",           # Detalles y separadores
+    "texto":           "#FFFFFF",           # Texto principal (blanco)
+    "texto_suave":     "#CBD9E3",           # Texto secundario
+    "texto_tenue":     "#8296A5",           # Texto muy secundario
+    "exito":           "#22C55E",           # Verde (aprobado / guardar)
+    "exito_hover":     "#16A34A",           # Verde oscuro para hover
+    "error":           "#EF4444",           # Rojo (reprobado / eliminar)
+    "error_hover":     "#DC2626",           # Rojo oscuro para hover
+    "alerta":          "#F59E0B",           # Naranja (advertencias)
+    "alerta_hover":    "#D97706",           # Naranja oscuro para hover
+    "blanco":          "#FFFFFF",           # Blanco puro
+    "negro":           "#000000",           # Negro de la barra superior
 }
 
 # --------------------------- Escala de calificacion --------------------------
@@ -109,7 +108,6 @@ NOTA_APROBACION = 14.0                      # Nota minima para aprobar la materi
 # Se guardan en la misma carpeta del script para que el proyecto sea portable.
 CARPETA_BASE = os.path.dirname(os.path.abspath(__file__))
 ARCHIVO_MATERIAS = os.path.join(CARPETA_BASE, "materias.json")
-ARCHIVO_TAREAS = os.path.join(CARPETA_BASE, "tareas.json")
 ARCHIVO_HORARIO = os.path.join(CARPETA_BASE, "horario.json")
 ARCHIVO_NOTAS = os.path.join(CARPETA_BASE, "notas.json")
 
@@ -120,8 +118,6 @@ NOMBRES_LOGO = ("logo_puce.png", "logo.png", "puce.png", "logo_puce.PNG")
 
 # ------------------------------ Listas fijas ---------------------------------
 DIAS_SEMANA = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
-PRIORIDADES = ["Alta", "Media", "Baja"]
-ESTADOS_TAREA = ["Pendiente", "En proceso", "Completada"]
 
 # --------------------- Diccionario global de tipografias ---------------------
 # Se llena en configurar_fuentes() una vez que la ventana raiz existe, porque
@@ -216,7 +212,7 @@ def leer_json(ruta):
             return [registro for registro in contenido if isinstance(registro, dict)]
         return []
     except (json.JSONDecodeError, OSError, UnicodeDecodeError) as error:
-        print("[Study Control] No se pudo leer '%s': %s" % (ruta, error))
+        print("[Sistema de Estudio] No se pudo leer '%s': %s" % (ruta, error))
         return []
 
 
@@ -232,7 +228,7 @@ def escribir_json(ruta, datos):
             json.dump(datos, archivo, indent=4, ensure_ascii=False)
         return True
     except (OSError, TypeError) as error:
-        print("[Study Control] No se pudo escribir '%s': %s" % (ruta, error))
+        print("[Sistema de Estudio] No se pudo escribir '%s': %s" % (ruta, error))
         messagebox.showerror(
             "Error de guardado",
             "No fue posible guardar la informacion en el archivo:\n\n%s\n\nDetalle: %s"
@@ -243,10 +239,10 @@ def escribir_json(ruta, datos):
 
 class BaseDeDatos:
     """
-    Repositorio central de informacion de Study Control.
+    Repositorio central de informacion del Sistema de Estudio.
 
-    Mantiene en memoria las cuatro colecciones del sistema (materias, tareas,
-    horario y notas) y sincroniza cada cambio con su archivo JSON. Todos los
+    Mantiene en memoria las tres colecciones del sistema (materias, horario
+    y notas) y sincroniza cada cambio con su archivo JSON. Todos los
     modulos trabajan sobre esta misma instancia, por lo que la informacion
     siempre esta actualizada en cualquier ventana.
     """
@@ -254,15 +250,13 @@ class BaseDeDatos:
     def __init__(self):
         # Colecciones en memoria (se llenan al llamar cargar_todo()).
         self.materias = []
-        self.tareas = []
         self.horario = []
         self.notas = []
 
     # ------------------------------------------------------------------ carga
     def cargar_todo(self):
-        """Carga automaticamente los cuatro archivos JSON al iniciar."""
+        """Carga automaticamente los tres archivos JSON al iniciar."""
         self.materias = leer_json(ARCHIVO_MATERIAS)
-        self.tareas = leer_json(ARCHIVO_TAREAS)
         self.horario = leer_json(ARCHIVO_HORARIO)
         self.notas = leer_json(ARCHIVO_NOTAS)
         self.reparar_identificadores()
@@ -275,7 +269,7 @@ class BaseDeDatos:
         aqui se le asigna uno nuevo para que las operaciones de editar y
         eliminar sigan funcionando correctamente.
         """
-        for coleccion in (self.materias, self.tareas, self.horario, self.notas):
+        for coleccion in (self.materias, self.horario, self.notas):
             usados = set()
             siguiente = 1
             for registro in coleccion:
@@ -292,10 +286,6 @@ class BaseDeDatos:
         """Escritura automatica de materias.json."""
         return escribir_json(ARCHIVO_MATERIAS, self.materias)
 
-    def guardar_tareas(self):
-        """Escritura automatica de tareas.json."""
-        return escribir_json(ARCHIVO_TAREAS, self.tareas)
-
     def guardar_horario(self):
         """Escritura automatica de horario.json."""
         return escribir_json(ARCHIVO_HORARIO, self.horario)
@@ -305,9 +295,8 @@ class BaseDeDatos:
         return escribir_json(ARCHIVO_NOTAS, self.notas)
 
     def guardar_todo(self):
-        """Guarda las cuatro colecciones (usado al cerrar la aplicacion)."""
+        """Guarda las tres colecciones (usado al cerrar la aplicacion)."""
         self.guardar_materias()
-        self.guardar_tareas()
         self.guardar_horario()
         self.guardar_notas()
 
@@ -340,7 +329,7 @@ class BaseDeDatos:
         """
         Lista ordenada con los nombres de las materias registradas.
 
-        Se usa para llenar los combobox de tareas, horario y promedios,
+        Se usa para llenar los combobox de horario y de promedios,
         evitando que el usuario escriba el nombre de la materia a mano.
         """
         nombres = sorted({str(m.get("materia", "")).strip()
@@ -531,52 +520,28 @@ def hora_a_minutos(hora):
         return 0
 
 
-def fecha_a_ordenable(fecha):
-    """
-    Convierte 'DD/MM/AAAA' en 'AAAAMMDD' (entero) para poder ordenar fechas.
-
-    Si la fecha no es valida devuelve 0 para que aparezca al final.
-    """
-    try:
-        dia, mes, anio = str(fecha).split("/")
-        return int(anio) * 10000 + int(mes) * 100 + int(dia)
-    except (ValueError, AttributeError):
-        return 0
-
-
-def dias_restantes(fecha):
-    """
-    Calcula cuantos dias faltan para una fecha 'DD/MM/AAAA'.
-
-    Devuelve None si la fecha no se puede interpretar.
-    """
-    try:
-        dia, mes, anio = [int(p) for p in str(fecha).split("/")]
-        objetivo = datetime.date(anio, mes, dia)
-        return (objetivo - datetime.date.today()).days
-    except (ValueError, AttributeError):
-        return None
-
-
-def texto_dias_restantes(fecha):
-    """Describe en palabras cuanto tiempo falta para la fecha de una tarea."""
-    faltan = dias_restantes(fecha)
-    if faltan is None:
-        return "Sin fecha"
-    if faltan < 0:
-        return "Vencida (%d d)" % abs(faltan)
-    if faltan == 0:
-        return "Vence HOY"
-    if faltan == 1:
-        return "Manana"
-    return "En %d dias" % faltan
-
-
 def promedio_de(lista_numeros):
     """Calcula el promedio aritmetico protegiendo contra divisiones por cero."""
     if not lista_numeros:
         return 0.0
     return sum(lista_numeros) / float(len(lista_numeros))
+
+
+def contraste_de(color_fondo):
+    """
+    Devuelve el color de letra que mejor se lee sobre el fondo indicado.
+
+    Calcula la luminancia percibida del color: sobre los celestes claros
+    devuelve negro y sobre los tonos oscuros devuelve blanco. Asi ningun
+    boton queda con texto ilegible al cambiar la paleta.
+    """
+    color = str(color_fondo).lstrip("#")
+    try:
+        rojo, verde, azul = (int(color[i:i + 2], 16) for i in (0, 2, 4))
+    except ValueError:
+        return COLORES["blanco"]
+    luminancia = (0.299 * rojo + 0.587 * verde + 0.114 * azul) / 255.0
+    return COLORES["negro"] if luminancia > 0.6 else COLORES["blanco"]
 
 
 def centrar_ventana(ventana, ancho=VENTANA_ANCHO, alto=VENTANA_ALTO):
@@ -606,7 +571,7 @@ def ejecutar_seguro(accion, descripcion="operacion de interfaz"):
         accion()
         return True
     except tk.TclError as error:
-        print("[Study Control] Se omitio la %s: %s" % (descripcion, error))
+        print("[Sistema de Estudio] Se omitio la %s: %s" % (descripcion, error))
         return False
 
 
@@ -668,7 +633,7 @@ def aplicar_estilos():
         fieldbackground=COLORES["superficie_alt"],
         background=COLORES["superficie_alt"],
         foreground=COLORES["texto"],
-        insertcolor=COLORES["morado_claro"],
+        insertcolor=COLORES["celeste_claro"],
         bordercolor=COLORES["borde"],
         lightcolor=COLORES["borde"],
         darkcolor=COLORES["borde"],
@@ -678,9 +643,9 @@ def aplicar_estilos():
     )
     estilo.map(
         "Study.TEntry",
-        bordercolor=[("focus", COLORES["morado"])],
-        lightcolor=[("focus", COLORES["morado"])],
-        darkcolor=[("focus", COLORES["morado"])],
+        bordercolor=[("focus", COLORES["celeste"])],
+        lightcolor=[("focus", COLORES["celeste"])],
+        darkcolor=[("focus", COLORES["celeste"])],
         fieldbackground=[("focus", COLORES["superficie_alt"])],
     )
 
@@ -690,7 +655,7 @@ def aplicar_estilos():
         fieldbackground=COLORES["superficie_alt"],
         background=COLORES["superficie_alt"],
         foreground=COLORES["texto"],
-        arrowcolor=COLORES["morado_claro"],
+        arrowcolor=COLORES["celeste_claro"],
         bordercolor=COLORES["borde"],
         lightcolor=COLORES["borde"],
         darkcolor=COLORES["borde"],
@@ -701,8 +666,8 @@ def aplicar_estilos():
     )
     estilo.map(
         "Study.TCombobox",
-        bordercolor=[("focus", COLORES["morado"]), ("hover", COLORES["morado_claro"])],
-        arrowcolor=[("hover", COLORES["morado"])],
+        bordercolor=[("focus", COLORES["celeste"]), ("hover", COLORES["celeste_claro"])],
+        arrowcolor=[("hover", COLORES["celeste"])],
         fieldbackground=[("readonly", COLORES["superficie_alt"])],
         foreground=[("readonly", COLORES["texto"])],
     )
@@ -720,7 +685,7 @@ def aplicar_estilos():
     )
     estilo.configure(
         "Study.Treeview.Heading",
-        background=COLORES["morado_oscuro"],
+        background=COLORES["celeste_oscuro"],
         foreground=COLORES["blanco"],
         relief="flat",
         borderwidth=0,
@@ -729,12 +694,14 @@ def aplicar_estilos():
     )
     estilo.map(
         "Study.Treeview.Heading",
-        background=[("active", COLORES["morado"])],
+        background=[("active", COLORES["azul"])],
     )
+    # La fila seleccionada se pinta de celeste claro, por eso su texto va en
+    # negro para mantener la legibilidad.
     estilo.map(
         "Study.Treeview",
-        background=[("selected", COLORES["morado"])],
-        foreground=[("selected", COLORES["blanco"])],
+        background=[("selected", COLORES["celeste"])],
+        foreground=[("selected", COLORES["negro"])],
     )
     estilo.layout("Study.Treeview", [
         ("Study.Treeview.treearea", {"sticky": "nswe"})
@@ -746,25 +713,25 @@ def aplicar_estilos():
         background=COLORES["superficie_alt"],
         troughcolor=COLORES["fondo_alt"],
         bordercolor=COLORES["fondo_alt"],
-        arrowcolor=COLORES["morado_claro"],
+        arrowcolor=COLORES["celeste_claro"],
         borderwidth=0,
         width=12,
     )
     estilo.map(
         "Study.Vertical.TScrollbar",
-        background=[("active", COLORES["morado"])],
+        background=[("active", COLORES["celeste"])],
     )
     estilo.configure(
         "Study.Horizontal.TScrollbar",
         background=COLORES["superficie_alt"],
         troughcolor=COLORES["fondo_alt"],
         bordercolor=COLORES["fondo_alt"],
-        arrowcolor=COLORES["morado_claro"],
+        arrowcolor=COLORES["celeste_claro"],
         borderwidth=0,
     )
     estilo.map(
         "Study.Horizontal.TScrollbar",
-        background=[("active", COLORES["morado"])],
+        background=[("active", COLORES["celeste"])],
     )
 
     # ----------------------------- Barra de progreso -------------------------
@@ -772,9 +739,9 @@ def aplicar_estilos():
         "Study.Horizontal.TProgressbar",
         troughcolor=COLORES["fondo_alt"],
         bordercolor=COLORES["fondo_alt"],
-        background=COLORES["morado"],
-        lightcolor=COLORES["morado_claro"],
-        darkcolor=COLORES["morado_oscuro"],
+        background=COLORES["celeste"],
+        lightcolor=COLORES["celeste_claro"],
+        darkcolor=COLORES["celeste_oscuro"],
         thickness=14,
     )
 
@@ -803,9 +770,9 @@ class BotonModerno(tk.Frame):
     def __init__(self, padre, texto, comando, icono="", ancho=170, alto=42,
                  color=None, color_hover=None, color_texto=None,
                  fuente=None, borde=None):
-        color = color or COLORES["morado"]
-        color_hover = color_hover or COLORES["morado_hover"]
-        color_texto = color_texto or COLORES["blanco"]
+        color = color or COLORES["celeste"]
+        color_hover = color_hover or COLORES["celeste_hover"]
+        color_texto = color_texto or contraste_de(color)
         borde = borde or color
 
         super().__init__(padre, bg=color, width=ancho, height=alto,
@@ -817,6 +784,8 @@ class BotonModerno(tk.Frame):
         self.color_normal = color
         self.color_hover = color_hover
         self.borde_normal = borde
+        self.texto_normal = color_texto
+        self.texto_hover = contraste_de(color_hover)
         self.comando = comando
         self.habilitado = True
 
@@ -844,22 +813,22 @@ class BotonModerno(tk.Frame):
         """Efecto hover: aclara el fondo y resalta el borde."""
         if not self.habilitado:
             return
-        self.configure(bg=self.color_hover, highlightbackground=COLORES["morado_claro"])
-        self.etiqueta.configure(bg=self.color_hover)
+        self.configure(bg=self.color_hover, highlightbackground=COLORES["celeste_claro"])
+        self.etiqueta.configure(bg=self.color_hover, fg=self.texto_hover)
 
     def _al_salir(self, _evento=None):
         """Devuelve el boton a su color original."""
         if not self.habilitado:
             return
         self.configure(bg=self.color_normal, highlightbackground=self.borde_normal)
-        self.etiqueta.configure(bg=self.color_normal)
+        self.etiqueta.configure(bg=self.color_normal, fg=self.texto_normal)
 
     def _al_presionar(self, _evento=None):
         """Retroalimentacion visual al hacer clic (oscurece ligeramente)."""
         if not self.habilitado:
             return
         self.configure(bg=self.color_normal)
-        self.etiqueta.configure(bg=self.color_normal)
+        self.etiqueta.configure(bg=self.color_normal, fg=self.texto_normal)
 
     def _al_soltar(self, _evento=None):
         """Ejecuta el comando asociado cuando se suelta el boton del mouse."""
@@ -896,25 +865,31 @@ class TarjetaMenu(tk.Frame):
 
         # ----------------------- Contenido de la tarjeta ---------------------
         self.cuerpo = tk.Frame(self, bg=COLORES["superficie"])
-        self.cuerpo.pack(side="left", fill="both", expand=True, padx=14, pady=12)
+        self.cuerpo.pack(side="left", fill="both", expand=True)
 
-        self.icono = tk.Label(self.cuerpo, text=icono, bg=COLORES["superficie"],
+        # El interior se centra verticalmente dentro de la tarjeta, de modo que
+        # el texto no quede pegado al borde superior cuando la tarjeta es alta.
+        self.interior = tk.Frame(self.cuerpo, bg=COLORES["superficie"])
+        self.interior.pack(expand=True, fill="x", padx=16)
+
+        self.icono = tk.Label(self.interior, text=icono, bg=COLORES["superficie"],
                               fg=color_acento, font=FUENTES["icono_medio"])
         self.icono.pack(anchor="w")
 
-        self.titulo = tk.Label(self.cuerpo, text=titulo, bg=COLORES["superficie"],
+        self.titulo = tk.Label(self.interior, text=titulo, bg=COLORES["superficie"],
                                fg=COLORES["texto"], font=FUENTES["texto_bold"],
                                anchor="w", justify="left", wraplength=210)
-        self.titulo.pack(anchor="w", pady=(4, 0))
+        self.titulo.pack(anchor="w", pady=(6, 0))
 
-        self.descripcion = tk.Label(self.cuerpo, text=descripcion,
+        self.descripcion = tk.Label(self.interior, text=descripcion,
                                     bg=COLORES["superficie"], fg=COLORES["texto_tenue"],
                                     font=FUENTES["pequena"], anchor="w", justify="left",
                                     wraplength=210)
-        self.descripcion.pack(anchor="w")
+        self.descripcion.pack(anchor="w", pady=(2, 0))
 
         # Todos los hijos deben reaccionar al mouse para que el hover sea fluido.
-        self._widgets = [self, self.cuerpo, self.icono, self.titulo, self.descripcion]
+        self._widgets = [self, self.cuerpo, self.interior,
+                         self.icono, self.titulo, self.descripcion]
         for widget in self._widgets:
             widget.bind("<Enter>", self._al_entrar)
             widget.bind("<Leave>", self._al_salir)
@@ -925,6 +900,7 @@ class TarjetaMenu(tk.Frame):
         """Aplica un juego de colores a toda la tarjeta (uso interno)."""
         self.configure(bg=color_fondo, highlightbackground=color_borde)
         self.cuerpo.configure(bg=color_fondo)
+        self.interior.configure(bg=color_fondo)
         self.icono.configure(bg=color_fondo)
         self.titulo.configure(bg=color_fondo, fg=color_titulo)
         self.descripcion.configure(bg=color_fondo)
@@ -1014,12 +990,12 @@ class TarjetaIndicador(tk.Frame):
     """
     Tarjeta compacta que muestra un indicador numerico (KPI).
 
-    Se usa en el modulo de Estadisticas y en los resultados de la calculadora:
+    Se usa para presentar los resultados de la calculadora de promedios:
     icono + valor grande + descripcion corta.
     """
 
     def __init__(self, padre, icono, titulo, valor="0", color=None, ancho=190, alto=110):
-        color = color or COLORES["morado_claro"]
+        color = color or COLORES["celeste_claro"]
         super().__init__(padre, bg=COLORES["superficie"], width=ancho, height=alto,
                          highlightthickness=1, highlightbackground=COLORES["borde"])
         self.pack_propagate(False)
@@ -1059,7 +1035,7 @@ def crear_titulo_seccion(padre, icono, texto, descripcion=""):
     fila = tk.Frame(contenedor, bg=COLORES["fondo"])
     fila.pack(fill="x")
 
-    tk.Label(fila, text=icono, bg=COLORES["fondo"], fg=COLORES["morado_claro"],
+    tk.Label(fila, text=icono, bg=COLORES["fondo"], fg=COLORES["celeste_claro"],
              font=FUENTES["texto_bold"]).pack(side="left")
     tk.Label(fila, text=texto.upper(), bg=COLORES["fondo"], fg=COLORES["texto"],
              font=FUENTES["seccion"]).pack(side="left", padx=(8, 0))
@@ -1186,7 +1162,7 @@ def crear_espacio_logo(padre, tamano=70):
     que queda listo para ser reemplazado por la imagen oficial.
     """
     marco = tk.Frame(padre, bg=COLORES["negro"], width=tamano, height=tamano,
-                     highlightthickness=1, highlightbackground=COLORES["morado_oscuro"])
+                     highlightthickness=1, highlightbackground=COLORES["celeste_oscuro"])
     marco.pack_propagate(False)
 
     imagen = cargar_imagen_logo(tamano - 8)
@@ -1201,7 +1177,7 @@ def crear_espacio_logo(padre, tamano=70):
         lienzo.pack(expand=True, fill="both")
         margen = 10
         lienzo.create_oval(margen, margen, tamano - margen, tamano - margen,
-                           outline=COLORES["morado"], width=2)
+                           outline=COLORES["celeste"], width=2)
         lienzo.create_oval(margen + 6, margen + 6, tamano - margen - 6, tamano - margen - 6,
                            outline=COLORES["cian"], width=1)
         lienzo.create_text(tamano / 2, tamano / 2 - 4, text="PUCE",
@@ -1232,7 +1208,7 @@ def crear_barra_institucional(padre, mostrar_reloj=True):
     textos.pack(side="left", padx=14)
     tk.Label(textos, text=APP_UNIVERSIDAD, bg=COLORES["negro"], fg=COLORES["texto"],
              font=FUENTES["etiqueta_bold"]).pack(anchor="w", pady=(10, 0))
-    tk.Label(textos, text=APP_CATEDRA, bg=COLORES["negro"], fg=COLORES["morado_claro"],
+    tk.Label(textos, text=APP_CATEDRA, bg=COLORES["negro"], fg=COLORES["celeste_claro"],
              font=FUENTES["micro"]).pack(anchor="w")
     tk.Label(textos, text=APP_AUTORES, bg=COLORES["negro"], fg=COLORES["texto_tenue"],
              font=FUENTES["micro"]).pack(anchor="w")
@@ -1292,7 +1268,7 @@ class VentanaModulo(tk.Toplevel):
     def __init__(self, aplicacion, titulo, descripcion, icono="✦", color_acento=None):
         super().__init__(aplicacion.raiz)
         self.aplicacion = aplicacion
-        self.color_acento = color_acento or COLORES["morado"]
+        self.color_acento = color_acento or COLORES["celeste"]
 
         # ------------------------- Configuracion base ------------------------
         self.title("%s  |  %s" % (APP_NOMBRE, titulo))
@@ -1344,9 +1320,9 @@ class VentanaModulo(tk.Toplevel):
         pie.pack_propagate(False)
 
         BotonModerno(
-            pie, "REGRESAR AL MENU", self.regresar, icono="⬅",
+            pie, "REGRESAR AL MENU", self.regresar,
             ancho=200, alto=38,
-            color=COLORES["superficie_alt"], color_hover=COLORES["morado"],
+            color=COLORES["superficie_alt"], color_hover=COLORES["celeste"],
             color_texto=COLORES["texto"], borde=COLORES["borde"],
             fuente=FUENTES["boton_pequeno"],
         ).pack(side="left", padx=18, pady=10)
@@ -1407,7 +1383,7 @@ class VentanaModulo(tk.Toplevel):
 # SECCION 10 : MODULO 1 - REGISTRO DE MATERIAS
 # =============================================================================
 # Permite registrar, editar y eliminar las materias del semestre con su
-# docente, creditos, aula y horario general. Toda la informacion se muestra
+# docente, aula y horario general. Toda la informacion se muestra
 # en un Treeview y se guarda automaticamente en materias.json.
 # =============================================================================
 
@@ -1418,9 +1394,9 @@ class VentanaMaterias(VentanaModulo):
         super().__init__(
             aplicacion,
             titulo="Registro de Materias",
-            descripcion="Administre las asignaturas del semestre, sus docentes, creditos y aulas",
+            descripcion="Administre las asignaturas del semestre, sus docentes y sus aulas",
             icono="📚",
-            color_acento=COLORES["morado"],
+            color_acento=COLORES["celeste"],
         )
         self.id_seleccionado = None              # Registro actualmente en edicion
         self.construir_interfaz()
@@ -1438,7 +1414,7 @@ class VentanaMaterias(VentanaModulo):
         panel_formulario.pack(side="left", fill="y")
         panel_formulario.pack_propagate(False)
 
-        tk.Frame(panel_formulario, bg=COLORES["morado"], height=4).pack(fill="x")
+        tk.Frame(panel_formulario, bg=COLORES["celeste"], height=4).pack(fill="x")
 
         encabezado = tk.Frame(panel_formulario, bg=COLORES["superficie"])
         encabezado.pack(fill="x", padx=16, pady=(14, 4))
@@ -1453,15 +1429,13 @@ class VentanaMaterias(VentanaModulo):
         formulario.grid_columnconfigure(0, weight=1)
         formulario.grid_columnconfigure(1, weight=1)
 
-        # --- Campos del formulario (creditos y aula comparten una misma fila) -
+        # ------------------------- Campos del formulario ---------------------
         self.campo_materia = CampoFormulario(formulario, "Materia", icono="📘",
                                              fila=0, columnas_ocupadas=2)
         self.campo_docente = CampoFormulario(formulario, "Docente", icono="👨‍🏫",
                                              fila=1, columnas_ocupadas=2)
-        self.campo_creditos = CampoFormulario(formulario, "Creditos", icono="🎓",
-                                              fila=2, columna=0, ancho=12)
         self.campo_aula = CampoFormulario(formulario, "Aula", icono="🏫",
-                                          fila=2, columna=1, ancho=12)
+                                          fila=2, columnas_ocupadas=2)
         self.campo_horario = CampoFormulario(formulario, "Horario", icono="🕐",
                                              fila=3, columnas_ocupadas=2)
 
@@ -1477,21 +1451,21 @@ class VentanaMaterias(VentanaModulo):
         # Cada fila de la botonera contiene dos botones del mismo tamano.
         fila_uno = tk.Frame(botonera, bg=COLORES["superficie"])
         fila_uno.pack(fill="x", pady=3)
-        BotonModerno(fila_uno, "GUARDAR", self.guardar_materia, icono="💾",
+        BotonModerno(fila_uno, "GUARDAR", self.guardar_materia,
                      ancho=140, alto=36, color=COLORES["exito"],
                      color_hover=COLORES["exito_hover"]).pack(side="left")
-        BotonModerno(fila_uno, "EDITAR", self.editar_materia, icono="✏",
+        BotonModerno(fila_uno, "EDITAR", self.editar_materia,
                      ancho=140, alto=36, color=COLORES["azul"],
                      color_hover=COLORES["azul_claro"]).pack(side="right")
 
         fila_dos = tk.Frame(botonera, bg=COLORES["superficie"])
         fila_dos.pack(fill="x", pady=3)
-        BotonModerno(fila_dos, "ELIMINAR", self.eliminar_materia, icono="🗑",
+        BotonModerno(fila_dos, "ELIMINAR", self.eliminar_materia,
                      ancho=140, alto=36, color=COLORES["error"],
                      color_hover=COLORES["error_hover"]).pack(side="left")
-        BotonModerno(fila_dos, "LIMPIAR", self.limpiar_formulario, icono="🧹",
+        BotonModerno(fila_dos, "LIMPIAR", self.limpiar_formulario,
                      ancho=140, alto=36, color=COLORES["superficie_alt"],
-                     color_hover=COLORES["morado"], color_texto=COLORES["texto"],
+                     color_hover=COLORES["celeste"], color_texto=COLORES["texto"],
                      borde=COLORES["borde"]).pack(side="right")
 
         # ============================ PANEL DERECHO ==========================
@@ -1507,15 +1481,15 @@ class VentanaMaterias(VentanaModulo):
 
         self.etiqueta_contador = tk.Label(
             cabecera_tabla, text="0 materias", bg=COLORES["fondo"],
-            fg=COLORES["morado_claro"], font=FUENTES["texto_bold"],
+            fg=COLORES["celeste_claro"], font=FUENTES["texto_bold"],
         )
         self.etiqueta_contador.pack(side="right", pady=6)
 
         contenedor_tabla, self.tabla = crear_tabla(
             panel_tabla,
-            columnas=["#", "Materia", "Docente", "Cr.", "Aula", "Horario"],
-            anchos=[36, 172, 148, 42, 68, 150],
-            alineaciones=["center", "w", "w", "center", "center", "w"],
+            columnas=["#", "Materia", "Docente", "Aula", "Horario"],
+            anchos=[38, 172, 150, 74, 180],
+            alineaciones=["center", "w", "w", "center", "w"],
             altura=11,
         )
         contenedor_tabla.pack(fill="both", expand=True)
@@ -1545,7 +1519,6 @@ class VentanaMaterias(VentanaModulo):
                     indice,
                     materia.get("materia", ""),
                     materia.get("docente", ""),
-                    materia.get("creditos", 0),
                     materia.get("aula", ""),
                     materia.get("horario", ""),
                 ),
@@ -1555,14 +1528,13 @@ class VentanaMaterias(VentanaModulo):
 
         # ------------------------- Indicadores del panel ---------------------
         total = len(DATOS.materias)
-        creditos = sum(int(m.get("creditos", 0) or 0) for m in DATOS.materias)
         docentes = len({str(m.get("docente", "")).strip().lower()
                         for m in DATOS.materias if str(m.get("docente", "")).strip()})
 
         self.etiqueta_contador.configure(text="%d materia%s" % (total, "" if total == 1 else "s"))
         self.etiqueta_resumen.configure(
-            text="📊  Total de materias: %d          🎓  Creditos acumulados: %d          "
-                 "👨‍🏫  Docentes distintos: %d" % (total, creditos, docentes)
+            text="Total de materias registradas: %d               "
+                 "Docentes distintos: %d" % (total, docentes)
         )
 
     def leer_formulario(self):
@@ -1584,13 +1556,6 @@ class VentanaMaterias(VentanaModulo):
             self.campo_docente.enfocar()
             return None
 
-        valido, creditos = validar_entero(self.campo_creditos.obtener(), "Creditos",
-                                          minimo=1, maximo=20)
-        if not valido:
-            self.advertir("Validacion", creditos)
-            self.campo_creditos.enfocar()
-            return None
-
         valido, aula = validar_texto(self.campo_aula.obtener(), "Aula", minimo=1, maximo=20)
         if not valido:
             self.advertir("Validacion", aula)
@@ -1606,7 +1571,6 @@ class VentanaMaterias(VentanaModulo):
         return {
             "materia": materia,
             "docente": docente,
-            "creditos": creditos,
             "aula": aula,
             "horario": horario,
         }
@@ -1695,19 +1659,15 @@ class VentanaMaterias(VentanaModulo):
         """
         Mantiene la coherencia de los datos al renombrar una materia.
 
-        Actualiza tareas, horario y notas para que sigan apuntando a la
-        materia correcta despues de la edicion.
+        Actualiza el horario y los promedios guardados para que sigan
+        apuntando a la materia correcta despues de la edicion.
         """
-        for tarea in DATOS.tareas:
-            if tarea.get("materia") == anterior:
-                tarea["materia"] = nuevo
         for bloque in DATOS.horario:
             if bloque.get("materia") == anterior:
                 bloque["materia"] = nuevo
         for nota in DATOS.notas:
             if nota.get("materia") == anterior:
                 nota["materia"] = nuevo
-        DATOS.guardar_tareas()
         DATOS.guardar_horario()
         DATOS.guardar_notas()
 
@@ -1727,13 +1687,12 @@ class VentanaMaterias(VentanaModulo):
             return
 
         nombre = registro.get("materia", "")
-        tareas_asociadas = sum(1 for t in DATOS.tareas if t.get("materia") == nombre)
         bloques_asociados = sum(1 for h in DATOS.horario if h.get("materia") == nombre)
 
         aviso = ""
-        if tareas_asociadas or bloques_asociados:
-            aviso = ("\n\nAtencion: esta materia tiene %d tarea(s) y %d bloque(s) de horario "
-                     "asociados. Esos registros se conservaran." % (tareas_asociadas, bloques_asociados))
+        if bloques_asociados:
+            aviso = ("\n\nAtencion: esta materia tiene %d bloque(s) de horario asociados. "
+                     "Esos registros se conservaran." % bloques_asociados)
 
         if not self.confirmar("Confirmar eliminacion",
                               "Desea eliminar definitivamente la materia:\n\n%s%s" % (nombre, aviso)):
@@ -1750,7 +1709,7 @@ class VentanaMaterias(VentanaModulo):
     @manejar_errores
     def limpiar_formulario(self, silencioso=False):
         """Vacia todos los campos y quita la seleccion de la tabla."""
-        for campo in (self.campo_materia, self.campo_docente, self.campo_creditos,
+        for campo in (self.campo_materia, self.campo_docente,
                       self.campo_aula, self.campo_horario):
             campo.limpiar()
         self.id_seleccionado = None
@@ -1771,1219 +1730,14 @@ class VentanaMaterias(VentanaModulo):
         self.id_seleccionado = identificador
         self.campo_materia.asignar(registro.get("materia", ""))
         self.campo_docente.asignar(registro.get("docente", ""))
-        self.campo_creditos.asignar(registro.get("creditos", ""))
         self.campo_aula.asignar(registro.get("aula", ""))
         self.campo_horario.asignar(registro.get("horario", ""))
         self.actualizar_mensaje("✏ Editando: %s" % registro.get("materia", ""),
-                                COLORES["morado_claro"])
+                                COLORES["celeste_claro"])
 
 
 # =============================================================================
-# SECCION 11 : MODULO 2 - CONTROL DE TAREAS
-# =============================================================================
-# Registro de tareas academicas con materia, nombre, fecha de entrega,
-# prioridad y estado. Incluye filtros, marcado rapido como completada y
-# guardado automatico en tareas.json.
-# =============================================================================
-
-class VentanaTareas(VentanaModulo):
-    """Modulo 2: control y seguimiento de las tareas del estudiante."""
-
-    def __init__(self, aplicacion):
-        super().__init__(
-            aplicacion,
-            titulo="Control de Tareas",
-            descripcion="Registre sus deberes, controle prioridades y fechas de entrega",
-            icono="📝",
-            color_acento=COLORES["cian"],
-        )
-        self.filtro_actual = tk.StringVar(value="Todas")
-        self.construir_interfaz()
-        self.refrescar_tabla()
-
-    # ------------------------------------------------------------ interfaz ---
-    def construir_interfaz(self):
-        """Construye el formulario, los filtros y la tabla de tareas."""
-        contenedor = tk.Frame(self.cuerpo, bg=COLORES["fondo"])
-        contenedor.pack(fill="both", expand=True)
-
-        # ============================ PANEL IZQUIERDO ========================
-        panel_formulario = tk.Frame(contenedor, bg=COLORES["superficie"], width=330,
-                                    highlightthickness=1, highlightbackground=COLORES["borde"])
-        panel_formulario.pack(side="left", fill="y")
-        panel_formulario.pack_propagate(False)
-
-        tk.Frame(panel_formulario, bg=COLORES["cian"], height=4).pack(fill="x")
-
-        encabezado = tk.Frame(panel_formulario, bg=COLORES["superficie"])
-        encabezado.pack(fill="x", padx=16, pady=(14, 4))
-        tk.Label(encabezado, text="🗒 DATOS DE LA TAREA", bg=COLORES["superficie"],
-                 fg=COLORES["texto"], font=FUENTES["seccion"]).pack(anchor="w")
-        tk.Label(encabezado, text="La fecha debe escribirse como DD/MM/AAAA",
-                 bg=COLORES["superficie"], fg=COLORES["texto_tenue"],
-                 font=FUENTES["pequena"]).pack(anchor="w", pady=(2, 0))
-
-        formulario = tk.Frame(panel_formulario, bg=COLORES["superficie"])
-        formulario.pack(fill="x", pady=(6, 0))
-        formulario.grid_columnconfigure(0, weight=1)
-        formulario.grid_columnconfigure(1, weight=1)
-
-        # Las materias disponibles provienen del Modulo 1.
-        materias = DATOS.nombres_de_materias()
-        self.campo_materia = CampoFormulario(formulario, "Materia", tipo="combo",
-                                             valores=materias, icono="📘",
-                                             fila=0, columnas_ocupadas=2)
-        self.campo_tarea = CampoFormulario(formulario, "Nombre de la tarea",
-                                           icono="✍", fila=1, columnas_ocupadas=2)
-        self.campo_fecha = CampoFormulario(formulario, "Fecha de entrega",
-                                           icono="📅", fila=2, columna=0, ancho=12)
-        self.campo_prioridad = CampoFormulario(formulario, "Prioridad", tipo="combo",
-                                               valores=PRIORIDADES, icono="⚡",
-                                               fila=2, columna=1, ancho=10)
-        self.campo_estado = CampoFormulario(formulario, "Estado", tipo="combo",
-                                            valores=ESTADOS_TAREA, icono="🔖",
-                                            fila=3, columnas_ocupadas=2)
-
-        # Valores por defecto comodos para el usuario.
-        self.campo_fecha.asignar(datetime.date.today().strftime("%d/%m/%Y"))
-        self.campo_prioridad.asignar("Media")
-        self.campo_estado.asignar("Pendiente")
-
-        if not materias:
-            tk.Label(panel_formulario,
-                     text="⚠ Aun no hay materias registradas.\nRegistre materias en el Modulo 1.",
-                     bg=COLORES["superficie"], fg=COLORES["alerta"],
-                     font=FUENTES["micro"], justify="left").pack(anchor="w", padx=20, pady=(4, 0))
-
-        # ----------------------------- Botonera ------------------------------
-        botonera = tk.Frame(panel_formulario, bg=COLORES["superficie"])
-        botonera.pack(side="bottom", fill="x", padx=14, pady=(4, 8))
-
-        fila_uno = tk.Frame(botonera, bg=COLORES["superficie"])
-        fila_uno.pack(fill="x", pady=3)
-        BotonModerno(fila_uno, "AGREGAR", self.agregar_tarea, icono="➕",
-                     ancho=140, alto=36, color=COLORES["exito"],
-                     color_hover=COLORES["exito_hover"]).pack(side="left")
-        BotonModerno(fila_uno, "EDITAR", self.editar_tarea, icono="✏",
-                     ancho=140, alto=36, color=COLORES["azul"],
-                     color_hover=COLORES["azul_claro"]).pack(side="right")
-
-        fila_dos = tk.Frame(botonera, bg=COLORES["superficie"])
-        fila_dos.pack(fill="x", pady=3)
-        BotonModerno(fila_dos, "ELIMINAR", self.eliminar_tarea, icono="🗑",
-                     ancho=140, alto=36, color=COLORES["error"],
-                     color_hover=COLORES["error_hover"]).pack(side="left")
-        BotonModerno(fila_dos, "LIMPIAR", self.limpiar_formulario, icono="🧹",
-                     ancho=140, alto=36, color=COLORES["superficie_alt"],
-                     color_hover=COLORES["morado"], color_texto=COLORES["texto"],
-                     borde=COLORES["borde"]).pack(side="right")
-
-        BotonModerno(botonera, "MARCAR COMO COMPLETADA", self.completar_tarea,
-                     icono="✅", ancho=290, alto=36, color=COLORES["morado"],
-                     color_hover=COLORES["morado_hover"]).pack(pady=(6, 0))
-
-        # ============================ PANEL DERECHO ==========================
-        panel_tabla = tk.Frame(contenedor, bg=COLORES["fondo"])
-        panel_tabla.pack(side="left", fill="both", expand=True, padx=(18, 0))
-
-        cabecera = tk.Frame(panel_tabla, bg=COLORES["fondo"])
-        cabecera.pack(fill="x", pady=(0, 10))
-        crear_titulo_seccion(cabecera, "📋", "Listado de tareas",
-                             "Doble clic sobre una tarea para marcarla como completada").pack(side="left")
-
-        # ------------------------- Filtros rapidos ---------------------------
-        filtros = tk.Frame(cabecera, bg=COLORES["fondo"])
-        filtros.pack(side="right", pady=4)
-        tk.Label(filtros, text="FILTRAR:", bg=COLORES["fondo"], fg=COLORES["texto_tenue"],
-                 font=FUENTES["micro"]).pack(side="left", padx=(0, 6))
-        combo_filtro = ttk.Combobox(
-            filtros, textvariable=self.filtro_actual, state="readonly",
-            values=["Todas", "Pendiente", "En proceso", "Completada",
-                    "Prioridad alta", "Vencidas"],
-            style="Study.TCombobox", width=14, font=FUENTES["pequena"],
-        )
-        combo_filtro.pack(side="left")
-        combo_filtro.bind("<<ComboboxSelected>>", lambda evento=None: self.refrescar_tabla())
-
-        contenedor_tabla, self.tabla = crear_tabla(
-            panel_tabla,
-            columnas=["#", "Materia", "Tarea", "Fecha", "Plazo", "Prior.", "Estado"],
-            anchos=[32, 130, 126, 90, 104, 62, 92],
-            alineaciones=["center", "w", "w", "center", "center", "center", "center"],
-            altura=10,
-            columna_elastica=2,
-        )
-        contenedor_tabla.pack(fill="both", expand=True)
-        self.tabla.bind("<<TreeviewSelect>>", self.al_seleccionar_fila)
-        self.tabla.bind("<Double-1>", lambda evento=None: self.completar_tarea())
-
-        # ------------------- Barra de progreso de avance ---------------------
-        progreso = tk.Frame(panel_tabla, bg=COLORES["fondo_alt"],
-                            highlightthickness=1, highlightbackground=COLORES["borde"])
-        progreso.pack(fill="x", pady=(12, 0))
-
-        fila_progreso = tk.Frame(progreso, bg=COLORES["fondo_alt"])
-        fila_progreso.pack(fill="x", padx=14, pady=10)
-
-        self.etiqueta_progreso = tk.Label(
-            fila_progreso, text="", bg=COLORES["fondo_alt"], fg=COLORES["texto_suave"],
-            font=FUENTES["pequena"], anchor="w",
-        )
-        self.etiqueta_progreso.pack(fill="x")
-
-        self.barra_progreso = ttk.Progressbar(
-            progreso, style="Study.Horizontal.TProgressbar",
-            orient="horizontal", mode="determinate", maximum=100,
-        )
-        self.barra_progreso.pack(fill="x", padx=14, pady=(0, 12))
-
-    # ---------------------------------------------------------------- datos --
-    def tareas_filtradas(self):
-        """Aplica el filtro seleccionado y ordena por fecha de entrega."""
-        filtro = self.filtro_actual.get()
-        seleccionadas = []
-
-        for tarea in DATOS.tareas:
-            estado = tarea.get("estado", "Pendiente")
-            prioridad = tarea.get("prioridad", "Media")
-            faltan = dias_restantes(tarea.get("fecha", ""))
-
-            if filtro == "Todas":
-                seleccionadas.append(tarea)
-            elif filtro in ESTADOS_TAREA and estado == filtro:
-                seleccionadas.append(tarea)
-            elif filtro == "Prioridad alta" and prioridad == "Alta":
-                seleccionadas.append(tarea)
-            elif filtro == "Vencidas" and estado != "Completada" and faltan is not None and faltan < 0:
-                seleccionadas.append(tarea)
-
-        # Orden: primero lo pendiente y lo mas urgente por fecha.
-        peso_estado = {"Pendiente": 0, "En proceso": 1, "Completada": 2}
-        seleccionadas.sort(key=lambda t: (peso_estado.get(t.get("estado", "Pendiente"), 0),
-                                          fecha_a_ordenable(t.get("fecha", ""))))
-        return seleccionadas
-
-    def etiqueta_de_color(self, tarea):
-        """Determina el color de la fila segun estado, prioridad y vencimiento."""
-        estado = tarea.get("estado", "Pendiente")
-        if estado == "Completada":
-            return "exito"
-        faltan = dias_restantes(tarea.get("fecha", ""))
-        if faltan is not None and faltan < 0:
-            return "error"
-        if tarea.get("prioridad") == "Alta":
-            return "alerta"
-        if estado == "En proceso":
-            return "info"
-        return None
-
-    def refrescar_tabla(self):
-        """Actualiza tabla, contador y barra de progreso."""
-        # El combo de materias se refresca por si se registraron nuevas.
-        self.campo_materia.actualizar_valores(DATOS.nombres_de_materias())
-
-        filas = []
-        for indice, tarea in enumerate(self.tareas_filtradas(), start=1):
-            filas.append((
-                tarea.get("id"),
-                (
-                    indice,
-                    tarea.get("materia", ""),
-                    tarea.get("tarea", ""),
-                    tarea.get("fecha", ""),
-                    texto_dias_restantes(tarea.get("fecha", "")),
-                    tarea.get("prioridad", ""),
-                    tarea.get("estado", ""),
-                ),
-                self.etiqueta_de_color(tarea),
-            ))
-        llenar_tabla(self.tabla, filas)
-
-        # --------------------------- Indicadores -----------------------------
-        total = len(DATOS.tareas)
-        completadas = sum(1 for t in DATOS.tareas if t.get("estado") == "Completada")
-        pendientes = total - completadas
-        vencidas = sum(1 for t in DATOS.tareas
-                       if t.get("estado") != "Completada"
-                       and (dias_restantes(t.get("fecha", "")) or 0) < 0
-                       and dias_restantes(t.get("fecha", "")) is not None)
-        porcentaje = (completadas / float(total) * 100.0) if total else 0.0
-
-        self.barra_progreso["value"] = porcentaje
-        self.etiqueta_progreso.configure(
-            text="📈  Avance: %s%%     ✅ Completadas: %d     ⏳ Pendientes: %d     "
-                 "⚠ Vencidas: %d     Σ Total: %d"
-                 % (formato_numero(porcentaje, 1), completadas, pendientes, vencidas, total)
-        )
-
-    def leer_formulario(self):
-        """Valida el formulario de tareas y devuelve el diccionario resultante."""
-        valido, materia = validar_texto(self.campo_materia.obtener(), "Materia", minimo=2)
-        if not valido:
-            self.advertir("Validacion", materia)
-            self.campo_materia.enfocar()
-            return None
-
-        valido, nombre = validar_texto(self.campo_tarea.obtener(), "Nombre de la tarea",
-                                       minimo=3, maximo=80)
-        if not valido:
-            self.advertir("Validacion", nombre)
-            self.campo_tarea.enfocar()
-            return None
-
-        valido, fecha = validar_fecha(self.campo_fecha.obtener(), "Fecha de entrega")
-        if not valido:
-            self.advertir("Validacion", fecha)
-            self.campo_fecha.enfocar()
-            return None
-
-        valido, prioridad = validar_opcion(self.campo_prioridad.obtener(),
-                                           "Prioridad", PRIORIDADES)
-        if not valido:
-            self.advertir("Validacion", prioridad)
-            return None
-
-        valido, estado = validar_opcion(self.campo_estado.obtener(), "Estado", ESTADOS_TAREA)
-        if not valido:
-            self.advertir("Validacion", estado)
-            return None
-
-        return {
-            "materia": materia,
-            "tarea": nombre,
-            "fecha": fecha,
-            "prioridad": prioridad,
-            "estado": estado,
-        }
-
-    # ------------------------------------------------------------- acciones --
-    @manejar_errores
-    def agregar_tarea(self):
-        """Registra una nueva tarea y actualiza tareas.json."""
-        if not DATOS.materias:
-            self.advertir("Sin materias",
-                          "Primero debe registrar al menos una materia en el Modulo 1 "
-                          "(Registrar Materias).")
-            return
-
-        datos = self.leer_formulario()
-        if datos is None:
-            return
-
-        datos["id"] = DATOS.nuevo_id(DATOS.tareas)
-        datos["registro"] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
-        DATOS.tareas.append(datos)
-        DATOS.guardar_tareas()
-
-        self.refrescar_tabla()
-        self.limpiar_formulario(silencioso=True)
-        self.actualizar_mensaje("✔ Tarea agregada correctamente", COLORES["exito"])
-        self.informar("Tarea registrada",
-                      "La tarea '%s' fue agregada correctamente." % datos["tarea"])
-
-    @manejar_errores
-    def editar_tarea(self):
-        """Modifica la tarea seleccionada con los valores del formulario."""
-        identificador = obtener_id_seleccionado(self.tabla)
-        if identificador is None:
-            self.advertir("Sin seleccion", "Seleccione la tarea que desea editar.")
-            return
-
-        registro = DATOS.buscar_por_id(DATOS.tareas, identificador)
-        if registro is None:
-            self.error("Registro no encontrado", "La tarea seleccionada ya no existe.")
-            self.refrescar_tabla()
-            return
-
-        datos = self.leer_formulario()
-        if datos is None:
-            return
-
-        if not self.confirmar("Confirmar edicion",
-                              "Se actualizara la tarea:\n\n%s\n\nDesea continuar?"
-                              % registro.get("tarea", "")):
-            return
-
-        registro.update(datos)
-        DATOS.guardar_tareas()
-
-        self.refrescar_tabla()
-        self.limpiar_formulario(silencioso=True)
-        self.actualizar_mensaje("✔ Tarea actualizada", COLORES["azul_claro"])
-        self.informar("Edicion exitosa", "La tarea fue actualizada correctamente.")
-
-    @manejar_errores
-    def eliminar_tarea(self):
-        """Elimina la tarea seleccionada previa confirmacion."""
-        identificador = obtener_id_seleccionado(self.tabla)
-        if identificador is None:
-            self.advertir("Sin seleccion", "Seleccione la tarea que desea eliminar.")
-            return
-
-        registro = DATOS.buscar_por_id(DATOS.tareas, identificador)
-        if registro is None:
-            self.error("Registro no encontrado", "La tarea seleccionada ya no existe.")
-            self.refrescar_tabla()
-            return
-
-        if not self.confirmar("Confirmar eliminacion",
-                              "Desea eliminar definitivamente la tarea:\n\n%s"
-                              % registro.get("tarea", "")):
-            return
-
-        nombre = registro.get("tarea", "")
-        DATOS.eliminar_por_id(DATOS.tareas, identificador)
-        DATOS.guardar_tareas()
-
-        self.refrescar_tabla()
-        self.limpiar_formulario(silencioso=True)
-        self.actualizar_mensaje("🗑 Tarea '%s' eliminada" % nombre, COLORES["error"])
-        self.informar("Eliminacion exitosa", "La tarea fue eliminada correctamente.")
-
-    @manejar_errores
-    def completar_tarea(self):
-        """Marca la tarea seleccionada como completada."""
-        identificador = obtener_id_seleccionado(self.tabla)
-        if identificador is None:
-            self.advertir("Sin seleccion",
-                          "Seleccione la tarea que desea marcar como completada.")
-            return
-
-        registro = DATOS.buscar_por_id(DATOS.tareas, identificador)
-        if registro is None:
-            self.error("Registro no encontrado", "La tarea seleccionada ya no existe.")
-            self.refrescar_tabla()
-            return
-
-        if registro.get("estado") == "Completada":
-            self.informar("Tarea completada",
-                          "La tarea '%s' ya estaba marcada como completada."
-                          % registro.get("tarea", ""))
-            return
-
-        registro["estado"] = "Completada"
-        registro["completada_el"] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
-        DATOS.guardar_tareas()
-
-        self.campo_estado.asignar("Completada")
-        self.refrescar_tabla()
-        self.actualizar_mensaje("✅ Tarea completada: %s" % registro.get("tarea", ""),
-                                COLORES["exito"])
-        self.informar("Excelente trabajo",
-                      "La tarea '%s' fue marcada como COMPLETADA." % registro.get("tarea", ""))
-
-    @manejar_errores
-    def limpiar_formulario(self, silencioso=False):
-        """Restablece el formulario a sus valores por defecto."""
-        self.campo_materia.limpiar()
-        self.campo_tarea.limpiar()
-        self.campo_fecha.asignar(datetime.date.today().strftime("%d/%m/%Y"))
-        self.campo_prioridad.asignar("Media")
-        self.campo_estado.asignar("Pendiente")
-        limpiar_seleccion(self.tabla)
-        self.campo_tarea.enfocar()
-        if not silencioso:
-            self.actualizar_mensaje("🧹 Formulario limpio", COLORES["texto_suave"])
-
-    @manejar_errores
-    def al_seleccionar_fila(self, _evento=None):
-        """Carga la tarea seleccionada dentro del formulario."""
-        identificador = obtener_id_seleccionado(self.tabla)
-        if identificador is None:
-            return
-        registro = DATOS.buscar_por_id(DATOS.tareas, identificador)
-        if registro is None:
-            return
-        self.campo_materia.asignar(registro.get("materia", ""))
-        self.campo_tarea.asignar(registro.get("tarea", ""))
-        self.campo_fecha.asignar(registro.get("fecha", ""))
-        self.campo_prioridad.asignar(registro.get("prioridad", "Media"))
-        self.campo_estado.asignar(registro.get("estado", "Pendiente"))
-        self.actualizar_mensaje("✏ Editando: %s" % registro.get("tarea", ""),
-                                COLORES["morado_claro"])
-
-
-# =============================================================================
-# SECCION 12 : MODULO 3 - CALCULADORA DE PROMEDIOS
-# =============================================================================
-# El usuario ingresa sus notas separadas por comas y el sistema entrega la
-# lista ordenada, el promedio, la nota mayor, la menor, la cantidad y el
-# veredicto APROBADO (verde) o REPROBADO (rojo). Ademas permite guardar el
-# resultado en notas.json para alimentar el modulo de estadisticas.
-# =============================================================================
-
-class VentanaPromedios(VentanaModulo):
-    """Modulo 3: calculo estadistico de las calificaciones del estudiante."""
-
-    def __init__(self, aplicacion):
-        super().__init__(
-            aplicacion,
-            titulo="Calculadora de Promedios",
-            descripcion="Analice sus calificaciones y conozca su situacion academica",
-            icono="📊",
-            color_acento=COLORES["azul_claro"],
-        )
-        self.notas_calculadas = []               # Ultimo calculo realizado
-        self.promedio_calculado = 0.0
-        self.construir_interfaz()
-        self.refrescar_historial()
-
-    # ------------------------------------------------------------ interfaz ---
-    def construir_interfaz(self):
-        """Distribuye el panel de ingreso, los indicadores y el historial."""
-        contenedor = tk.Frame(self.cuerpo, bg=COLORES["fondo"])
-        contenedor.pack(fill="both", expand=True)
-
-        # ============================ PANEL IZQUIERDO ========================
-        panel = tk.Frame(contenedor, bg=COLORES["superficie"], width=360,
-                         highlightthickness=1, highlightbackground=COLORES["borde"])
-        panel.pack(side="left", fill="y")
-        panel.pack_propagate(False)
-
-        tk.Frame(panel, bg=COLORES["azul_claro"], height=4).pack(fill="x")
-
-        encabezado = tk.Frame(panel, bg=COLORES["superficie"])
-        encabezado.pack(fill="x", padx=16, pady=(14, 2))
-        tk.Label(encabezado, text="🔢 INGRESO DE NOTAS", bg=COLORES["superficie"],
-                 fg=COLORES["texto"], font=FUENTES["seccion"]).pack(anchor="w")
-        tk.Label(encabezado,
-                 text="Escriba las notas separadas por comas.\nEjemplo:  15, 18.5, 12, 20",
-                 bg=COLORES["superficie"], fg=COLORES["texto_tenue"],
-                 font=FUENTES["pequena"], justify="left").pack(anchor="w", pady=(3, 0))
-
-        # ------------------------ Caja de texto de notas ---------------------
-        caja = tk.Frame(panel, bg=COLORES["superficie_alt"],
-                        highlightthickness=1, highlightbackground=COLORES["borde"])
-        caja.pack(fill="x", padx=16, pady=12)
-
-        self.texto_notas = tk.Text(
-            caja, height=4, bg=COLORES["superficie_alt"], fg=COLORES["texto"],
-            insertbackground=COLORES["morado_claro"], relief="flat",
-            font=FUENTES["mono"], wrap="word", padx=10, pady=8,
-        )
-        self.texto_notas.pack(fill="both", expand=True)
-        self.texto_notas.bind("<Return>", self._calcular_con_enter)
-
-        # ---------------------- Materia asociada (opcional) ------------------
-        formulario = tk.Frame(panel, bg=COLORES["superficie"])
-        formulario.pack(fill="x")
-        formulario.grid_columnconfigure(0, weight=1)
-        self.campo_materia = CampoFormulario(
-            formulario, "Materia asociada (opcional)", tipo="combo",
-            valores=DATOS.nombres_de_materias(), icono="📘", fila=0,
-        )
-
-        tk.Label(panel,
-                 text="Escala vigente: %s a %s   |   Nota minima de aprobacion: %s"
-                      % (formato_numero(NOTA_MINIMA, 0), formato_numero(NOTA_MAXIMA, 0),
-                         formato_numero(NOTA_APROBACION)),
-                 bg=COLORES["superficie"], fg=COLORES["morado_claro"],
-                 font=FUENTES["micro"], wraplength=310, justify="left").pack(anchor="w", padx=20)
-
-        # ----------------------------- Botonera ------------------------------
-        botonera = tk.Frame(panel, bg=COLORES["superficie"])
-        botonera.pack(side="bottom", fill="x", padx=14, pady=(4, 8))
-
-        BotonModerno(botonera, "CALCULAR PROMEDIO", self.calcular, icono="🧮",
-                     ancho=320, alto=42, color=COLORES["morado"],
-                     color_hover=COLORES["morado_hover"]).pack(pady=(0, 6))
-
-        fila = tk.Frame(botonera, bg=COLORES["superficie"])
-        fila.pack(fill="x")
-        BotonModerno(fila, "GUARDAR", self.guardar_en_historial, icono="💾",
-                     ancho=155, alto=36, color=COLORES["exito"],
-                     color_hover=COLORES["exito_hover"]).pack(side="left")
-        BotonModerno(fila, "LIMPIAR", self.limpiar, icono="🧹",
-                     ancho=155, alto=36, color=COLORES["superficie_alt"],
-                     color_hover=COLORES["morado"], color_texto=COLORES["texto"],
-                     borde=COLORES["borde"]).pack(side="right")
-
-        # ============================ PANEL DERECHO ==========================
-        derecha = tk.Frame(contenedor, bg=COLORES["fondo"])
-        derecha.pack(side="left", fill="both", expand=True, padx=(18, 0))
-
-        # ------------------------ Tarjetas de resultado ----------------------
-        tarjetas = tk.Frame(derecha, bg=COLORES["fondo"])
-        tarjetas.pack(fill="x")
-
-        self.tarjeta_promedio = TarjetaIndicador(tarjetas, "🎯", "Promedio", "0.00",
-                                                 COLORES["morado"], ancho=160, alto=96)
-        self.tarjeta_promedio.pack(side="left", padx=(0, 10))
-
-        self.tarjeta_mayor = TarjetaIndicador(tarjetas, "🔼", "Nota mayor", "0.00",
-                                              COLORES["exito"], ancho=160, alto=96)
-        self.tarjeta_mayor.pack(side="left", padx=(0, 10))
-
-        self.tarjeta_menor = TarjetaIndicador(tarjetas, "🔽", "Nota menor", "0.00",
-                                              COLORES["error"], ancho=160, alto=96)
-        self.tarjeta_menor.pack(side="left", padx=(0, 10))
-
-        self.tarjeta_cantidad = TarjetaIndicador(tarjetas, "#️⃣", "Cantidad", "0",
-                                                 COLORES["cian"], ancho=160, alto=96)
-        self.tarjeta_cantidad.pack(side="left")
-
-        # ------------------------- Franja de veredicto -----------------------
-        self.franja_estado = tk.Frame(derecha, bg=COLORES["fondo_alt"], height=54,
-                                      highlightthickness=1,
-                                      highlightbackground=COLORES["borde"])
-        self.franja_estado.pack(fill="x", pady=8)
-        self.franja_estado.pack_propagate(False)
-
-        self.etiqueta_estado = tk.Label(
-            self.franja_estado, text="⌛  Ingrese sus notas y presione CALCULAR PROMEDIO",
-            bg=COLORES["fondo_alt"], fg=COLORES["texto_suave"], font=FUENTES["texto_bold"],
-        )
-        self.etiqueta_estado.pack(expand=True)
-
-        # ---------- Dos tablas lado a lado: analisis actual e historial ------
-        zona_tablas = tk.Frame(derecha, bg=COLORES["fondo"])
-        zona_tablas.pack(fill="both", expand=True)
-
-        # Izquierda: lista ordenada del calculo recien realizado.
-        columna_izquierda = tk.Frame(zona_tablas, bg=COLORES["fondo"])
-        columna_izquierda.pack(side="left", fill="both", expand=True)
-
-        crear_titulo_seccion(columna_izquierda, "📑", "Lista ordenada de notas",
-                             "De la calificacion mas alta a la mas baja").pack(anchor="w",
-                                                                                pady=(0, 6))
-
-        contenedor_tabla, self.tabla_notas = crear_tabla(
-            columna_izquierda,
-            columnas=["Pos", "Nota", "Estado", "Diferencia"],
-            anchos=[46, 62, 88, 100],
-            alineaciones=["center", "center", "center", "center"],
-            altura=7,
-        )
-        contenedor_tabla.pack(fill="both", expand=True)
-
-        # Derecha: promedios ya guardados en notas.json.
-        columna_derecha = tk.Frame(zona_tablas, bg=COLORES["fondo"])
-        columna_derecha.pack(side="left", fill="both", expand=True, padx=(14, 0))
-
-        crear_titulo_seccion(columna_derecha, "🗂", "Promedios guardados",
-                             "Alimentan el modulo de Estadisticas").pack(anchor="w", pady=(0, 6))
-
-        contenedor_historial, self.tabla_historial = crear_tabla(
-            columna_derecha,
-            columnas=["Materia", "Notas", "Prom.", "Estado"],
-            anchos=[100, 70, 56, 86],
-            alineaciones=["w", "w", "center", "center"],
-            altura=7,
-            columna_elastica=0,
-        )
-        contenedor_historial.pack(fill="both", expand=True)
-        self.tabla_historial.bind("<Double-1>", lambda evento=None: self.eliminar_del_historial())
-
-    # ------------------------------------------------------------- acciones --
-    def _calcular_con_enter(self, _evento=None):
-        """Permite calcular presionando Enter dentro de la caja de notas."""
-        self.calcular()
-        return "break"                            # Evita el salto de linea
-
-    def obtener_texto_notas(self):
-        """Devuelve el contenido actual de la caja de texto."""
-        return self.texto_notas.get("1.0", "end").strip()
-
-    @manejar_errores
-    def calcular(self):
-        """
-        Valida las notas ingresadas y muestra el analisis completo.
-
-        Calcula promedio, mayor, menor, cantidad y determina si el estudiante
-        aprueba (verde) o reprueba (rojo).
-        """
-        valido, resultado = validar_lista_de_notas(self.obtener_texto_notas())
-        if not valido:
-            self.advertir("Notas invalidas", resultado)
-            self.texto_notas.focus_set()
-            return
-
-        notas = resultado
-        promedio = promedio_de(notas)
-        mayor = max(notas)
-        menor = min(notas)
-        cantidad = len(notas)
-        aprueba = promedio >= NOTA_APROBACION
-
-        self.notas_calculadas = notas
-        self.promedio_calculado = promedio
-
-        # --------------------------- Tarjetas KPI ----------------------------
-        color_promedio = COLORES["exito"] if aprueba else COLORES["error"]
-        self.tarjeta_promedio.actualizar(formato_numero(promedio), color_promedio)
-        self.tarjeta_mayor.actualizar(formato_numero(mayor), COLORES["exito"])
-        self.tarjeta_menor.actualizar(formato_numero(menor), COLORES["error"])
-        self.tarjeta_cantidad.actualizar(str(cantidad), COLORES["cian"])
-
-        # ------------------------- Franja de veredicto -----------------------
-        if aprueba:
-            mensaje = ("✅  APROBADO   |   Promedio %s   |   Supera el minimo por %s puntos"
-                       % (formato_numero(promedio),
-                          formato_numero(promedio - NOTA_APROBACION)))
-            self.pintar_estado(mensaje, COLORES["exito"])
-        else:
-            mensaje = ("❌  REPROBADO   |   Promedio %s   |   Le faltan %s puntos para aprobar"
-                       % (formato_numero(promedio),
-                          formato_numero(NOTA_APROBACION - promedio)))
-            self.pintar_estado(mensaje, COLORES["error"])
-
-        # ------------------------ Tabla de notas ordenadas -------------------
-        ordenadas = sorted(notas, reverse=True)
-        filas = []
-        for posicion, nota in enumerate(ordenadas, start=1):
-            diferencia = nota - NOTA_APROBACION
-            if nota >= NOTA_APROBACION:
-                condicion, etiqueta = "Aprobada", "exito"
-                texto_diferencia = "+%s puntos" % formato_numero(diferencia)
-            else:
-                condicion, etiqueta = "Reprobada", "error"
-                texto_diferencia = "-%s puntos" % formato_numero(abs(diferencia))
-            filas.append((posicion, (posicion, formato_numero(nota), condicion,
-                                     texto_diferencia), etiqueta))
-        llenar_tabla(self.tabla_notas, filas)
-
-        self.actualizar_mensaje(
-            "🧮 Calculo realizado sobre %d nota%s" % (cantidad, "" if cantidad == 1 else "s"),
-            COLORES["azul_claro"]
-        )
-
-    def pintar_estado(self, mensaje, color):
-        """Aplica el color del veredicto a la franja de resultado."""
-        self.franja_estado.configure(highlightbackground=color)
-        self.etiqueta_estado.configure(text=mensaje, fg=color)
-
-    @manejar_errores
-    def guardar_en_historial(self):
-        """Guarda el promedio calculado dentro de notas.json."""
-        if not self.notas_calculadas:
-            self.advertir("Sin calculo",
-                          "Primero debe calcular un promedio con el boton CALCULAR PROMEDIO.")
-            return
-
-        materia = self.campo_materia.obtener()
-        if not materia:
-            if not self.confirmar(
-                "Materia no seleccionada",
-                "No selecciono ninguna materia.\n\n"
-                "El promedio se guardara como 'General'. Desea continuar?"
-            ):
-                return
-            materia = "General"
-
-        # Si ya existe un registro de la misma materia se ofrece reemplazarlo.
-        existente = None
-        for registro in DATOS.notas:
-            if str(registro.get("materia", "")).lower() == materia.lower():
-                existente = registro
-                break
-
-        if existente is not None:
-            if not self.confirmar(
-                "Registro existente",
-                "Ya existe un promedio guardado para '%s' (%s).\n\nDesea reemplazarlo?"
-                % (materia, formato_numero(existente.get("promedio", 0)))
-            ):
-                return
-            DATOS.notas.remove(existente)
-
-        DATOS.notas.append({
-            "id": DATOS.nuevo_id(DATOS.notas),
-            "materia": materia,
-            "notas": self.notas_calculadas,
-            "promedio": round(self.promedio_calculado, 2),
-            "estado": "Aprobado" if self.promedio_calculado >= NOTA_APROBACION else "Reprobado",
-            "fecha": datetime.date.today().strftime("%d/%m/%Y"),
-        })
-        DATOS.guardar_notas()
-
-        self.refrescar_historial()
-        self.actualizar_mensaje("💾 Promedio de '%s' guardado" % materia, COLORES["exito"])
-        self.informar("Promedio guardado",
-                      "El promedio de '%s' (%s) fue guardado correctamente.\n\n"
-                      "Este dato se vera reflejado en el modulo de Estadisticas."
-                      % (materia, formato_numero(self.promedio_calculado)))
-
-    @manejar_errores
-    def eliminar_del_historial(self):
-        """Elimina un promedio guardado (doble clic sobre la fila)."""
-        identificador = obtener_id_seleccionado(self.tabla_historial)
-        if identificador is None:
-            return
-        registro = DATOS.buscar_por_id(DATOS.notas, identificador)
-        if registro is None:
-            return
-        if not self.confirmar("Eliminar promedio",
-                              "Desea eliminar el promedio guardado de '%s'?"
-                              % registro.get("materia", "")):
-            return
-        DATOS.eliminar_por_id(DATOS.notas, identificador)
-        DATOS.guardar_notas()
-        self.refrescar_historial()
-        self.actualizar_mensaje("🗑 Promedio eliminado del historial", COLORES["error"])
-
-    def refrescar_historial(self):
-        """Vuelve a dibujar la tabla de promedios guardados."""
-        self.campo_materia.actualizar_valores(DATOS.nombres_de_materias())
-        registros = sorted(DATOS.notas,
-                           key=lambda r: float(r.get("promedio", 0)), reverse=True)
-        filas = []
-        for registro in registros:
-            notas = registro.get("notas", [])
-            texto_notas = ", ".join(formato_numero(n, 1) for n in notas)
-            if len(texto_notas) > 11:
-                texto_notas = texto_notas[:8] + "..."
-            aprobado = float(registro.get("promedio", 0)) >= NOTA_APROBACION
-            filas.append((
-                registro.get("id"),
-                (
-                    registro.get("materia", ""),
-                    texto_notas,
-                    formato_numero(registro.get("promedio", 0)),
-                    "Aprobado" if aprobado else "Reprobado",
-                ),
-                "exito" if aprobado else "error",
-            ))
-        llenar_tabla(self.tabla_historial, filas)
-
-    @manejar_errores
-    def limpiar(self):
-        """Restablece la calculadora a su estado inicial."""
-        self.texto_notas.delete("1.0", "end")
-        self.campo_materia.limpiar()
-        self.notas_calculadas = []
-        self.promedio_calculado = 0.0
-
-        self.tarjeta_promedio.actualizar("0.00", COLORES["texto"])
-        self.tarjeta_mayor.actualizar("0.00", COLORES["texto"])
-        self.tarjeta_menor.actualizar("0.00", COLORES["texto"])
-        self.tarjeta_cantidad.actualizar("0", COLORES["texto"])
-
-        self.franja_estado.configure(highlightbackground=COLORES["borde"])
-        self.etiqueta_estado.configure(
-            text="⌛  Ingrese sus notas y presione CALCULAR PROMEDIO",
-            fg=COLORES["texto_suave"],
-        )
-        llenar_tabla(self.tabla_notas, [])
-        self.texto_notas.focus_set()
-        self.actualizar_mensaje("🧹 Calculadora reiniciada", COLORES["texto_suave"])
-
-
-# =============================================================================
-# SECCION 13 : MODULO 4 - NOTA NECESARIA
-# =============================================================================
-# Responde a la pregunta clasica del estudiante: "que nota necesito en el
-# examen para aprobar la materia?". Utiliza la formula de ponderacion:
-#
-#     nota_necesaria = (nota_minima - promedio_actual * %acumulado) / %examen
-#
-# Los porcentajes se trabajan en forma decimal (por ejemplo 70 % -> 0.70).
-# =============================================================================
-
-class VentanaNotaNecesaria(VentanaModulo):
-    """Modulo 4: proyeccion de la nota requerida en el examen final."""
-
-    def __init__(self, aplicacion):
-        super().__init__(
-            aplicacion,
-            titulo="Nota Necesaria",
-            descripcion="Calcule que calificacion necesita obtener en su examen final",
-            icono="🎯",
-            color_acento=COLORES["alerta"],
-        )
-        self.construir_interfaz()
-
-    # ------------------------------------------------------------ interfaz ---
-    def construir_interfaz(self):
-        """Crea el formulario de ponderaciones y el panel de resultados."""
-        contenedor = tk.Frame(self.cuerpo, bg=COLORES["fondo"])
-        contenedor.pack(fill="both", expand=True)
-
-        # ============================ PANEL IZQUIERDO ========================
-        panel = tk.Frame(contenedor, bg=COLORES["superficie"], width=360,
-                         highlightthickness=1, highlightbackground=COLORES["borde"])
-        panel.pack(side="left", fill="y")
-        panel.pack_propagate(False)
-
-        tk.Frame(panel, bg=COLORES["alerta"], height=4).pack(fill="x")
-
-        encabezado = tk.Frame(panel, bg=COLORES["superficie"])
-        encabezado.pack(fill="x", padx=16, pady=(14, 2))
-        tk.Label(encabezado, text="⚙ PARAMETROS DEL CALCULO", bg=COLORES["superficie"],
-                 fg=COLORES["texto"], font=FUENTES["seccion"]).pack(anchor="w")
-        tk.Label(encabezado,
-                 text="Los porcentajes deben sumar 100 %",
-                 bg=COLORES["superficie"], fg=COLORES["texto_tenue"],
-                 font=FUENTES["pequena"]).pack(anchor="w", pady=(3, 0))
-
-        formulario = tk.Frame(panel, bg=COLORES["superficie"])
-        formulario.pack(fill="x", pady=(10, 0))
-        formulario.grid_columnconfigure(0, weight=1)
-
-        self.campo_materia = CampoFormulario(formulario, "Materia (opcional)", tipo="combo",
-                                             valores=DATOS.nombres_de_materias(),
-                                             icono="📘", fila=0)
-        self.campo_promedio = CampoFormulario(formulario, "Promedio actual",
-                                              icono="📈", fila=1)
-        self.campo_acumulado = CampoFormulario(formulario, "Porcentaje acumulado (%)",
-                                               icono="📦", fila=2)
-        self.campo_examen = CampoFormulario(formulario, "Porcentaje del examen (%)",
-                                            icono="📝", fila=3)
-        self.campo_minima = CampoFormulario(formulario, "Nota minima para aprobar",
-                                            icono="🎯", fila=4)
-
-        # Valores iniciales tipicos de la universidad.
-        self.campo_acumulado.asignar("70")
-        self.campo_examen.asignar("30")
-        self.campo_minima.asignar(formato_numero(NOTA_APROBACION))
-
-        # Al cambiar cualquier valor se recalcula automaticamente.
-        for campo in (self.campo_promedio, self.campo_acumulado,
-                      self.campo_examen, self.campo_minima):
-            campo.variable.trace_add("write", self._al_cambiar_campo)
-
-        # ----------------------------- Botonera ------------------------------
-        botonera = tk.Frame(panel, bg=COLORES["superficie"])
-        botonera.pack(side="bottom", fill="x", padx=14, pady=(4, 8))
-
-        BotonModerno(botonera, "CALCULAR NOTA NECESARIA", self.calcular, icono="🧮",
-                     ancho=320, alto=42, color=COLORES["morado"],
-                     color_hover=COLORES["morado_hover"]).pack(pady=(0, 6))
-
-        fila = tk.Frame(botonera, bg=COLORES["superficie"])
-        fila.pack(fill="x")
-        BotonModerno(fila, "USAR PROMEDIO", self.usar_promedio_guardado, icono="📥",
-                     ancho=190, alto=36, color=COLORES["azul"],
-                     color_hover=COLORES["azul_claro"]).pack(side="left")
-        BotonModerno(fila, "LIMPIAR", self.limpiar, icono="🧹",
-                     ancho=126, alto=36, color=COLORES["superficie_alt"],
-                     color_hover=COLORES["morado"], color_texto=COLORES["texto"],
-                     borde=COLORES["borde"]).pack(side="right")
-
-        # ============================ PANEL DERECHO ==========================
-        derecha = tk.Frame(contenedor, bg=COLORES["fondo"])
-        derecha.pack(side="left", fill="both", expand=True, padx=(18, 0))
-
-        # ------------------------- Panel de resultado ------------------------
-        self.panel_resultado = tk.Frame(derecha, bg=COLORES["superficie"],
-                                        highlightthickness=2,
-                                        highlightbackground=COLORES["borde"])
-        self.panel_resultado.pack(fill="x")
-
-        self.franja_resultado = tk.Frame(self.panel_resultado, bg=COLORES["morado"], height=5)
-        self.franja_resultado.pack(fill="x")
-
-        interior = tk.Frame(self.panel_resultado, bg=COLORES["superficie"])
-        interior.pack(fill="x", padx=22, pady=8)
-
-        tk.Label(interior, text="NOTA QUE NECESITA EN EL EXAMEN",
-                 bg=COLORES["superficie"], fg=COLORES["texto_tenue"],
-                 font=FUENTES["pequena_bold"]).pack(anchor="w")
-
-        self.etiqueta_resultado = tk.Label(
-            interior, text="--", bg=COLORES["superficie"],
-            fg=COLORES["texto"], font=FUENTES["resultado"],
-        )
-        self.etiqueta_resultado.pack(anchor="w", pady=(4, 2))
-
-        self.etiqueta_veredicto = tk.Label(
-            interior, text="Complete los campos para obtener el calculo",
-            bg=COLORES["superficie"], fg=COLORES["texto_suave"],
-            font=FUENTES["texto_bold"], anchor="w", justify="left", wraplength=620,
-        )
-        self.etiqueta_veredicto.pack(anchor="w", pady=(4, 0))
-
-        self.etiqueta_detalle = tk.Label(
-            interior, text="", bg=COLORES["superficie"], fg=COLORES["texto_tenue"],
-            font=FUENTES["pequena"], anchor="w", justify="left", wraplength=620,
-        )
-        self.etiqueta_detalle.pack(anchor="w", pady=(8, 0))
-
-        # ----------------------- Desglose de la formula ----------------------
-        crear_titulo_seccion(derecha, "🧾", "Desglose del calculo",
-                             "Detalle de la ponderacion utilizada").pack(anchor="w", pady=(10, 6))
-
-        contenedor_tabla, self.tabla_desglose = crear_tabla(
-            derecha,
-            columnas=["Concepto", "Valor", "Descripcion"],
-            anchos=[195, 95, 300],
-            alineaciones=["w", "center", "w"],
-            altura=3,
-        )
-        contenedor_tabla.pack(fill="both", expand=True)
-
-        # --------------------- Escenarios de referencia ----------------------
-        crear_titulo_seccion(derecha, "🔮", "Escenarios posibles",
-                             "Nota final que obtendria segun la calificacion del examen"
-                             ).pack(anchor="w", pady=(10, 6))
-
-        self.lienzo_escenarios = tk.Canvas(
-            derecha, height=76, bg=COLORES["superficie"], highlightthickness=1,
-            highlightbackground=COLORES["borde"],
-        )
-        self.lienzo_escenarios.pack(fill="both", expand=True)
-
-        self.limpiar_resultados()
-
-    # -------------------------------------------------------------- calculo --
-    def _al_cambiar_campo(self, *_argumentos):
-        """
-        Recalcula en silencio cada vez que el usuario escribe.
-
-        No muestra messagebox: si los datos aun estan incompletos simplemente
-        deja el resultado en espera. El calculo formal se hace con el boton.
-        """
-        try:
-            self.calcular(silencioso=True)
-        except Exception as error:
-            # El calculo silencioso nunca debe interrumpir la escritura.
-            print("[Study Control] Recalculo automatico omitido: %s" % error)
-
-    def leer_parametros(self, silencioso):
-        """
-        Valida los cuatro parametros del calculo.
-
-        Devuelve una tupla (promedio, acumulado, examen, minima) o None.
-        En modo silencioso no muestra advertencias.
-        """
-        valido, promedio = validar_decimal(self.campo_promedio.obtener(),
-                                           "Promedio actual", NOTA_MINIMA, NOTA_MAXIMA)
-        if not valido:
-            if not silencioso:
-                self.advertir("Validacion", promedio)
-                self.campo_promedio.enfocar()
-            return None
-
-        valido, acumulado = validar_decimal(self.campo_acumulado.obtener(),
-                                            "Porcentaje acumulado", 0, 100)
-        if not valido:
-            if not silencioso:
-                self.advertir("Validacion", acumulado)
-                self.campo_acumulado.enfocar()
-            return None
-
-        valido, examen = validar_decimal(self.campo_examen.obtener(),
-                                         "Porcentaje del examen", 0.01, 100)
-        if not valido:
-            if not silencioso:
-                self.advertir("Validacion", examen)
-                self.campo_examen.enfocar()
-            return None
-
-        valido, minima = validar_decimal(self.campo_minima.obtener(),
-                                         "Nota minima para aprobar", NOTA_MINIMA, NOTA_MAXIMA)
-        if not valido:
-            if not silencioso:
-                self.advertir("Validacion", minima)
-                self.campo_minima.enfocar()
-            return None
-
-        # Se avisa (sin bloquear) cuando los porcentajes no suman 100 %.
-        if abs((acumulado + examen) - 100.0) > 0.01 and not silencioso:
-            self.advertir(
-                "Porcentajes inconsistentes",
-                "El porcentaje acumulado (%s %%) y el del examen (%s %%) suman %s %%.\n\n"
-                "Lo habitual es que sumen 100 %%. El calculo se realizara igualmente "
-                "con los valores ingresados."
-                % (formato_numero(acumulado, 1), formato_numero(examen, 1),
-                   formato_numero(acumulado + examen, 1))
-            )
-
-        return promedio, acumulado, examen, minima
-
-    @manejar_errores
-    def calcular(self, silencioso=False):
-        """
-        Aplica la formula de ponderacion y muestra un mensaje inteligente.
-
-        Casos contemplados:
-            - Ya aprobaste           (el acumulado alcanza la nota minima)
-            - No es posible aprobar  (la nota requerida supera la escala)
-            - Necesitas obtener...   (calificacion exacta requerida)
-        """
-        parametros = self.leer_parametros(silencioso)
-        if parametros is None:
-            if silencioso:
-                self.limpiar_resultados()
-            return
-
-        promedio, acumulado, examen, minima = parametros
-
-        # ------------------------- Formula principal -------------------------
-        aporte_acumulado = promedio * (acumulado / 100.0)
-        factor_examen = examen / 100.0
-        necesaria = (minima - aporte_acumulado) / factor_examen
-
-        # ------------------------ Interpretacion -----------------------------
-        if aporte_acumulado >= minima:
-            titulo = "✅  YA APROBASTE"
-            mensaje = ("Con tu acumulado ya alcanzas la nota minima de %s. "
-                       "Aunque obtengas %s en el examen, la materia esta aprobada."
-                       % (formato_numero(minima), formato_numero(NOTA_MINIMA, 0)))
-            valor_mostrado = formato_numero(max(0.0, necesaria))
-            color = COLORES["exito"]
-        elif necesaria > NOTA_MAXIMA:
-            titulo = "❌  NO ES POSIBLE APROBAR"
-            mensaje = ("Necesitarias obtener %s en el examen, pero la nota maxima "
-                       "de la escala es %s. Matematicamente no alcanzas el minimo de %s."
-                       % (formato_numero(necesaria), formato_numero(NOTA_MAXIMA, 0),
-                          formato_numero(minima)))
-            valor_mostrado = formato_numero(necesaria)
-            color = COLORES["error"]
-        elif necesaria <= NOTA_MINIMA:
-            titulo = "✅  YA APROBASTE"
-            mensaje = ("Tu acumulado es suficiente: cualquier calificacion en el examen "
-                       "te mantiene sobre la nota minima de %s." % formato_numero(minima))
-            valor_mostrado = formato_numero(max(0.0, necesaria))
-            color = COLORES["exito"]
-        else:
-            titulo = "🎯  NECESITAS OBTENER %s" % formato_numero(necesaria)
-            exigencia = necesaria / NOTA_MAXIMA * 100.0
-            if exigencia >= 85:
-                comentario = "Es una meta exigente: organiza un plan de estudio intensivo."
-            elif exigencia >= 60:
-                comentario = "Es una meta alcanzable con estudio constante."
-            else:
-                comentario = "Es una meta comoda: manten el ritmo y aseguras la materia."
-            mensaje = ("Debes obtener al menos %s sobre %s en el examen para alcanzar "
-                       "la nota minima de %s. %s"
-                       % (formato_numero(necesaria), formato_numero(NOTA_MAXIMA, 0),
-                          formato_numero(minima), comentario))
-            valor_mostrado = formato_numero(necesaria)
-            color = COLORES["alerta"] if necesaria >= NOTA_APROBACION else COLORES["azul_claro"]
-
-        # ------------------------- Pintado del panel -------------------------
-        self.etiqueta_resultado.configure(text=valor_mostrado, fg=color)
-        self.etiqueta_veredicto.configure(text=titulo, fg=color)
-        self.etiqueta_detalle.configure(text=mensaje, fg=COLORES["texto_suave"])
-        self.panel_resultado.configure(highlightbackground=color)
-        self.franja_resultado.configure(bg=color)
-
-        # --------------------------- Tabla desglose --------------------------
-        nota_maxima_posible = aporte_acumulado + NOTA_MAXIMA * factor_examen
-        filas = [
-            (1, ("Promedio actual", formato_numero(promedio),
-                 "Calificacion obtenida hasta el momento"), "info"),
-            (2, ("Porcentaje acumulado", "%s %%" % formato_numero(acumulado, 1),
-                 "Peso del promedio actual sobre la nota final"), None),
-            (3, ("Aporte del acumulado", formato_numero(aporte_acumulado),
-                 "Puntos ya asegurados en la nota final"), "exito"),
-            (4, ("Porcentaje del examen", "%s %%" % formato_numero(examen, 1),
-                 "Peso del examen sobre la nota final"), None),
-            (5, ("Nota minima requerida", formato_numero(minima),
-                 "Meta que se debe alcanzar en la materia"), "alerta"),
-            (6, ("Nota maxima alcanzable", formato_numero(nota_maxima_posible),
-                 "Resultado final si obtiene %s en el examen"
-                 % formato_numero(NOTA_MAXIMA, 0)),
-             "exito" if nota_maxima_posible >= minima else "error"),
-        ]
-        llenar_tabla(self.tabla_desglose, filas)
-
-        # --------------------------- Escenarios ------------------------------
-        self.dibujar_escenarios(aporte_acumulado, factor_examen, minima)
-
-        if not silencioso:
-            self.actualizar_mensaje("🎯 Calculo actualizado correctamente", color)
-
-    def dibujar_escenarios(self, aporte_acumulado, factor_examen, minima):
-        """
-        Dibuja en un Canvas la nota final segun distintas notas de examen.
-
-        Es una ayuda visual: muestra cinco escenarios (0, 5, 10, 15 y 20)
-        pintados de verde si aprueban y de rojo si no.
-        """
-        lienzo = self.lienzo_escenarios
-        lienzo.delete("all")
-        lienzo.update_idletasks()
-
-        ancho_total = max(lienzo.winfo_width(), 700)
-        alto_total = max(lienzo.winfo_height(), 60)
-        escenarios = [0.0, 5.0, 10.0, 15.0, 20.0]
-        ancho_columna = ancho_total / float(len(escenarios))
-
-        # Las alturas son proporcionales para que el grafico se adapte al
-        # espacio realmente disponible en la ventana.
-        fila_titulo = alto_total * 0.22
-        fila_valor = alto_total * 0.53
-        fila_estado = alto_total * 0.84
-
-        for indice, nota_examen in enumerate(escenarios):
-            final = aporte_acumulado + nota_examen * factor_examen
-            aprueba = final >= minima
-            color = COLORES["exito"] if aprueba else COLORES["error"]
-
-            centro_x = ancho_columna * indice + ancho_columna / 2.0
-
-            lienzo.create_text(centro_x, fila_titulo,
-                               text="Examen %s" % formato_numero(nota_examen, 0),
-                               fill=COLORES["texto_tenue"], font=("TkDefaultFont", 8))
-            lienzo.create_text(centro_x, fila_valor, text=formato_numero(final),
-                               fill=color, font=("TkDefaultFont", 15, "bold"))
-            lienzo.create_text(centro_x, fila_estado,
-                               text="APRUEBA" if aprueba else "NO APRUEBA",
-                               fill=color, font=("TkDefaultFont", 8, "bold"))
-
-            if indice < len(escenarios) - 1:
-                separador_x = ancho_columna * (indice + 1)
-                lienzo.create_line(separador_x, alto_total * 0.12,
-                                   separador_x, alto_total * 0.9, fill=COLORES["borde"])
-
-    # ------------------------------------------------------------- acciones --
-    @manejar_errores
-    def usar_promedio_guardado(self):
-        """Toma el promedio guardado de la materia seleccionada (Modulo 3)."""
-        materia = self.campo_materia.obtener()
-        if not materia:
-            self.advertir("Sin materia",
-                          "Seleccione primero una materia para recuperar su promedio guardado.")
-            return
-
-        for registro in DATOS.notas:
-            if str(registro.get("materia", "")).lower() == materia.lower():
-                self.campo_promedio.asignar(formato_numero(registro.get("promedio", 0)))
-                self.calcular(silencioso=True)
-                self.actualizar_mensaje("📥 Promedio de '%s' cargado" % materia,
-                                        COLORES["azul_claro"])
-                self.informar("Promedio cargado",
-                              "Se cargo el promedio %s de la materia '%s'."
-                              % (formato_numero(registro.get("promedio", 0)), materia))
-                return
-
-        self.advertir("Sin datos",
-                      "La materia '%s' no tiene un promedio guardado.\n\n"
-                      "Puede calcularlo y guardarlo en el modulo Calculadora de Promedios."
-                      % materia)
-
-    @manejar_errores
-    def limpiar(self):
-        """Restablece los valores por defecto del modulo."""
-        self.campo_materia.limpiar()
-        self.campo_promedio.limpiar()
-        self.campo_acumulado.asignar("70")
-        self.campo_examen.asignar("30")
-        self.campo_minima.asignar(formato_numero(NOTA_APROBACION))
-        self.limpiar_resultados()
-        self.campo_promedio.enfocar()
-        self.actualizar_mensaje("🧹 Parametros reiniciados", COLORES["texto_suave"])
-
-    def limpiar_resultados(self):
-        """Deja el panel de resultados en su estado neutro de espera."""
-        self.etiqueta_resultado.configure(text="--", fg=COLORES["texto"])
-        self.etiqueta_veredicto.configure(
-            text="Complete los campos para obtener el calculo", fg=COLORES["texto_suave"])
-        self.etiqueta_detalle.configure(text="")
-        self.panel_resultado.configure(highlightbackground=COLORES["borde"])
-        self.franja_resultado.configure(bg=COLORES["morado"])
-        llenar_tabla(self.tabla_desglose, [])
-        self.lienzo_escenarios.delete("all")
-        self.lienzo_escenarios.create_text(
-            350, max(self.lienzo_escenarios.winfo_height(), 60) / 2,
-            text="Los escenarios apareceran despues del calculo",
-            fill=COLORES["texto_tenue"], font=("TkDefaultFont", 9),
-        )
-
-
-# =============================================================================
-# SECCION 14 : MODULO 5 - HORARIO SEMANAL
+# SECCION 11 : MODULO 2 - HORARIO SEMANAL
 # =============================================================================
 # Registro de los bloques de clase: materia, dia, hora de inicio, hora de fin
 # y docente. Detecta cruces de horario, calcula la duracion de cada bloque y
@@ -3056,21 +1810,21 @@ class VentanaHorario(VentanaModulo):
 
         fila_uno = tk.Frame(botonera, bg=COLORES["superficie"])
         fila_uno.pack(fill="x", pady=3)
-        BotonModerno(fila_uno, "GUARDAR", self.guardar_bloque, icono="💾",
+        BotonModerno(fila_uno, "GUARDAR", self.guardar_bloque,
                      ancho=140, alto=36, color=COLORES["exito"],
                      color_hover=COLORES["exito_hover"]).pack(side="left")
-        BotonModerno(fila_uno, "EDITAR", self.editar_bloque, icono="✏",
+        BotonModerno(fila_uno, "EDITAR", self.editar_bloque,
                      ancho=140, alto=36, color=COLORES["azul"],
                      color_hover=COLORES["azul_claro"]).pack(side="right")
 
         fila_dos = tk.Frame(botonera, bg=COLORES["superficie"])
         fila_dos.pack(fill="x", pady=3)
-        BotonModerno(fila_dos, "ELIMINAR", self.eliminar_bloque, icono="🗑",
+        BotonModerno(fila_dos, "ELIMINAR", self.eliminar_bloque,
                      ancho=140, alto=36, color=COLORES["error"],
                      color_hover=COLORES["error_hover"]).pack(side="left")
-        BotonModerno(fila_dos, "LIMPIAR", self.limpiar_formulario, icono="🧹",
+        BotonModerno(fila_dos, "LIMPIAR", self.limpiar_formulario,
                      ancho=140, alto=36, color=COLORES["superficie_alt"],
-                     color_hover=COLORES["morado"], color_texto=COLORES["texto"],
+                     color_hover=COLORES["celeste"], color_texto=COLORES["texto"],
                      borde=COLORES["borde"]).pack(side="right")
 
         # ============================ PANEL DERECHO ==========================
@@ -3243,7 +1997,8 @@ class VentanaHorario(VentanaModulo):
             minutos = minutos_por_dia[dia]
             centro_x = ancho_columna * indice + ancho_columna / 2.0
             altura_barra = (minutos / float(maximo)) * (alto_total - 52)
-            color = COLORES["morado"] if dia != hoy else COLORES["cian"]
+            # El dia de hoy se resalta en blanco para diferenciarlo del resto.
+            color = COLORES["blanco"] if dia == hoy else COLORES["celeste"]
 
             base_y = alto_total - 26
             if minutos > 0:
@@ -3258,7 +2013,7 @@ class VentanaHorario(VentanaModulo):
                                    fill=COLORES["borde"], width=2)
 
             lienzo.create_text(centro_x, alto_total - 12, text=dia[:3].upper(),
-                               fill=COLORES["cian"] if dia == hoy else COLORES["texto_tenue"],
+                               fill=COLORES["blanco"] if dia == hoy else COLORES["texto_tenue"],
                                font=("TkDefaultFont", 8, "bold"))
 
     def leer_formulario(self):
@@ -3431,328 +2186,381 @@ class VentanaHorario(VentanaModulo):
         self.campo_fin.asignar(registro.get("fin", ""))
         self.campo_docente.asignar(registro.get("docente", ""))
         self.actualizar_mensaje("✏ Editando bloque de %s" % registro.get("materia", ""),
-                                COLORES["morado_claro"])
+                                COLORES["celeste_claro"])
 
 
 # =============================================================================
-# SECCION 15 : MODULO 6 - ESTADISTICAS GENERALES
+# SECCION 12 : MODULO 3 - CALCULADORA DE PROMEDIOS
 # =============================================================================
-# Consolida la informacion de los demas modulos y la presenta en tarjetas,
-# graficos dibujados con Canvas y una tabla comparativa por materia. Todos
-# los valores se calculan automaticamente a partir de los archivos JSON.
+# El usuario ingresa sus notas separadas por comas y el sistema entrega la
+# lista ordenada, el promedio, la nota mayor, la menor, la cantidad y el
+# veredicto APROBADO (verde) o REPROBADO (rojo). Ademas permite guardar el
+# resultado en notas.json para alimentar el modulo de estadisticas.
 # =============================================================================
 
-class VentanaEstadisticas(VentanaModulo):
-    """Modulo 6: panel de control academico con indicadores automaticos."""
+class VentanaPromedios(VentanaModulo):
+    """Modulo 3: calculo estadistico de las calificaciones del estudiante."""
 
     def __init__(self, aplicacion):
         super().__init__(
             aplicacion,
-            titulo="Estadisticas Generales",
-            descripcion="Resumen automatico de su desempeno academico",
-            icono="📈",
-            color_acento=COLORES["exito"],
+            titulo="Calculadora de Promedios",
+            descripcion="Analice sus calificaciones y conozca su situacion academica",
+            icono="📊",
+            color_acento=COLORES["azul_claro"],
         )
+        self.notas_calculadas = []               # Ultimo calculo realizado
+        self.promedio_calculado = 0.0
         self.construir_interfaz()
-        self.calcular_estadisticas()
+        self.refrescar_historial()
 
     # ------------------------------------------------------------ interfaz ---
     def construir_interfaz(self):
-        """Crea las tarjetas de indicadores, los graficos y la tabla."""
-        # ------------------------- Fila de indicadores -----------------------
-        fila_tarjetas = tk.Frame(self.cuerpo, bg=COLORES["fondo"])
-        fila_tarjetas.pack(fill="x")
+        """Distribuye el panel de ingreso, los indicadores y el historial."""
+        contenedor = tk.Frame(self.cuerpo, bg=COLORES["fondo"])
+        contenedor.pack(fill="both", expand=True)
 
-        self.tarjeta_materias = TarjetaIndicador(fila_tarjetas, "📚", "Materias", "0",
-                                                 COLORES["morado"], ancho=200, alto=96)
-        self.tarjeta_materias.pack(side="left", padx=(0, 10))
+        # ============================ PANEL IZQUIERDO ========================
+        panel = tk.Frame(contenedor, bg=COLORES["superficie"], width=360,
+                         highlightthickness=1, highlightbackground=COLORES["borde"])
+        panel.pack(side="left", fill="y")
+        panel.pack_propagate(False)
 
-        self.tarjeta_tareas = TarjetaIndicador(fila_tarjetas, "📝", "Tareas totales", "0",
-                                               COLORES["cian"], ancho=200, alto=96)
-        self.tarjeta_tareas.pack(side="left", padx=(0, 10))
+        tk.Frame(panel, bg=COLORES["azul_claro"], height=4).pack(fill="x")
 
-        self.tarjeta_completadas = TarjetaIndicador(fila_tarjetas, "✅", "Completadas", "0",
-                                                    COLORES["exito"], ancho=200, alto=96)
-        self.tarjeta_completadas.pack(side="left", padx=(0, 10))
+        encabezado = tk.Frame(panel, bg=COLORES["superficie"])
+        encabezado.pack(fill="x", padx=16, pady=(14, 2))
+        tk.Label(encabezado, text="🔢 INGRESO DE NOTAS", bg=COLORES["superficie"],
+                 fg=COLORES["texto"], font=FUENTES["seccion"]).pack(anchor="w")
+        tk.Label(encabezado,
+                 text="Escriba las notas separadas por comas.\nEjemplo:  15, 18.5, 12, 20",
+                 bg=COLORES["superficie"], fg=COLORES["texto_tenue"],
+                 font=FUENTES["pequena"], justify="left").pack(anchor="w", pady=(3, 0))
 
-        self.tarjeta_pendientes = TarjetaIndicador(fila_tarjetas, "⏳", "Pendientes", "0",
-                                                   COLORES["alerta"], ancho=200, alto=96)
-        self.tarjeta_pendientes.pack(side="left", padx=(0, 10))
+        # ------------------------ Caja de texto de notas ---------------------
+        caja = tk.Frame(panel, bg=COLORES["superficie_alt"],
+                        highlightthickness=1, highlightbackground=COLORES["borde"])
+        caja.pack(fill="x", padx=16, pady=12)
 
-        self.tarjeta_promedio = TarjetaIndicador(fila_tarjetas, "🎯", "Promedio general", "0.00",
-                                                 COLORES["azul_claro"], ancho=200, alto=96)
-        self.tarjeta_promedio.pack(side="left")
+        self.texto_notas = tk.Text(
+            caja, height=4, bg=COLORES["superficie_alt"], fg=COLORES["texto"],
+            insertbackground=COLORES["celeste_claro"], relief="flat",
+            font=FUENTES["mono"], wrap="word", padx=10, pady=8,
+        )
+        self.texto_notas.pack(fill="both", expand=True)
+        self.texto_notas.bind("<Return>", self._calcular_con_enter)
 
-        # -------------------------- Zona intermedia --------------------------
-        zona = tk.Frame(self.cuerpo, bg=COLORES["fondo"])
-        zona.pack(fill="both", expand=True, pady=10)
+        # ---------------------- Materia asociada (opcional) ------------------
+        formulario = tk.Frame(panel, bg=COLORES["superficie"])
+        formulario.pack(fill="x")
+        formulario.grid_columnconfigure(0, weight=1)
+        self.campo_materia = CampoFormulario(
+            formulario, "Materia asociada (opcional)", tipo="combo",
+            valores=DATOS.nombres_de_materias(), icono="📘", fila=0,
+        )
 
-        # ---- Izquierda: grafico de avance y distribucion de prioridades -----
-        izquierda = tk.Frame(zona, bg=COLORES["fondo"], width=430)
-        izquierda.pack(side="left", fill="both")
-        izquierda.pack_propagate(False)
+        tk.Label(panel,
+                 text="Escala vigente: %s a %s   |   Nota minima de aprobacion: %s"
+                      % (formato_numero(NOTA_MINIMA, 0), formato_numero(NOTA_MAXIMA, 0),
+                         formato_numero(NOTA_APROBACION)),
+                 bg=COLORES["superficie"], fg=COLORES["celeste_claro"],
+                 font=FUENTES["micro"], wraplength=310, justify="left").pack(anchor="w", padx=20)
 
-        crear_titulo_seccion(izquierda, "📊", "Avance de tareas",
-                             "Porcentaje de tareas completadas").pack(anchor="w", pady=(0, 8))
+        # ----------------------------- Botonera ------------------------------
+        botonera = tk.Frame(panel, bg=COLORES["superficie"])
+        botonera.pack(side="bottom", fill="x", padx=14, pady=(4, 8))
 
-        self.lienzo_avance = tk.Canvas(izquierda, height=128, bg=COLORES["superficie"],
-                                       highlightthickness=1,
-                                       highlightbackground=COLORES["borde"])
-        self.lienzo_avance.pack(fill="x")
+        BotonModerno(botonera, "CALCULAR PROMEDIO", self.calcular,
+                     ancho=320, alto=42, color=COLORES["celeste"],
+                     color_hover=COLORES["celeste_hover"]).pack(pady=(0, 6))
 
-        crear_titulo_seccion(izquierda, "⚡", "Tareas por prioridad",
-                             "Distribucion de la carga academica").pack(anchor="w", pady=(10, 6))
+        fila = tk.Frame(botonera, bg=COLORES["superficie"])
+        fila.pack(fill="x")
+        BotonModerno(fila, "GUARDAR", self.guardar_en_historial,
+                     ancho=155, alto=36, color=COLORES["exito"],
+                     color_hover=COLORES["exito_hover"]).pack(side="left")
+        BotonModerno(fila, "LIMPIAR", self.limpiar,
+                     ancho=155, alto=36, color=COLORES["superficie_alt"],
+                     color_hover=COLORES["celeste"], color_texto=COLORES["texto"],
+                     borde=COLORES["borde"]).pack(side="right")
 
-        self.lienzo_prioridad = tk.Canvas(izquierda, height=106, bg=COLORES["superficie"],
-                                          highlightthickness=1,
-                                          highlightbackground=COLORES["borde"])
-        self.lienzo_prioridad.pack(fill="x")
-
-        # ------------------ Derecha: detalle por materia ---------------------
-        derecha = tk.Frame(zona, bg=COLORES["fondo"])
+        # ============================ PANEL DERECHO ==========================
+        derecha = tk.Frame(contenedor, bg=COLORES["fondo"])
         derecha.pack(side="left", fill="both", expand=True, padx=(18, 0))
 
-        crear_titulo_seccion(derecha, "🔎", "Detalle por materia",
-                             "Comparativa de tareas, creditos y promedios").pack(anchor="w",
-                                                                                  pady=(0, 8))
+        # ------------------------ Tarjetas de resultado ----------------------
+        tarjetas = tk.Frame(derecha, bg=COLORES["fondo"])
+        tarjetas.pack(fill="x")
 
-        contenedor_tabla, self.tabla = crear_tabla(
-            derecha,
-            columnas=["Materia", "Cr.", "Tareas", "Hechas", "Pend.", "Prom.", "Estado"],
-            anchos=[145, 42, 72, 72, 60, 66, 92],
-            alineaciones=["w", "center", "center", "center", "center", "center", "center"],
-            altura=4,
-            columna_elastica=0,
+        self.tarjeta_promedio = TarjetaIndicador(tarjetas, "🎯", "Promedio", "0.00",
+                                                 COLORES["celeste"], ancho=160, alto=96)
+        self.tarjeta_promedio.pack(side="left", padx=(0, 10))
+
+        self.tarjeta_mayor = TarjetaIndicador(tarjetas, "🔼", "Nota mayor", "0.00",
+                                              COLORES["exito"], ancho=160, alto=96)
+        self.tarjeta_mayor.pack(side="left", padx=(0, 10))
+
+        self.tarjeta_menor = TarjetaIndicador(tarjetas, "🔽", "Nota menor", "0.00",
+                                              COLORES["error"], ancho=160, alto=96)
+        self.tarjeta_menor.pack(side="left", padx=(0, 10))
+
+        self.tarjeta_cantidad = TarjetaIndicador(tarjetas, "#️⃣", "Cantidad", "0",
+                                                 COLORES["cian"], ancho=160, alto=96)
+        self.tarjeta_cantidad.pack(side="left")
+
+        # ------------------------- Franja de veredicto -----------------------
+        self.franja_estado = tk.Frame(derecha, bg=COLORES["fondo_alt"], height=54,
+                                      highlightthickness=1,
+                                      highlightbackground=COLORES["borde"])
+        self.franja_estado.pack(fill="x", pady=8)
+        self.franja_estado.pack_propagate(False)
+
+        self.etiqueta_estado = tk.Label(
+            self.franja_estado, text="⌛  Ingrese sus notas y presione CALCULAR PROMEDIO",
+            bg=COLORES["fondo_alt"], fg=COLORES["texto_suave"], font=FUENTES["texto_bold"],
+        )
+        self.etiqueta_estado.pack(expand=True)
+
+        # ---------- Dos tablas lado a lado: analisis actual e historial ------
+        zona_tablas = tk.Frame(derecha, bg=COLORES["fondo"])
+        zona_tablas.pack(fill="both", expand=True)
+
+        # Izquierda: lista ordenada del calculo recien realizado.
+        columna_izquierda = tk.Frame(zona_tablas, bg=COLORES["fondo"])
+        columna_izquierda.pack(side="left", fill="both", expand=True)
+
+        crear_titulo_seccion(columna_izquierda, "📑", "Lista ordenada de notas",
+                             "De la calificacion mas alta a la mas baja").pack(anchor="w",
+                                                                                pady=(0, 6))
+
+        contenedor_tabla, self.tabla_notas = crear_tabla(
+            columna_izquierda,
+            columnas=["Pos", "Nota", "Estado", "Diferencia"],
+            anchos=[46, 62, 88, 100],
+            alineaciones=["center", "center", "center", "center"],
+            altura=7,
         )
         contenedor_tabla.pack(fill="both", expand=True)
 
-        # ------------------------ Panel de conclusiones ----------------------
-        panel_conclusion = tk.Frame(derecha, bg=COLORES["superficie"],
-                                    highlightthickness=1, highlightbackground=COLORES["borde"])
-        panel_conclusion.pack(fill="x", pady=(12, 0))
+        # Derecha: promedios ya guardados en notas.json.
+        columna_derecha = tk.Frame(zona_tablas, bg=COLORES["fondo"])
+        columna_derecha.pack(side="left", fill="both", expand=True, padx=(14, 0))
 
-        tk.Frame(panel_conclusion, bg=COLORES["exito"], height=3).pack(fill="x")
-        self.etiqueta_conclusion = tk.Label(
-            panel_conclusion, text="", bg=COLORES["superficie"], fg=COLORES["texto_suave"],
-            font=FUENTES["pequena"], justify="left", anchor="w", wraplength=560,
+        crear_titulo_seccion(columna_derecha, "🗂", "Promedios guardados",
+                             "Quedan guardados en notas.json").pack(anchor="w", pady=(0, 6))
+
+        contenedor_historial, self.tabla_historial = crear_tabla(
+            columna_derecha,
+            columnas=["Materia", "Notas", "Prom.", "Estado"],
+            anchos=[100, 70, 56, 86],
+            alineaciones=["w", "w", "center", "center"],
+            altura=7,
+            columna_elastica=0,
         )
-        self.etiqueta_conclusion.pack(fill="x", padx=14, pady=12)
+        contenedor_historial.pack(fill="both", expand=True)
+        self.tabla_historial.bind("<Double-1>", lambda evento=None: self.eliminar_del_historial())
 
-        # ---------------------- Boton de actualizacion -----------------------
-        BotonModerno(self.zona_titulo_derecha, "ACTUALIZAR DATOS", self.calcular_estadisticas,
-                     icono="🔄", ancho=185, alto=38, color=COLORES["superficie_alt"],
-                     color_hover=COLORES["morado"], color_texto=COLORES["texto"],
-                     borde=COLORES["borde"], fuente=FUENTES["boton_pequeno"]).pack(pady=12)
+    # ------------------------------------------------------------- acciones --
+    def _calcular_con_enter(self, _evento=None):
+        """Permite calcular presionando Enter dentro de la caja de notas."""
+        self.calcular()
+        return "break"                            # Evita el salto de linea
 
-    # ------------------------------------------------------------- calculos --
+    def obtener_texto_notas(self):
+        """Devuelve el contenido actual de la caja de texto."""
+        return self.texto_notas.get("1.0", "end").strip()
+
     @manejar_errores
-    def calcular_estadisticas(self):
-        """Recalcula todos los indicadores a partir de la informacion actual."""
-        total_materias = len(DATOS.materias)
-        total_tareas = len(DATOS.tareas)
-        completadas = sum(1 for t in DATOS.tareas if t.get("estado") == "Completada")
-        pendientes = total_tareas - completadas
+    def calcular(self):
+        """
+        Valida las notas ingresadas y muestra el analisis completo.
 
-        promedios = [float(n.get("promedio", 0)) for n in DATOS.notas]
-        promedio_general = promedio_de(promedios)
+        Calcula promedio, mayor, menor, cantidad y determina si el estudiante
+        aprueba (verde) o reprueba (rojo).
+        """
+        valido, resultado = validar_lista_de_notas(self.obtener_texto_notas())
+        if not valido:
+            self.advertir("Notas invalidas", resultado)
+            self.texto_notas.focus_set()
+            return
+
+        notas = resultado
+        promedio = promedio_de(notas)
+        mayor = max(notas)
+        menor = min(notas)
+        cantidad = len(notas)
+        aprueba = promedio >= NOTA_APROBACION
+
+        self.notas_calculadas = notas
+        self.promedio_calculado = promedio
 
         # --------------------------- Tarjetas KPI ----------------------------
-        self.tarjeta_materias.actualizar(total_materias, COLORES["texto"])
-        self.tarjeta_tareas.actualizar(total_tareas, COLORES["texto"])
-        self.tarjeta_completadas.actualizar(completadas, COLORES["exito"])
-        self.tarjeta_pendientes.actualizar(pendientes,
-                                           COLORES["alerta"] if pendientes else COLORES["exito"])
+        color_promedio = COLORES["exito"] if aprueba else COLORES["error"]
+        self.tarjeta_promedio.actualizar(formato_numero(promedio), color_promedio)
+        self.tarjeta_mayor.actualizar(formato_numero(mayor), COLORES["exito"])
+        self.tarjeta_menor.actualizar(formato_numero(menor), COLORES["error"])
+        self.tarjeta_cantidad.actualizar(str(cantidad), COLORES["cian"])
 
-        if promedios:
-            color_promedio = (COLORES["exito"] if promedio_general >= NOTA_APROBACION
-                              else COLORES["error"])
-            self.tarjeta_promedio.actualizar(formato_numero(promedio_general), color_promedio)
+        # ------------------------- Franja de veredicto -----------------------
+        if aprueba:
+            mensaje = ("✅  APROBADO   |   Promedio %s   |   Supera el minimo por %s puntos"
+                       % (formato_numero(promedio),
+                          formato_numero(promedio - NOTA_APROBACION)))
+            self.pintar_estado(mensaje, COLORES["exito"])
         else:
-            self.tarjeta_promedio.actualizar("--", COLORES["texto_tenue"])
+            mensaje = ("❌  REPROBADO   |   Promedio %s   |   Le faltan %s puntos para aprobar"
+                       % (formato_numero(promedio),
+                          formato_numero(NOTA_APROBACION - promedio)))
+            self.pintar_estado(mensaje, COLORES["error"])
 
-        # ------------------------------ Graficos -----------------------------
-        porcentaje = (completadas / float(total_tareas) * 100.0) if total_tareas else 0.0
-        self.dibujar_avance(porcentaje, completadas, pendientes)
-        self.dibujar_prioridades()
-
-        # -------------------------- Tabla por materia ------------------------
-        self.llenar_detalle()
-
-        # --------------------------- Conclusiones ----------------------------
-        self.escribir_conclusiones(total_materias, total_tareas, completadas,
-                                   pendientes, promedios, promedio_general)
-
-        self.actualizar_mensaje("🔄 Estadisticas actualizadas el %s"
-                                % datetime.datetime.now().strftime("%d/%m/%Y a las %H:%M"),
-                                COLORES["exito"])
-
-    def dibujar_avance(self, porcentaje, completadas, pendientes):
-        """Dibuja un anillo de progreso con el porcentaje de tareas completadas."""
-        lienzo = self.lienzo_avance
-        lienzo.delete("all")
-        lienzo.update_idletasks()
-
-        ancho = max(lienzo.winfo_width(), 400)
-        centro_x, centro_y, radio = 80, 64, 44
-
-        # Anillo base (gris) y anillo de avance (morado / verde).
-        lienzo.create_oval(centro_x - radio, centro_y - radio,
-                           centro_x + radio, centro_y + radio,
-                           outline=COLORES["fondo_alt"], width=14)
-
-        if porcentaje > 0:
-            color = COLORES["exito"] if porcentaje >= 70 else (
-                COLORES["morado"] if porcentaje >= 35 else COLORES["alerta"])
-            lienzo.create_arc(centro_x - radio, centro_y - radio,
-                              centro_x + radio, centro_y + radio,
-                              start=90, extent=-porcentaje * 3.6,
-                              style="arc", outline=color, width=14)
-        else:
-            color = COLORES["texto_tenue"]
-
-        lienzo.create_text(centro_x, centro_y - 6, text="%s%%" % formato_numero(porcentaje, 0),
-                           fill=COLORES["texto"], font=("TkDefaultFont", 18, "bold"))
-        lienzo.create_text(centro_x, centro_y + 15, text="completado",
-                           fill=COLORES["texto_tenue"], font=("TkDefaultFont", 8))
-
-        # Leyenda al costado derecho del anillo.
-        base_x = min(ancho - 150, 190)
-        lienzo.create_rectangle(base_x, 40, base_x + 12, 52,
-                                fill=COLORES["exito"], outline=COLORES["exito"])
-        lienzo.create_text(base_x + 22, 46, anchor="w",
-                           text="Completadas: %d" % completadas,
-                           fill=COLORES["texto"], font=("TkDefaultFont", 9))
-
-        lienzo.create_rectangle(base_x, 72, base_x + 12, 84,
-                                fill=COLORES["alerta"], outline=COLORES["alerta"])
-        lienzo.create_text(base_x + 22, 78, anchor="w",
-                           text="Pendientes: %d" % pendientes,
-                           fill=COLORES["texto"], font=("TkDefaultFont", 9))
-
-    def dibujar_prioridades(self):
-        """Dibuja barras horizontales con la cantidad de tareas por prioridad."""
-        lienzo = self.lienzo_prioridad
-        lienzo.delete("all")
-        lienzo.update_idletasks()
-
-        ancho = max(lienzo.winfo_width(), 400)
-        colores = {"Alta": COLORES["error"], "Media": COLORES["alerta"], "Baja": COLORES["exito"]}
-
-        conteos = {}
-        for prioridad in PRIORIDADES:
-            conteos[prioridad] = sum(1 for t in DATOS.tareas
-                                     if t.get("prioridad") == prioridad)
-        maximo = max(conteos.values()) if any(conteos.values()) else 1
-
-        for indice, prioridad in enumerate(PRIORIDADES):
-            posicion_y = 22 + indice * 31
-            cantidad = conteos[prioridad]
-            largo = (cantidad / float(maximo)) * (ancho - 190)
-
-            lienzo.create_text(16, posicion_y, anchor="w", text=prioridad.upper(),
-                               fill=COLORES["texto_suave"], font=("TkDefaultFont", 9, "bold"))
-            lienzo.create_rectangle(84, posicion_y - 9, ancho - 90, posicion_y + 9,
-                                    fill=COLORES["fondo_alt"], outline=COLORES["fondo_alt"])
-            if cantidad > 0:
-                lienzo.create_rectangle(84, posicion_y - 9, 84 + max(largo, 4), posicion_y + 9,
-                                        fill=colores[prioridad], outline=colores[prioridad])
-            lienzo.create_text(ancho - 74, posicion_y, anchor="w",
-                               text="%d tarea%s" % (cantidad, "" if cantidad == 1 else "s"),
-                               fill=COLORES["texto"], font=("TkDefaultFont", 9))
-
-    def llenar_detalle(self):
-        """Construye la tabla comparativa materia por materia."""
+        # ------------------------ Tabla de notas ordenadas -------------------
+        ordenadas = sorted(notas, reverse=True)
         filas = []
-        for materia in sorted(DATOS.materias,
-                              key=lambda m: str(m.get("materia", "")).lower()):
-            nombre = materia.get("materia", "")
-            tareas = [t for t in DATOS.tareas if t.get("materia") == nombre]
-            completadas = sum(1 for t in tareas if t.get("estado") == "Completada")
-            pendientes = len(tareas) - completadas
-
-            promedio = None
-            for registro in DATOS.notas:
-                if str(registro.get("materia", "")).lower() == nombre.lower():
-                    promedio = float(registro.get("promedio", 0))
-                    break
-
-            if promedio is None:
-                texto_promedio, condicion, etiqueta = "--", "Sin notas", None
-            elif promedio >= NOTA_APROBACION:
-                texto_promedio, condicion, etiqueta = formato_numero(promedio), "Aprobado", "exito"
+        for posicion, nota in enumerate(ordenadas, start=1):
+            diferencia = nota - NOTA_APROBACION
+            if nota >= NOTA_APROBACION:
+                condicion, etiqueta = "Aprobada", "exito"
+                texto_diferencia = "+%s puntos" % formato_numero(diferencia)
             else:
-                texto_promedio, condicion, etiqueta = formato_numero(promedio), "Reprobado", "error"
+                condicion, etiqueta = "Reprobada", "error"
+                texto_diferencia = "-%s puntos" % formato_numero(abs(diferencia))
+            filas.append((posicion, (posicion, formato_numero(nota), condicion,
+                                     texto_diferencia), etiqueta))
+        llenar_tabla(self.tabla_notas, filas)
 
+        self.actualizar_mensaje(
+            "🧮 Calculo realizado sobre %d nota%s" % (cantidad, "" if cantidad == 1 else "s"),
+            COLORES["azul_claro"]
+        )
+
+    def pintar_estado(self, mensaje, color):
+        """Aplica el color del veredicto a la franja de resultado."""
+        self.franja_estado.configure(highlightbackground=color)
+        self.etiqueta_estado.configure(text=mensaje, fg=color)
+
+    @manejar_errores
+    def guardar_en_historial(self):
+        """Guarda el promedio calculado dentro de notas.json."""
+        if not self.notas_calculadas:
+            self.advertir("Sin calculo",
+                          "Primero debe calcular un promedio con el boton CALCULAR PROMEDIO.")
+            return
+
+        materia = self.campo_materia.obtener()
+        if not materia:
+            if not self.confirmar(
+                "Materia no seleccionada",
+                "No selecciono ninguna materia.\n\n"
+                "El promedio se guardara como 'General'. Desea continuar?"
+            ):
+                return
+            materia = "General"
+
+        # Si ya existe un registro de la misma materia se ofrece reemplazarlo.
+        existente = None
+        for registro in DATOS.notas:
+            if str(registro.get("materia", "")).lower() == materia.lower():
+                existente = registro
+                break
+
+        if existente is not None:
+            if not self.confirmar(
+                "Registro existente",
+                "Ya existe un promedio guardado para '%s' (%s).\n\nDesea reemplazarlo?"
+                % (materia, formato_numero(existente.get("promedio", 0)))
+            ):
+                return
+            DATOS.notas.remove(existente)
+
+        DATOS.notas.append({
+            "id": DATOS.nuevo_id(DATOS.notas),
+            "materia": materia,
+            "notas": self.notas_calculadas,
+            "promedio": round(self.promedio_calculado, 2),
+            "estado": "Aprobado" if self.promedio_calculado >= NOTA_APROBACION else "Reprobado",
+            "fecha": datetime.date.today().strftime("%d/%m/%Y"),
+        })
+        DATOS.guardar_notas()
+
+        self.refrescar_historial()
+        self.actualizar_mensaje("💾 Promedio de '%s' guardado" % materia, COLORES["exito"])
+        self.informar("Promedio guardado",
+                      "El promedio de '%s' (%s) fue guardado correctamente.\n\n"
+                      "Quedara guardado junto a los demas promedios del semestre."
+                      % (materia, formato_numero(self.promedio_calculado)))
+
+    @manejar_errores
+    def eliminar_del_historial(self):
+        """Elimina un promedio guardado (doble clic sobre la fila)."""
+        identificador = obtener_id_seleccionado(self.tabla_historial)
+        if identificador is None:
+            return
+        registro = DATOS.buscar_por_id(DATOS.notas, identificador)
+        if registro is None:
+            return
+        if not self.confirmar("Eliminar promedio",
+                              "Desea eliminar el promedio guardado de '%s'?"
+                              % registro.get("materia", "")):
+            return
+        DATOS.eliminar_por_id(DATOS.notas, identificador)
+        DATOS.guardar_notas()
+        self.refrescar_historial()
+        self.actualizar_mensaje("🗑 Promedio eliminado del historial", COLORES["error"])
+
+    def refrescar_historial(self):
+        """Vuelve a dibujar la tabla de promedios guardados."""
+        self.campo_materia.actualizar_valores(DATOS.nombres_de_materias())
+        registros = sorted(DATOS.notas,
+                           key=lambda r: float(r.get("promedio", 0)), reverse=True)
+        filas = []
+        for registro in registros:
+            notas = registro.get("notas", [])
+            texto_notas = ", ".join(formato_numero(n, 1) for n in notas)
+            if len(texto_notas) > 11:
+                texto_notas = texto_notas[:8] + "..."
+            aprobado = float(registro.get("promedio", 0)) >= NOTA_APROBACION
             filas.append((
-                materia.get("id"),
-                (nombre, materia.get("creditos", 0), len(tareas), completadas,
-                 pendientes, texto_promedio, condicion),
-                etiqueta,
+                registro.get("id"),
+                (
+                    registro.get("materia", ""),
+                    texto_notas,
+                    formato_numero(registro.get("promedio", 0)),
+                    "Aprobado" if aprobado else "Reprobado",
+                ),
+                "exito" if aprobado else "error",
             ))
-        llenar_tabla(self.tabla, filas)
+        llenar_tabla(self.tabla_historial, filas)
 
-    def escribir_conclusiones(self, materias, tareas, completadas,
-                              pendientes, promedios, promedio_general):
-        """Genera un texto interpretativo del desempeno del estudiante."""
-        lineas = []
+    @manejar_errores
+    def limpiar(self):
+        """Restablece la calculadora a su estado inicial."""
+        self.texto_notas.delete("1.0", "end")
+        self.campo_materia.limpiar()
+        self.notas_calculadas = []
+        self.promedio_calculado = 0.0
 
-        if materias == 0:
-            lineas.append("📌  Aun no hay materias registradas. Comience por el modulo "
-                          "'Registrar Materias'.")
-        else:
-            creditos = sum(int(m.get("creditos", 0) or 0) for m in DATOS.materias)
-            lineas.append("📌  Cursa %d materia(s) con un total de %d credito(s)."
-                          % (materias, creditos))
+        self.tarjeta_promedio.actualizar("0.00", COLORES["texto"])
+        self.tarjeta_mayor.actualizar("0.00", COLORES["texto"])
+        self.tarjeta_menor.actualizar("0.00", COLORES["texto"])
+        self.tarjeta_cantidad.actualizar("0", COLORES["texto"])
 
-        if tareas == 0:
-            lineas.append("📝  No hay tareas registradas en el sistema.")
-        else:
-            porcentaje = completadas / float(tareas) * 100.0
-            if porcentaje >= 80:
-                comentario = "Excelente nivel de cumplimiento, mantenga el ritmo."
-            elif porcentaje >= 50:
-                comentario = "Buen avance, aun quedan entregas por cerrar."
-            else:
-                comentario = "Se recomienda priorizar las tareas pendientes."
-            lineas.append("📝  Ha completado %d de %d tareas (%s %%). %s"
-                          % (completadas, tareas, formato_numero(porcentaje, 1), comentario))
-
-            vencidas = sum(1 for t in DATOS.tareas
-                           if t.get("estado") != "Completada"
-                           and dias_restantes(t.get("fecha", "")) is not None
-                           and dias_restantes(t.get("fecha", "")) < 0)
-            if vencidas:
-                lineas.append("⚠  Tiene %d tarea(s) vencida(s) sin completar." % vencidas)
-
-        if not promedios:
-            lineas.append("🎯  Aun no ha guardado promedios. Utilice el modulo "
-                          "'Calculadora de Promedios' para registrarlos.")
-        else:
-            aprobadas = sum(1 for p in promedios if p >= NOTA_APROBACION)
-            estado = "APROBATORIO" if promedio_general >= NOTA_APROBACION else "EN RIESGO"
-            lineas.append("🎯  Promedio general de %s sobre %s (%s). Materias aprobadas: %d de %d."
-                          % (formato_numero(promedio_general),
-                             formato_numero(NOTA_MAXIMA, 0), estado, aprobadas, len(promedios)))
-
-        bloques = len(DATOS.horario)
-        if bloques:
-            minutos = sum(max(0, hora_a_minutos(b.get("fin", "")) -
-                              hora_a_minutos(b.get("inicio", ""))) for b in DATOS.horario)
-            lineas.append("📅  Su horario contempla %d bloque(s) con una carga semanal de "
-                          "%dh %02dmin." % (bloques, minutos // 60, minutos % 60))
-        else:
-            lineas.append("📅  El horario semanal aun no tiene bloques registrados.")
-
-        self.etiqueta_conclusion.configure(text="\n".join(lineas))
+        self.franja_estado.configure(highlightbackground=COLORES["borde"])
+        self.etiqueta_estado.configure(
+            text="⌛  Ingrese sus notas y presione CALCULAR PROMEDIO",
+            fg=COLORES["texto_suave"],
+        )
+        llenar_tabla(self.tabla_notas, [])
+        self.texto_notas.focus_set()
+        self.actualizar_mensaje("🧹 Calculadora reiniciada", COLORES["texto_suave"])
 
 
 # =============================================================================
-# SECCION 16 : MODULO 7 - INFORMACION DEL SISTEMA
+# SECCION 13 : MODULO 4 - INFORMACION DEL SISTEMA
 # =============================================================================
 
 def mostrar_informacion(ventana_padre):
     """
-    Muestra el cuadro de dialogo institucional del proyecto (Modulo 7).
+    Muestra el cuadro de dialogo institucional del proyecto (Modulo 4).
 
     Cumple el requisito de presentar un MessageBox con los datos del software,
     los autores, la universidad y la tecnologia utilizada.
@@ -3772,30 +2580,25 @@ def mostrar_informacion(ventana_padre):
         "   Python %s\n\n"
         "MODULOS DEL SISTEMA:\n"
         "   1. Registro de Materias\n"
-        "   2. Control de Tareas\n"
+        "   2. Horario Semanal\n"
         "   3. Calculadora de Promedios\n"
-        "   4. Nota Necesaria\n"
-        "   5. Horario Semanal\n"
-        "   6. Estadisticas Generales\n"
-        "   7. Informacion del Sistema\n\n"
+        "   4. Informacion del Sistema\n\n"
         "ALMACENAMIENTO:\n"
-        "   materias.json  ·  tareas.json\n"
-        "   horario.json   ·  notas.json\n\n"
+        "   materias.json  ·  horario.json  ·  notas.json\n\n"
         "REGISTROS ACTUALES:\n"
-        "   Materias: %d   |   Tareas: %d\n"
-        "   Bloques de horario: %d   |   Promedios: %d"
+        "   Materias: %d   |   Bloques de horario: %d\n"
+        "   Promedios guardados: %d"
         % (APP_NOMBRE, APP_VERSION, APP_SUBTITULO,
            sys.version.split()[0],
-           len(DATOS.materias), len(DATOS.tareas),
-           len(DATOS.horario), len(DATOS.notas))
+           len(DATOS.materias), len(DATOS.horario), len(DATOS.notas))
     )
     messagebox.showinfo("Informacion del Sistema", detalle, parent=ventana_padre)
 
 
 # =============================================================================
-# SECCION 17 : VENTANA PRINCIPAL (MENU DEL SISTEMA)
+# SECCION 14 : VENTANA PRINCIPAL (MENU DEL SISTEMA)
 # =============================================================================
-# Pantalla de inicio de Study Control. Contiene el encabezado institucional,
+# Pantalla de inicio del sistema. Contiene el encabezado institucional,
 # el titulo del sistema y las ocho tarjetas que abren cada modulo mediante
 # ventanas Toplevel independientes.
 # =============================================================================
@@ -3843,8 +2646,8 @@ class AplicacionStudyControl:
         franja = tk.Frame(self.raiz, bg=COLORES["fondo"], height=4)
         franja.pack(fill="x")
         franja.pack_propagate(False)
-        tk.Frame(franja, bg=COLORES["morado_oscuro"]).place(relx=0.0, relwidth=0.34, relheight=1)
-        tk.Frame(franja, bg=COLORES["morado"]).place(relx=0.34, relwidth=0.33, relheight=1)
+        tk.Frame(franja, bg=COLORES["celeste_oscuro"]).place(relx=0.0, relwidth=0.34, relheight=1)
+        tk.Frame(franja, bg=COLORES["celeste"]).place(relx=0.34, relwidth=0.33, relheight=1)
         tk.Frame(franja, bg=COLORES["cian"]).place(relx=0.67, relwidth=0.33, relheight=1)
 
         # ------------------------- Bloque de titulo --------------------------
@@ -3855,19 +2658,15 @@ class AplicacionStudyControl:
         contenido = tk.Frame(hero, bg=COLORES["fondo_alt"])
         contenido.pack(expand=True)
 
-        # Titulo grande y centrado: STUDY CONTROL
-        titulo = tk.Frame(contenido, bg=COLORES["fondo_alt"])
-        titulo.pack()
-        tk.Label(titulo, text="🎓", bg=COLORES["fondo_alt"], fg=COLORES["morado_claro"],
-                 font=FUENTES["titulo_grande"]).pack(side="left", padx=(0, 14))
-        tk.Label(titulo, text="STUDY CONTROL", bg=COLORES["fondo_alt"],
-                 fg=COLORES["blanco"], font=FUENTES["titulo_gigante"]).pack(side="left")
+        # Titulo principal, grande y centrado, sin ningun icono.
+        tk.Label(contenido, text="SISTEMA DE ESTUDIO", bg=COLORES["fondo_alt"],
+                 fg=COLORES["blanco"], font=FUENTES["titulo_gigante"]).pack()
 
         # Subtitulo descriptivo del sistema.
         tk.Label(contenido, text=APP_SUBTITULO, bg=COLORES["fondo_alt"],
-                 fg=COLORES["morado_claro"], font=FUENTES["subtitulo"]).pack(pady=(4, 0))
+                 fg=COLORES["celeste_claro"], font=FUENTES["subtitulo"]).pack(pady=(4, 0))
 
-        # Separador decorativo entre el subtitulo y los creditos.
+        # Separador decorativo entre el subtitulo y los autores.
         separador = tk.Frame(contenido, bg=COLORES["fondo_alt"])
         separador.pack(pady=8)
         tk.Frame(separador, bg=COLORES["borde"], width=110, height=1).pack(side="left", pady=6)
@@ -3886,33 +2685,25 @@ class AplicacionStudyControl:
     # =========================================================================
     def definicion_de_modulos(self):
         """
-        Devuelve la definicion de las ocho opciones del menu principal.
+        Devuelve la definicion de los cuatro modulos del menu principal.
 
         Cada elemento contiene: icono, titulo, descripcion, comando y color.
         Tener la definicion en un solo lugar evita repetir codigo al crear
         las tarjetas y facilita agregar nuevos modulos en el futuro.
         """
         return [
-            ("📚", "Registrar Materias", "Asignaturas, docentes y creditos",
-             self.abrir_materias, COLORES["morado"]),
-            ("📝", "Control de Tareas", "Deberes, fechas y prioridades",
-             self.abrir_tareas, COLORES["cian"]),
+            ("📚", "Registro de Materias", "Asignaturas, docentes y aulas",
+             self.abrir_materias, COLORES["celeste"]),
+            ("📅", "Horario", "Bloques de clase semanales",
+             self.abrir_horario, COLORES["celeste_claro"]),
             ("📊", "Calculadora de Promedios", "Analisis de sus calificaciones",
              self.abrir_promedios, COLORES["azul_claro"]),
-            ("🎯", "Nota Necesaria", "Proyeccion para el examen final",
-             self.abrir_nota_necesaria, COLORES["alerta"]),
-            ("📅", "Horario", "Bloques de clase semanales",
-             self.abrir_horario, COLORES["azul"]),
-            ("📈", "Estadisticas", "Indicadores automaticos",
-             self.abrir_estadisticas, COLORES["exito"]),
             ("👤", "Informacion", "Datos del proyecto y autores",
-             self.abrir_informacion, COLORES["morado_claro"]),
-            ("🚪", "Salir", "Cerrar la aplicacion",
-             self.salir, COLORES["error"]),
+             self.abrir_informacion, COLORES["celeste_hover"]),
         ]
 
     def construir_menu(self):
-        """Dibuja la rejilla de tarjetas del menu principal (4 x 2)."""
+        """Dibuja las cuatro tarjetas del menu y el boton de salida."""
         contenedor = tk.Frame(self.raiz, bg=COLORES["fondo"])
         contenedor.pack(fill="both", expand=True, padx=26, pady=18)
 
@@ -3931,16 +2722,22 @@ class AplicacionStudyControl:
         rejilla = tk.Frame(contenedor, bg=COLORES["fondo"])
         rejilla.pack(fill="both", expand=True)
 
-        # Cuatro columnas de igual ancho y dos filas de igual alto.
+        # Los cuatro modulos ocupan una sola fila de columnas iguales.
         for columna in range(4):
             rejilla.grid_columnconfigure(columna, weight=1, uniform="columna")
-        for fila in range(2):
-            rejilla.grid_rowconfigure(fila, weight=1, uniform="fila")
+        rejilla.grid_rowconfigure(0, weight=1)
 
         for indice, (icono, titulo, descripcion, comando, color) in \
                 enumerate(self.definicion_de_modulos()):
             tarjeta = TarjetaMenu(rejilla, icono, titulo, descripcion, comando, color)
-            tarjeta.grid(row=indice // 4, column=indice % 4, sticky="nsew", padx=7, pady=7)
+            tarjeta.grid(row=0, column=indice, sticky="nsew", padx=7, pady=7)
+
+        # Boton de salida, separado de los modulos porque no abre ninguna ventana.
+        zona_salida = tk.Frame(contenedor, bg=COLORES["fondo"])
+        zona_salida.pack(fill="x", pady=(14, 0))
+        BotonModerno(zona_salida, "SALIR DEL SISTEMA", self.salir,
+                     ancho=230, alto=42, color=COLORES["error"],
+                     color_hover=COLORES["error_hover"]).pack()
 
     # =========================================================================
     # PIE DE PAGINA
@@ -3969,18 +2766,16 @@ class AplicacionStudyControl:
         que el menu siempre muestra informacion actualizada.
         """
         try:
-            completadas = sum(1 for t in DATOS.tareas if t.get("estado") == "Completada")
             promedios = [float(n.get("promedio", 0)) for n in DATOS.notas]
             texto_promedio = (formato_numero(promedio_de(promedios)) if promedios else "--")
 
             self.etiqueta_resumen.configure(
-                text="📚 Materias: %d      📝 Tareas: %d  (✅ %d)      "
-                     "📅 Bloques: %d      🎯 Promedio general: %s"
-                     % (len(DATOS.materias), len(DATOS.tareas), completadas,
-                        len(DATOS.horario), texto_promedio)
+                text="Materias registradas: %d       Bloques de horario: %d       "
+                     "Promedio general: %s"
+                     % (len(DATOS.materias), len(DATOS.horario), texto_promedio)
             )
         except tk.TclError as error:
-            print("[Study Control] No se pudo refrescar el resumen: %s" % error)
+            print("[Sistema de Estudio] No se pudo refrescar el resumen: %s" % error)
 
     # =========================================================================
     # APERTURA DE MODULOS
@@ -4008,9 +2803,9 @@ class AplicacionStudyControl:
         self.abrir_ventana(VentanaMaterias)
 
     @manejar_errores
-    def abrir_tareas(self):
-        """Modulo 2: Control de Tareas."""
-        self.abrir_ventana(VentanaTareas)
+    def abrir_horario(self):
+        """Modulo 2: Horario Semanal."""
+        self.abrir_ventana(VentanaHorario)
 
     @manejar_errores
     def abrir_promedios(self):
@@ -4018,23 +2813,8 @@ class AplicacionStudyControl:
         self.abrir_ventana(VentanaPromedios)
 
     @manejar_errores
-    def abrir_nota_necesaria(self):
-        """Modulo 4: Nota Necesaria."""
-        self.abrir_ventana(VentanaNotaNecesaria)
-
-    @manejar_errores
-    def abrir_horario(self):
-        """Modulo 5: Horario Semanal."""
-        self.abrir_ventana(VentanaHorario)
-
-    @manejar_errores
-    def abrir_estadisticas(self):
-        """Modulo 6: Estadisticas Generales."""
-        self.abrir_ventana(VentanaEstadisticas)
-
-    @manejar_errores
     def abrir_informacion(self):
-        """Modulo 7: Informacion del sistema (MessageBox institucional)."""
+        """Modulo 4: Informacion del sistema (MessageBox institucional)."""
         mostrar_informacion(self.raiz)
 
     # =========================================================================
@@ -4063,17 +2843,17 @@ class AplicacionStudyControl:
 
 
 # =============================================================================
-# SECCION 18 : PUNTO DE ENTRADA DEL PROGRAMA
+# SECCION 15 : PUNTO DE ENTRADA DEL PROGRAMA
 # =============================================================================
 
 def crear_archivos_si_no_existen():
     """
-    Garantiza que los cuatro archivos JSON existan desde el primer arranque.
+    Garantiza que los tres archivos JSON existan desde el primer arranque.
 
     Si no existen se crean vacios, de modo que el usuario pueda verlos en la
     carpeta del proyecto y el programa nunca falle al intentar leerlos.
     """
-    for ruta in (ARCHIVO_MATERIAS, ARCHIVO_TAREAS, ARCHIVO_HORARIO, ARCHIVO_NOTAS):
+    for ruta in (ARCHIVO_MATERIAS, ARCHIVO_HORARIO, ARCHIVO_NOTAS):
         if not os.path.exists(ruta):
             escribir_json(ruta, [])
 
@@ -4106,19 +2886,19 @@ def main():
     raiz.deiconify()
     raiz.lift()
 
-    print("[Study Control] Aplicacion iniciada correctamente.")
-    print("[Study Control] Registros cargados -> materias: %d | tareas: %d | "
+    print("[Sistema de Estudio] Aplicacion iniciada correctamente.")
+    print("[Sistema de Estudio] Registros cargados -> materias: %d | "
           "horario: %d | promedios: %d"
-          % (len(DATOS.materias), len(DATOS.tareas), len(DATOS.horario), len(DATOS.notas)))
+          % (len(DATOS.materias), len(DATOS.horario), len(DATOS.notas)))
 
     # 5) Bucle principal protegido: ningun error cierra la aplicacion en seco.
     try:
         raiz.mainloop()
     except KeyboardInterrupt:
-        print("[Study Control] Ejecucion interrumpida por el usuario.")
+        print("[Sistema de Estudio] Ejecucion interrumpida por el usuario.")
     finally:
         DATOS.guardar_todo()
-        print("[Study Control] Informacion guardada. Hasta pronto.")
+        print("[Sistema de Estudio] Informacion guardada. Hasta pronto.")
 
     return aplicacion
 
@@ -4134,7 +2914,8 @@ if __name__ == "__main__":
         try:
             messagebox.showerror(
                 "Error critico",
-                "Study Control no pudo iniciarse correctamente.\n\nDetalle: %s" % error_general
+                "El Sistema de Estudio no pudo iniciarse correctamente.\n\n"
+                "Detalle: %s" % error_general
             )
         except Exception:
-            print("[Study Control] Error critico: %s" % error_general)
+            print("[Sistema de Estudio] Error critico: %s" % error_general)

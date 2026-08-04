@@ -1,8 +1,7 @@
 __pycache__/
 *.pyc
 
-# Datos generados automaticamente por Study Control
+# Datos generados automaticamente por el Sistema de Estudio
 materias.json
-tareas.json
 horario.json
 notas.json
