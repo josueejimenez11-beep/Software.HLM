@@ -1427,7 +1427,7 @@ function reducirImagen(dataURL) {
 }
 
 /** Ruta del logo que viene con el proyecto (junto a index.html). */
-const LOGO_POR_DEFECTO = dom.logoImg.getAttribute('src');
+let LOGO_POR_DEFECTO = 'logo-puce.png';
 
 /**
  * Muestra una imagen en el recuadro.
@@ -1435,6 +1435,7 @@ const LOGO_POR_DEFECTO = dom.logoImg.getAttribute('src');
  * en ese caso aparece la × para volver al logo original.
  */
 function pintarLogo(datosImagen, personalizada) {
+  if (!dom.logoImg) return;
   dom.logoImg.src = datosImagen;
   dom.logoImg.classList.remove('oculto');
   dom.logoVacio.classList.add('oculto');
@@ -1444,6 +1445,7 @@ function pintarLogo(datosImagen, personalizada) {
 
 /** Muestra el marcador de posición: no hay ninguna imagen disponible. */
 function mostrarRecuadroVacio() {
+  if (!dom.logoImg) return;
   dom.logoImg.classList.add('oculto');
   dom.logoVacio.classList.remove('oculto');
   dom.logoSlot.classList.remove('con-logo', 'personalizado');
@@ -1457,70 +1459,77 @@ function borrarLogo() {
 }
 
 /**
- * Si el archivo del logo no está en la carpeta, el navegador no puede
- * cargarlo: en ese caso se muestra el recuadro para elegir una imagen.
+ * Prepara todo lo del logo. Es una funcion aparte, y no codigo suelto, para
+ * que si faltara algun elemento en el HTML el fallo quede acotado aqui y la
+ * calculadora siga funcionando igual.
  */
-dom.logoImg.addEventListener('error', () => {
-  if (!dom.logoSlot.classList.contains('personalizado')) mostrarRecuadroVacio();
-});
+function iniciarLogo() {
+  if (!dom.logoSlot || !dom.logoImg) return;   // el encabezado no trae logo
 
-dom.logoImg.addEventListener('load', () => {
-  dom.logoSlot.classList.add('con-logo');
-  dom.logoVacio.classList.add('oculto');
-});
+  LOGO_POR_DEFECTO = dom.logoImg.getAttribute('src') || LOGO_POR_DEFECTO;
 
-/** Deja el recuadro en su estado inicial correcto al abrir la página. */
-function recuperarLogo() {
-  // Si el usuario eligió un logo en una sesión anterior, ese tiene prioridad.
+  // Si el archivo del logo no esta en la carpeta, el navegador no puede
+  // cargarlo: en ese caso se muestra el recuadro para elegir una imagen.
+  dom.logoImg.addEventListener('error', () => {
+    if (!dom.logoSlot.classList.contains('personalizado')) mostrarRecuadroVacio();
+  });
+
+  dom.logoImg.addEventListener('load', () => {
+    dom.logoSlot.classList.add('con-logo');
+    dom.logoVacio.classList.add('oculto');
+  });
+
+  // Clic o Enter sobre el recuadro: abre el selector de archivos
+  dom.logoSlot.addEventListener('click', (ev) => {
+    if (ev.target === dom.logoQuitar) return;   // la x no debe abrir el selector
+    dom.logoArchivo.click();
+  });
+
+  dom.logoSlot.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Enter' || ev.key === ' ') {
+      ev.preventDefault();
+      dom.logoArchivo.click();
+    }
+  });
+
+  // Lectura de la imagen elegida
+  dom.logoArchivo.addEventListener('change', (ev) => {
+    const archivo = ev.target.files && ev.target.files[0];
+    if (!archivo) return;
+
+    const lector = new FileReader();
+    lector.onload = (e) => {
+      reducirImagen(e.target.result).then((imagen) => {
+        pintarLogo(imagen, true);
+        try { localStorage.setItem(LOGO_CLAVE, imagen); } catch (err) { /* sin espacio o sin permiso */ }
+      });
+    };
+    lector.readAsDataURL(archivo);
+  });
+
+  dom.logoQuitar.addEventListener('click', (ev) => {
+    ev.stopPropagation();
+    borrarLogo();
+  });
+
+  // --- Estado inicial del recuadro ---
+  // Si el usuario eligio un logo en una sesion anterior, ese tiene prioridad.
   try {
     const guardado = localStorage.getItem(LOGO_CLAVE);
     if (guardado) { pintarLogo(guardado, true); return; }
   } catch (e) { /* almacenamiento no disponible (modo privado, etc.) */ }
 
   // El navegador empieza a cargar el <img> mientras lee el HTML, antes de que
-  // este script exista, así que el evento 'error' puede haberse disparado ya.
+  // este script exista, asi que el evento 'error' puede haberse disparado ya.
   // Por eso se consulta el estado de la imagen en lugar de solo esperarlo.
   if (dom.logoImg.complete) {
-    if (dom.logoImg.naturalWidth === 0) mostrarRecuadroVacio();   // no se encontró
+    if (dom.logoImg.naturalWidth === 0) mostrarRecuadroVacio();   // no se encontro
     else {
       dom.logoSlot.classList.add('con-logo');
       dom.logoVacio.classList.add('oculto');
     }
   }
 }
-
-// Clic o Enter sobre el recuadro: abre el selector de archivos
-dom.logoSlot.addEventListener('click', (ev) => {
-  if (ev.target === dom.logoQuitar) return;   // la × no debe abrir el selector
-  dom.logoArchivo.click();
-});
-
-dom.logoSlot.addEventListener('keydown', (ev) => {
-  if (ev.key === 'Enter' || ev.key === ' ') {
-    ev.preventDefault();
-    dom.logoArchivo.click();
-  }
-});
-
-// Lectura de la imagen elegida
-dom.logoArchivo.addEventListener('change', (ev) => {
-  const archivo = ev.target.files && ev.target.files[0];
-  if (!archivo) return;
-
-  const lector = new FileReader();
-  lector.onload = (e) => {
-    reducirImagen(e.target.result).then((imagen) => {
-      pintarLogo(imagen, true);
-      try { localStorage.setItem(LOGO_CLAVE, imagen); } catch (err) { /* sin espacio o sin permiso */ }
-    });
-  };
-  lector.readAsDataURL(archivo);
-});
-
-dom.logoQuitar.addEventListener('click', (ev) => {
-  ev.stopPropagation();
-  borrarLogo();
-});
 
 /* ---------- Arranque ---------- */
 
@@ -1530,7 +1539,9 @@ function iniciar() {
   if (yaIniciado) return;          // evita una doble inicialización
   yaIniciado = true;
 
-  recuperarLogo();
+  // El logo es un adorno: si algo falla ahi, la calculadora debe seguir viva.
+  try { iniciarLogo(); } catch (e) { console.warn('No se pudo preparar el logo:', e); }
+
   construirEjemplos();
   redimensionarLienzo();
   actualizarInterfaz();
