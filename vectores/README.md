@@ -29,6 +29,18 @@ Paleta: **rojo / negro / celeste**.
 >
 > Si les cambias el nombre, cambia también esas dos líneas.
 
+## Si la página se ve bien pero la gráfica y el procedimiento salen vacíos
+
+Significa que **`script.js` no se cargó**. La página te lo avisa sola con un
+recuadro rojo al final. Causas más comunes:
+
+1. El archivo no se llama exactamente `script.js` (revisa `script.js.txt`,
+   `Script.js`, `scrip.js`). En VS Code: clic derecho → *Rename*.
+2. Está en otra carpeta. Los tres archivos van **juntos**.
+3. El pegado quedó incompleto. `script.js` debe empezar con
+   `const $ = id => document.getElementById(id);` y terminar con `resolver();`
+4. Presiona **F12** → pestaña **Console** para ver el error exacto.
+
 ## Qué hace la página
 
 - **Ingreso de datos:** componentes x, y del vector A⃗ y del vector B⃗, más un escalar k.

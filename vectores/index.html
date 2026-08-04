@@ -65,15 +65,15 @@
         <div class="op-sel">
           <label>Operación a resolver</label>
           <select id="op">
-            <option value="suma">Suma:  A⃗ + B⃗</option>
-            <option value="resta">Resta:  A⃗ − B⃗</option>
-            <option value="escalar">Multiplicación por escalar:  k · A⃗</option>
-            <option value="punto">Producto punto (escalar):  A⃗ · B⃗</option>
-            <option value="angulo">Ángulo entre A⃗ y B⃗</option>
-            <option value="magnitud">Magnitud y dirección de A⃗</option>
-            <option value="unitario">Vector unitario de A⃗</option>
-            <option value="proyeccion">Proyección de A⃗ sobre B⃗</option>
-            <option value="cruz">Producto cruz (área):  A⃗ × B⃗</option>
+            <option value="suma">Suma:  A + B</option>
+            <option value="resta">Resta:  A − B</option>
+            <option value="escalar">Multiplicación por escalar:  k · A</option>
+            <option value="punto">Producto punto (escalar):  A · B</option>
+            <option value="angulo">Ángulo entre A y B</option>
+            <option value="magnitud">Magnitud y dirección de A</option>
+            <option value="unitario">Vector unitario de A</option>
+            <option value="proyeccion">Proyección de A sobre B</option>
+            <option value="cruz">Producto cruz (área):  A × B</option>
           </select>
         </div>
         <div class="esc-wrap">
@@ -98,9 +98,9 @@
       </div>
 
       <div class="ayuda">
-        Un vector en el plano se escribe <code>A⃗ = (a₁, a₂)</code> o en forma canónica <code>A⃗ = a₁î + a₂ĵ</code>.
+        Un vector en el plano se escribe <code><span class="vec">A</span> = (a₁, a₂)</code> o en forma canónica <code><span class="vec">A</span> = a₁î + a₂ĵ</code>.
         Se admiten valores negativos y decimales (usa punto: <code>2.5</code>).
-        El escalar <code>k</code> solo se usa en la operación <code>k · A⃗</code>.
+        El escalar <code>k</code> solo se usa en la operación <code>k · <span class="vec">A</span></code>.
       </div>
 
       <div id="msg"></div>
@@ -130,8 +130,8 @@
         </div>
 
         <div class="leyenda">
-          <span><i class="key" style="background:#38bdf8"></i> A⃗ (vector A)</span>
-          <span><i class="key" style="background:#ef4444"></i> B⃗ (vector B)</span>
+          <span><i class="key" style="background:#38bdf8"></i> <span class="vec">A</span> (vector A)</span>
+          <span><i class="key" style="background:#ef4444"></i> <span class="vec">B</span> (vector B)</span>
           <span><i class="key" style="background:#ffffff"></i> Resultante</span>
           <span><i class="key" style="background:#fbbf24"></i> Auxiliar / proyección</span>
         </div>
@@ -157,7 +157,7 @@
 
   <!-- ==================== TABLA RESUMEN ==================== -->
   <section class="card">
-    <div class="card-head"><span class="dot"></span><h2>4 · Tabla resumen de operaciones</h2><span class="tag">todas las operaciones con A⃗ y B⃗</span></div>
+    <div class="card-head"><span class="dot"></span><h2>4 · Tabla resumen de operaciones</h2><span class="tag">todas las operaciones con <span class="vec">A</span> y <span class="vec">B</span></span></div>
     <div class="card-body">
       <div class="tabla-scroll">
         <table>
@@ -178,61 +178,61 @@
 
         <div class="ej">
           <div class="n">Ejemplo 1 — Suma</div>
-          <h4>A⃗ = (4, 3) &nbsp;·&nbsp; B⃗ = (−2, 5)</h4>
+          <h4><span class="vec">A</span> = (4, 3) &nbsp;·&nbsp; <span class="vec">B</span> = (−2, 5)</h4>
           <ul>
             <li><b>1.</b> Se suman componente a componente</li>
-            <li><b>2.</b> R⃗ₓ = 4 + (−2) = 2</li>
-            <li><b>3.</b> R⃗ᵧ = 3 + 5 = 8</li>
-            <li><b>4.</b> |R⃗| = √(2² + 8²) = √68 ≈ 8.25</li>
+            <li><b>2.</b> <span class="vec">R</span>ₓ = 4 + (−2) = 2</li>
+            <li><b>3.</b> <span class="vec">R</span>ᵧ = 3 + 5 = 8</li>
+            <li><b>4.</b> |<span class="vec">R</span>| = √(2² + 8²) = √68 ≈ 8.25</li>
           </ul>
-          <div class="final">R⃗ = (2, 8)</div>
+          <div class="final"><span class="vec">R</span> = (2, 8)</div>
           <button class="btn btn-ghost cargar" data-a="4,3" data-b="-2,5" data-op="suma">Cargar en el software</button>
         </div>
 
         <div class="ej">
           <div class="n">Ejemplo 2 — Resta</div>
-          <h4>A⃗ = (6, 2) &nbsp;·&nbsp; B⃗ = (1, 4)</h4>
+          <h4><span class="vec">A</span> = (6, 2) &nbsp;·&nbsp; <span class="vec">B</span> = (1, 4)</h4>
           <ul>
-            <li><b>1.</b> A⃗ − B⃗ = A⃗ + (−B⃗)</li>
-            <li><b>2.</b> R⃗ₓ = 6 − 1 = 5</li>
-            <li><b>3.</b> R⃗ᵧ = 2 − 4 = −2</li>
-            <li><b>4.</b> |R⃗| = √(25 + 4) = √29 ≈ 5.39</li>
+            <li><b>1.</b> <span class="vec">A</span> − <span class="vec">B</span> = <span class="vec">A</span> + (−<span class="vec">B</span>)</li>
+            <li><b>2.</b> <span class="vec">R</span>ₓ = 6 − 1 = 5</li>
+            <li><b>3.</b> <span class="vec">R</span>ᵧ = 2 − 4 = −2</li>
+            <li><b>4.</b> |<span class="vec">R</span>| = √(25 + 4) = √29 ≈ 5.39</li>
           </ul>
-          <div class="final">R⃗ = (5, −2)</div>
+          <div class="final"><span class="vec">R</span> = (5, −2)</div>
           <button class="btn btn-ghost cargar" data-a="6,2" data-b="1,4" data-op="resta">Cargar en el software</button>
         </div>
 
         <div class="ej">
           <div class="n">Ejemplo 3 — Magnitud y dirección</div>
-          <h4>A⃗ = (3, 4)</h4>
+          <h4><span class="vec">A</span> = (3, 4)</h4>
           <ul>
-            <li><b>1.</b> |A⃗| = √(a₁² + a₂²)</li>
-            <li><b>2.</b> |A⃗| = √(3² + 4²) = √25</li>
+            <li><b>1.</b> |<span class="vec">A</span>| = √(a₁² + a₂²)</li>
+            <li><b>2.</b> |<span class="vec">A</span>| = √(3² + 4²) = √25</li>
             <li><b>3.</b> θ = arctan(4 / 3)</li>
             <li><b>4.</b> θ ≈ 53.13°</li>
           </ul>
-          <div class="final">|A⃗| = 5 ; θ ≈ 53.13°</div>
+          <div class="final">|<span class="vec">A</span>| = 5 ; θ ≈ 53.13°</div>
           <button class="btn btn-ghost cargar" data-a="3,4" data-b="1,1" data-op="magnitud">Cargar en el software</button>
         </div>
 
         <div class="ej">
           <div class="n">Ejemplo 4 — Producto punto</div>
-          <h4>A⃗ = (2, 3) &nbsp;·&nbsp; B⃗ = (4, −1)</h4>
+          <h4><span class="vec">A</span> = (2, 3) &nbsp;·&nbsp; <span class="vec">B</span> = (4, −1)</h4>
           <ul>
-            <li><b>1.</b> A⃗ · B⃗ = a₁b₁ + a₂b₂</li>
+            <li><b>1.</b> <span class="vec">A</span> · <span class="vec">B</span> = a₁b₁ + a₂b₂</li>
             <li><b>2.</b> = (2)(4) + (3)(−1)</li>
             <li><b>3.</b> = 8 − 3</li>
           </ul>
-          <div class="final">A⃗ · B⃗ = 5</div>
+          <div class="final"><span class="vec">A</span> · <span class="vec">B</span> = 5</div>
           <button class="btn btn-ghost cargar" data-a="2,3" data-b="4,-1" data-op="punto">Cargar en el software</button>
         </div>
 
         <div class="ej">
           <div class="n">Ejemplo 5 — Ángulo entre vectores</div>
-          <h4>A⃗ = (1, 0) &nbsp;·&nbsp; B⃗ = (1, 1)</h4>
+          <h4><span class="vec">A</span> = (1, 0) &nbsp;·&nbsp; <span class="vec">B</span> = (1, 1)</h4>
           <ul>
-            <li><b>1.</b> cos θ = (A⃗·B⃗) / (|A⃗||B⃗|)</li>
-            <li><b>2.</b> A⃗·B⃗ = 1 ; |A⃗| = 1 ; |B⃗| = √2</li>
+            <li><b>1.</b> cos θ = (<span class="vec">A</span>·<span class="vec">B</span>) / (|<span class="vec">A</span>||<span class="vec">B</span>|)</li>
+            <li><b>2.</b> <span class="vec">A</span>·<span class="vec">B</span> = 1 ; |<span class="vec">A</span>| = 1 ; |<span class="vec">B</span>| = √2</li>
             <li><b>3.</b> cos θ = 1/√2 = 0.7071</li>
           </ul>
           <div class="final">θ = 45°</div>
@@ -241,14 +241,14 @@
 
         <div class="ej">
           <div class="n">Ejemplo 6 — Escalar</div>
-          <h4>k = 2 &nbsp;·&nbsp; A⃗ = (3, 1)</h4>
+          <h4>k = 2 &nbsp;·&nbsp; <span class="vec">A</span> = (3, 1)</h4>
           <ul>
-            <li><b>1.</b> k·A⃗ = (k·a₁, k·a₂)</li>
+            <li><b>1.</b> k·<span class="vec">A</span> = (k·a₁, k·a₂)</li>
             <li><b>2.</b> = (2·3, 2·1)</li>
             <li><b>3.</b> El vector conserva su dirección</li>
             <li><b>4.</b> Su magnitud se duplica</li>
           </ul>
-          <div class="final">2A⃗ = (6, 2)</div>
+          <div class="final">2<span class="vec">A</span> = (6, 2)</div>
           <button class="btn btn-ghost cargar" data-a="3,1" data-b="1,1" data-op="escalar" data-k="2">Cargar en el software</button>
         </div>
 
@@ -264,12 +264,12 @@
         <div class="teo">
           <h4>¿Qué es un vector?</h4>
           <p>Es un segmento orientado que posee <b>magnitud</b> (tamaño), <b>dirección</b> (ángulo) y <b>sentido</b>. Se representa por sus componentes rectangulares.</p>
-          <span class="f">A⃗ = (a₁, a₂) = a₁î + a₂ĵ</span>
+          <span class="f"><span class="vec">A</span> = (a₁, a₂) = a₁î + a₂ĵ</span>
         </div>
         <div class="teo">
           <h4>Magnitud o módulo</h4>
           <p>Se obtiene con el teorema de Pitágoras aplicado a las componentes.</p>
-          <span class="f">|A⃗| = √(a₁² + a₂²)</span>
+          <span class="f">|<span class="vec">A</span>| = √(a₁² + a₂²)</span>
         </div>
         <div class="teo">
           <h4>Dirección</h4>
@@ -279,41 +279,53 @@
         <div class="teo">
           <h4>Suma y resta</h4>
           <p>Se operan las componentes correspondientes. Gráficamente se usa el método del paralelogramo o del triángulo.</p>
-          <span class="f">A⃗ ± B⃗ = (a₁ ± b₁, a₂ ± b₂)</span>
+          <span class="f"><span class="vec">A</span> ± <span class="vec">B</span> = (a₁ ± b₁, a₂ ± b₂)</span>
         </div>
         <div class="teo">
           <h4>Producto por un escalar</h4>
           <p>Cambia la magnitud. Si k &lt; 0 además invierte el sentido del vector.</p>
-          <span class="f">k·A⃗ = (k·a₁, k·a₂)</span>
+          <span class="f">k·<span class="vec">A</span> = (k·a₁, k·a₂)</span>
         </div>
         <div class="teo">
           <h4>Producto punto</h4>
           <p>Da como resultado un número real. Si es cero, los vectores son perpendiculares.</p>
-          <span class="f">A⃗·B⃗ = a₁b₁ + a₂b₂ = |A⃗||B⃗|cos θ</span>
+          <span class="f"><span class="vec">A</span>·<span class="vec">B</span> = a₁b₁ + a₂b₂ = |<span class="vec">A</span>||<span class="vec">B</span>|cos θ</span>
         </div>
         <div class="teo">
           <h4>Ángulo entre vectores</h4>
           <p>Se despeja del producto punto.</p>
-          <span class="f">θ = arccos( (A⃗·B⃗) / (|A⃗|·|B⃗|) )</span>
+          <span class="f">θ = arccos( (<span class="vec">A</span>·<span class="vec">B</span>) / (|<span class="vec">A</span>|·|<span class="vec">B</span>|) )</span>
         </div>
         <div class="teo">
           <h4>Vector unitario</h4>
-          <p>Vector de magnitud 1 con la misma dirección que A⃗.</p>
-          <span class="f">û = A⃗ / |A⃗|</span>
+          <p>Vector de magnitud 1 con la misma dirección que <span class="vec">A</span>.</p>
+          <span class="f">û = <span class="vec">A</span> / |<span class="vec">A</span>|</span>
         </div>
         <div class="teo">
           <h4>Producto cruz en el plano</h4>
-          <p>Su valor absoluto es el área del paralelogramo formado por A⃗ y B⃗.</p>
-          <span class="f">A⃗ × B⃗ = a₁b₂ − a₂b₁</span>
+          <p>Su valor absoluto es el área del paralelogramo formado por <span class="vec">A</span> y <span class="vec">B</span>.</p>
+          <span class="f"><span class="vec">A</span> × <span class="vec">B</span> = a₁b₂ − a₂b₁</span>
         </div>
         <div class="teo">
           <h4>Proyección</h4>
-          <p>Sombra de A⃗ sobre la dirección de B⃗.</p>
-          <span class="f">proy_B A⃗ = [(A⃗·B⃗)/|B⃗|²] · B⃗</span>
+          <p>Sombra de <span class="vec">A</span> sobre la dirección de <span class="vec">B</span>.</p>
+          <span class="f">proy_B <span class="vec">A</span> = [(<span class="vec">A</span>·<span class="vec">B</span>)/|<span class="vec">B</span>|²] · <span class="vec">B</span></span>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Aviso automático: aparece solo si script.js no se cargó -->
+  <div id="sinJS">
+    <h3>⚠ No se cargó el archivo <code>script.js</code></h3>
+    <p>Por eso las secciones <b>Gráfica</b> y <b>Procedimiento</b> están vacías. Revisa lo siguiente:</p>
+    <ol>
+      <li>Que el archivo se llame exactamente <code>script.js</code> (no <code>script.js.txt</code> ni <code>Script.js</code>).</li>
+      <li>Que esté en la <b>misma carpeta</b> que <code>index.html</code> y <code>estilos.css</code>.</li>
+      <li>Que se haya pegado <b>todo</b> el contenido: debe empezar con <code>const $ = id =&gt;</code> y terminar con <code>resolver();</code></li>
+      <li>Abre la consola del navegador con <b>F12</b> → pestaña <b>Console</b> para ver el error exacto.</li>
+    </ol>
+  </div>
 
   <footer>
     <span>SOFTWARE DE VECTORES</span> · Álgebra — Habilidades Lógico Matemáticas<br>
@@ -322,5 +334,11 @@
 </main>
 
 <script src="script.js"></script>
+<script>
+/* Comprueba que script.js se haya ejecutado por completo */
+window.addEventListener("load", function () {
+  if (!window.VECTORES_OK) document.getElementById("sinJS").style.display = "block";
+});
+</script>
 </body>
 </html>

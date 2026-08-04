@@ -29,6 +29,24 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
+
+/* Flecha de vector dibujada con CSS (se ve igual en cualquier fuente) */
+.vec{position:relative;display:inline-block;font-weight:700;padding-top:.15em}
+.vec::after{
+  content:"→";position:absolute;left:-.06em;right:-.06em;top:-.42em;
+  font-size:.62em;line-height:1;text-align:center;font-weight:400;
+}
+
+/* Aviso si no se cargó script.js */
+#sinJS{
+  display:none;margin:22px 0 0;padding:18px 20px;border-radius:12px;
+  background:linear-gradient(135deg, rgba(239,68,68,.16), rgba(10,16,26,.75));
+  border:1px solid rgba(239,68,68,.6);
+}
+#sinJS h3{color:#fca5a5;font-size:15px;margin-bottom:8px;letter-spacing:.02em}
+#sinJS p{font-size:13.5px;color:#eaf2ff;line-height:1.8}
+#sinJS code{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.28);color:#7dd3fc;padding:1px 6px;border-radius:5px;font-size:12.5px}
+#sinJS ol{margin:8px 0 0 20px;font-size:13.5px;color:#9fb0c6;line-height:1.9}
 html,body{height:100%}
 body{
   background:

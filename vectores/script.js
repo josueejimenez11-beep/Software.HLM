@@ -50,8 +50,8 @@ function leer() {
 
   if ([A.x, A.y, B.x, B.y].some(isNaN)) return "Completa las cuatro componentes con números válidos.";
   if (OP === "escalar" && isNaN(K)) return "Ingresa un valor numérico para el escalar k.";
-  if (["angulo","proyeccion"].includes(OP) && mag(B) === 0) return "El vector B⃗ no puede ser nulo para esta operación.";
-  if (["angulo","unitario","magnitud"].includes(OP) && mag(A) === 0) return "El vector A⃗ no puede ser nulo para esta operación.";
+  if (["angulo","proyeccion"].includes(OP) && mag(B) === 0) return "El vector B no puede ser nulo para esta operación.";
+  if (["angulo","unitario","magnitud"].includes(OP) && mag(A) === 0) return "El vector A no puede ser nulo para esta operación.";
   return null;
 }
 
@@ -87,8 +87,8 @@ function resolver() {
   /* --- Paso común: datos --- */
   P("Datos del problema",
     p("Se identifican las componentes rectangulares de cada vector.") +
-    F("A⃗ = " + vecTxt(A) + "   →   A⃗ = " + nf(A.x) + "î + " + nf(A.y) + "ĵ") +
-    (["magnitud","unitario"].includes(OP) ? "" : F("B⃗ = " + vecTxt(B) + "   →   B⃗ = " + nf(B.x) + "î + " + nf(B.y) + "ĵ")) +
+    F("A = " + vecTxt(A) + "   →   A = " + nf(A.x) + "î + " + nf(A.y) + "ĵ") +
+    (["magnitud","unitario"].includes(OP) ? "" : F("B = " + vecTxt(B) + "   →   B = " + nf(B.x) + "î + " + nf(B.y) + "ĵ")) +
     (OP === "escalar" ? F("k = " + nf(K)) : "")
   );
 
@@ -96,81 +96,81 @@ function resolver() {
 
     case "suma": {
       R = {x:A.x + B.x, y:A.y + B.y};
-      etiqueta = "A⃗ + B⃗";
+      etiqueta = "A + B";
       P("Fórmula de la suma",
         p("La suma de vectores se realiza componente a componente.") +
-        F("A⃗ + B⃗ = (a₁ + b₁ , a₂ + b₂)"));
+        F("A + B = (a₁ + b₁ , a₂ + b₂)"));
       P("Sustitución de valores",
-        F("A⃗ + B⃗ = (" + nf(A.x) + " + " + sgn(B.x) + " , " + nf(A.y) + " + " + sgn(B.y) + ")"));
+        F("A + B = (" + nf(A.x) + " + " + sgn(B.x) + " , " + nf(A.y) + " + " + sgn(B.y) + ")"));
       P("Operación",
-        F("A⃗ + B⃗ = (" + nf(R.x) + " , " + nf(R.y) + ")"));
+        F("A + B = (" + nf(R.x) + " , " + nf(R.y) + ")"));
       P("Magnitud y dirección de la resultante",
-        F("|R⃗| = √(" + sgn(R.x) + "² + " + sgn(R.y) + "²) = √" + nf(R.x**2 + R.y**2) + " = " + nf(mag(R))) +
+        F("|R| = √(" + sgn(R.x) + "² + " + sgn(R.y) + "²) = √" + nf(R.x**2 + R.y**2) + " = " + nf(mag(R))) +
         F("θ = arctan(" + nf(R.y) + " / " + nf(R.x) + ") = " + nf(angDir(R)) + "°") +
-        FF("R⃗ = " + vecTxt(R) + "   ·   |R⃗| = " + nf(mag(R)) + "   ·   θ = " + nf(angDir(R)) + "°") +
-        N("Gráficamente la resultante es la diagonal del paralelogramo formado por A⃗ y B⃗."));
-      resHTML = '<span class="big">R⃗ = A⃗ + B⃗ = ' + vecTxt(R) + '</span>' +
+        FF("R = " + vecTxt(R) + "   ·   |R| = " + nf(mag(R)) + "   ·   θ = " + nf(angDir(R)) + "°") +
+        N("Gráficamente la resultante es la diagonal del paralelogramo formado por A y B."));
+      resHTML = '<span class="big">R = A + B = ' + vecTxt(R) + '</span>' +
                 '<p>La resultante tiene una magnitud de <b>' + nf(mag(R)) + '</b> unidades y una dirección de <b>' + nf(angDir(R)) + '°</b> respecto al eje x positivo.</p>';
       break;
     }
 
     case "resta": {
       R = {x:A.x - B.x, y:A.y - B.y};
-      etiqueta = "A⃗ − B⃗";
+      etiqueta = "A − B";
       P("Fórmula de la resta",
-        p("Restar equivale a sumar el vector opuesto: A⃗ − B⃗ = A⃗ + (−B⃗).") +
-        F("A⃗ − B⃗ = (a₁ − b₁ , a₂ − b₂)"));
-      P("Vector opuesto de B⃗",
-        F("−B⃗ = (" + nf(-B.x) + " , " + nf(-B.y) + ")"));
+        p("Restar equivale a sumar el vector opuesto: A − B = A + (−B).") +
+        F("A − B = (a₁ − b₁ , a₂ − b₂)"));
+      P("Vector opuesto de B",
+        F("−B = (" + nf(-B.x) + " , " + nf(-B.y) + ")"));
       P("Sustitución y operación",
-        F("A⃗ − B⃗ = (" + nf(A.x) + " − " + sgn(B.x) + " , " + nf(A.y) + " − " + sgn(B.y) + ")") +
-        F("A⃗ − B⃗ = (" + nf(R.x) + " , " + nf(R.y) + ")"));
+        F("A − B = (" + nf(A.x) + " − " + sgn(B.x) + " , " + nf(A.y) + " − " + sgn(B.y) + ")") +
+        F("A − B = (" + nf(R.x) + " , " + nf(R.y) + ")"));
       P("Magnitud y dirección",
-        F("|R⃗| = √(" + sgn(R.x) + "² + " + sgn(R.y) + "²) = " + nf(mag(R))) +
+        F("|R| = √(" + sgn(R.x) + "² + " + sgn(R.y) + "²) = " + nf(mag(R))) +
         F("θ = " + nf(angDir(R)) + "°") +
-        FF("R⃗ = " + vecTxt(R)));
-      resHTML = '<span class="big">R⃗ = A⃗ − B⃗ = ' + vecTxt(R) + '</span>' +
-                '<p>Magnitud <b>' + nf(mag(R)) + '</b> · dirección <b>' + nf(angDir(R)) + '°</b>. Este vector va desde el extremo de B⃗ hasta el extremo de A⃗.</p>';
+        FF("R = " + vecTxt(R)));
+      resHTML = '<span class="big">R = A − B = ' + vecTxt(R) + '</span>' +
+                '<p>Magnitud <b>' + nf(mag(R)) + '</b> · dirección <b>' + nf(angDir(R)) + '°</b>. Este vector va desde el extremo de B hasta el extremo de A.</p>';
       break;
     }
 
     case "escalar": {
       R = {x:K * A.x, y:K * A.y};
-      etiqueta = nf(K) + "·A⃗";
+      etiqueta = nf(K) + "·A";
       P("Fórmula del producto por un escalar",
         p("Cada componente del vector se multiplica por el escalar k.") +
-        F("k·A⃗ = (k·a₁ , k·a₂)"));
+        F("k·A = (k·a₁ , k·a₂)"));
       P("Sustitución",
-        F(nf(K) + "·A⃗ = (" + nf(K) + "·" + sgn(A.x) + " , " + nf(K) + "·" + sgn(A.y) + ")"));
+        F(nf(K) + "·A = (" + nf(K) + "·" + sgn(A.x) + " , " + nf(K) + "·" + sgn(A.y) + ")"));
       P("Operación",
-        F(nf(K) + "·A⃗ = (" + nf(R.x) + " , " + nf(R.y) + ")"));
+        F(nf(K) + "·A = (" + nf(R.x) + " , " + nf(R.y) + ")"));
       P("Efecto sobre la magnitud",
-        F("|A⃗| = " + nf(mA) + "   →   |k·A⃗| = |k|·|A⃗| = " + nf(Math.abs(K)) + " · " + nf(mA) + " = " + nf(mag(R))) +
-        FF(nf(K) + "A⃗ = " + vecTxt(R)) +
+        F("|A| = " + nf(mA) + "   →   |k·A| = |k|·|A| = " + nf(Math.abs(K)) + " · " + nf(mA) + " = " + nf(mag(R))) +
+        FF(nf(K) + "A = " + vecTxt(R)) +
         N(K < 0 ? "Como k es negativo, el vector conserva la dirección pero invierte su sentido."
                 : "Como k es positivo, el vector conserva dirección y sentido; solo cambia su tamaño."));
-      resHTML = '<span class="big">' + nf(K) + '·A⃗ = ' + vecTxt(R) + '</span>' +
+      resHTML = '<span class="big">' + nf(K) + '·A = ' + vecTxt(R) + '</span>' +
                 '<p>La magnitud pasó de <b>' + nf(mA) + '</b> a <b>' + nf(mag(R)) + '</b>. ' +
                 (K < 0 ? 'El sentido se <b>invirtió</b> por ser k negativo.' : 'El sentido se <b>mantiene</b>.') + '</p>';
       break;
     }
 
     case "punto": {
-      etiqueta = "A⃗ · B⃗";
+      etiqueta = "A · B";
       P("Fórmula del producto punto",
         p("El producto punto (o escalar) da como resultado un número real, no un vector.") +
-        F("A⃗ · B⃗ = a₁·b₁ + a₂·b₂"));
+        F("A · B = a₁·b₁ + a₂·b₂"));
       P("Sustitución",
-        F("A⃗ · B⃗ = (" + nf(A.x) + ")(" + nf(B.x) + ") + (" + nf(A.y) + ")(" + nf(B.y) + ")"));
+        F("A · B = (" + nf(A.x) + ")(" + nf(B.x) + ") + (" + nf(A.y) + ")(" + nf(B.y) + ")"));
       P("Operación",
-        F("A⃗ · B⃗ = " + nf(A.x * B.x) + " + " + sgn(A.y * B.y)) +
-        FF("A⃗ · B⃗ = " + nf(d)));
+        F("A · B = " + nf(A.x * B.x) + " + " + sgn(A.y * B.y)) +
+        FF("A · B = " + nf(d)));
       P("Interpretación",
-        F("A⃗ · B⃗ = |A⃗|·|B⃗|·cos θ = " + nf(mA) + " · " + nf(mB) + " · cos θ") +
+        F("A · B = |A|·|B|·cos θ = " + nf(mA) + " · " + nf(mB) + " · cos θ") +
         N(Math.abs(d) < 1e-9 ? "El resultado es cero: los vectores son PERPENDICULARES (θ = 90°)."
           : d > 0 ? "El resultado es positivo: el ángulo entre los vectores es agudo (menor a 90°)."
                   : "El resultado es negativo: el ángulo entre los vectores es obtuso (mayor a 90°)."));
-      resHTML = '<span class="big">A⃗ · B⃗ = ' + nf(d) + '</span>' +
+      resHTML = '<span class="big">A · B = ' + nf(d) + '</span>' +
                 '<p>' + (Math.abs(d) < 1e-9 ? 'Los vectores son <b>perpendiculares</b> entre sí.'
                 : 'El ángulo entre ellos es de <b>' + nf(Math.acos(Math.max(-1,Math.min(1, d/(mA*mB)))) * 180/Math.PI) + '°</b>.') + '</p>';
       break;
@@ -182,12 +182,12 @@ function resolver() {
       etiqueta = "ángulo θ";
       P("Fórmula del ángulo entre vectores",
         p("Se despeja el ángulo a partir de la definición del producto punto.") +
-        F("cos θ = (A⃗ · B⃗) / (|A⃗| · |B⃗|)"));
+        F("cos θ = (A · B) / (|A| · |B|)"));
       P("Producto punto",
-        F("A⃗ · B⃗ = (" + nf(A.x) + ")(" + nf(B.x) + ") + (" + nf(A.y) + ")(" + nf(B.y) + ") = " + nf(d)));
+        F("A · B = (" + nf(A.x) + ")(" + nf(B.x) + ") + (" + nf(A.y) + ")(" + nf(B.y) + ") = " + nf(d)));
       P("Magnitudes",
-        F("|A⃗| = √(" + sgn(A.x) + "² + " + sgn(A.y) + "²) = " + nf(mA)) +
-        F("|B⃗| = √(" + sgn(B.x) + "² + " + sgn(B.y) + "²) = " + nf(mB)));
+        F("|A| = √(" + sgn(A.x) + "² + " + sgn(A.y) + "²) = " + nf(mA)) +
+        F("|B| = √(" + sgn(B.x) + "² + " + sgn(B.y) + "²) = " + nf(mB)));
       P("Sustitución y resultado",
         F("cos θ = " + nf(d) + " / (" + nf(mA) + " · " + nf(mB) + ") = " + nf(c, 4)) +
         F("θ = arccos(" + nf(c, 4) + ")") +
@@ -201,22 +201,22 @@ function resolver() {
     }
 
     case "magnitud": {
-      etiqueta = "|A⃗| y θ";
+      etiqueta = "|A| y θ";
       P("Fórmula de la magnitud",
         p("Se aplica el teorema de Pitágoras a las componentes del vector.") +
-        F("|A⃗| = √(a₁² + a₂²)"));
+        F("|A| = √(a₁² + a₂²)"));
       P("Sustitución",
-        F("|A⃗| = √((" + nf(A.x) + ")² + (" + nf(A.y) + ")²)") +
-        F("|A⃗| = √(" + nf(A.x**2) + " + " + nf(A.y**2) + ") = √" + nf(A.x**2 + A.y**2)));
+        F("|A| = √((" + nf(A.x) + ")² + (" + nf(A.y) + ")²)") +
+        F("|A| = √(" + nf(A.x**2) + " + " + nf(A.y**2) + ") = √" + nf(A.x**2 + A.y**2)));
       P("Magnitud",
-        FF("|A⃗| = " + nf(mA) + " unidades"));
+        FF("|A| = " + nf(mA) + " unidades"));
       P("Dirección del vector",
         F("θ = arctan(a₂ / a₁) = arctan(" + nf(A.y) + " / " + nf(A.x) + ")") +
         FF("θ = " + nf(angDir(A)) + "°") +
         N("Ángulo medido desde el eje x positivo en sentido antihorario. El vector se ubica en el " +
           (A.x >= 0 && A.y >= 0 ? "I" : A.x < 0 && A.y >= 0 ? "II" : A.x < 0 ? "III" : "IV") + " cuadrante."));
-      resHTML = '<span class="big">|A⃗| = ' + nf(mA) + '  ·  θ = ' + nf(angDir(A)) + '°</span>' +
-                '<p>El vector A⃗ mide <b>' + nf(mA) + '</b> unidades y apunta en la dirección de <b>' + nf(angDir(A)) + '°</b>.</p>';
+      resHTML = '<span class="big">|A| = ' + nf(mA) + '  ·  θ = ' + nf(angDir(A)) + '°</span>' +
+                '<p>El vector A mide <b>' + nf(mA) + '</b> unidades y apunta en la dirección de <b>' + nf(angDir(A)) + '°</b>.</p>';
       break;
     }
 
@@ -225,9 +225,9 @@ function resolver() {
       etiqueta = "û";
       P("Fórmula del vector unitario",
         p("Un vector unitario tiene magnitud 1 y la misma dirección del vector original.") +
-        F("û = A⃗ / |A⃗|"));
+        F("û = A / |A|"));
       P("Cálculo de la magnitud",
-        F("|A⃗| = √((" + nf(A.x) + ")² + (" + nf(A.y) + ")²) = " + nf(mA)));
+        F("|A| = √((" + nf(A.x) + ")² + (" + nf(A.y) + ")²) = " + nf(mA)));
       P("División de cada componente",
         F("û = (" + nf(A.x) + "/" + nf(mA) + " , " + nf(A.y) + "/" + nf(mA) + ")") +
         FF("û = (" + nf(R.x, 4) + " , " + nf(R.y, 4) + ")"));
@@ -235,7 +235,7 @@ function resolver() {
         F("|û| = √(" + nf(R.x,4) + "² + " + nf(R.y,4) + "²) = " + nf(mag(R), 4)) +
         N("La magnitud resulta 1, lo que confirma que el vector es unitario."));
       resHTML = '<span class="big">û = (' + nf(R.x, 4) + ', ' + nf(R.y, 4) + ')</span>' +
-                '<p>Vector de magnitud <b>1</b> con la misma dirección de A⃗ (<b>' + nf(angDir(A)) + '°</b>).</p>';
+                '<p>Vector de magnitud <b>1</b> con la misma dirección de A (<b>' + nf(angDir(A)) + '°</b>).</p>';
       break;
     }
 
@@ -245,38 +245,38 @@ function resolver() {
       AUX = R;
       etiqueta = "proy";
       P("Fórmula de la proyección",
-        p("La proyección de A⃗ sobre B⃗ es la 'sombra' de A⃗ en la dirección de B⃗.") +
-        F("proy_B A⃗ = [ (A⃗ · B⃗) / |B⃗|² ] · B⃗"));
-      P("Producto punto y magnitud de B⃗",
-        F("A⃗ · B⃗ = (" + nf(A.x) + ")(" + nf(B.x) + ") + (" + nf(A.y) + ")(" + nf(B.y) + ") = " + nf(d)) +
-        F("|B⃗|² = " + sgn(B.x) + "² + " + sgn(B.y) + "² = " + nf(mB * mB)));
+        p("La proyección de A sobre B es la 'sombra' de A en la dirección de B.") +
+        F("proy_B A = [ (A · B) / |B|² ] · B"));
+      P("Producto punto y magnitud de B",
+        F("A · B = (" + nf(A.x) + ")(" + nf(B.x) + ") + (" + nf(A.y) + ")(" + nf(B.y) + ") = " + nf(d)) +
+        F("|B|² = " + sgn(B.x) + "² + " + sgn(B.y) + "² = " + nf(mB * mB)));
       P("Escalar de proyección",
-        F("(A⃗ · B⃗) / |B⃗|² = " + nf(d) + " / " + nf(mB*mB) + " = " + nf(esc, 4)));
+        F("(A · B) / |B|² = " + nf(d) + " / " + nf(mB*mB) + " = " + nf(esc, 4)));
       P("Vector proyección",
-        F("proy_B A⃗ = " + nf(esc, 4) + " · (" + nf(B.x) + " , " + nf(B.y) + ")") +
-        FF("proy_B A⃗ = " + vecTxt(R)) +
-        F("Componente escalar:  comp_B A⃗ = (A⃗·B⃗)/|B⃗| = " + nf(d / mB)));
-      resHTML = '<span class="big">proy_B A⃗ = ' + vecTxt(R) + '</span>' +
-                '<p>La componente escalar de A⃗ en la dirección de B⃗ es <b>' + nf(d / mB) + '</b>.</p>';
+        F("proy_B A = " + nf(esc, 4) + " · (" + nf(B.x) + " , " + nf(B.y) + ")") +
+        FF("proy_B A = " + vecTxt(R)) +
+        F("Componente escalar:  comp_B A = (A·B)/|B| = " + nf(d / mB)));
+      resHTML = '<span class="big">proy_B A = ' + vecTxt(R) + '</span>' +
+                '<p>La componente escalar de A en la dirección de B es <b>' + nf(d / mB) + '</b>.</p>';
       break;
     }
 
     case "cruz": {
-      etiqueta = "A⃗ × B⃗";
+      etiqueta = "A × B";
       P("Fórmula del producto cruz en el plano",
         p("En dos dimensiones el producto cruz es un escalar que corresponde al determinante de las componentes.") +
-        F("A⃗ × B⃗ = | a₁  a₂ |\n          | b₁  b₂ |  = a₁·b₂ − a₂·b₁"));
+        F("A × B = | a₁  a₂ |\n          | b₁  b₂ |  = a₁·b₂ − a₂·b₁"));
       P("Sustitución",
-        F("A⃗ × B⃗ = (" + nf(A.x) + ")(" + nf(B.y) + ") − (" + nf(A.y) + ")(" + nf(B.x) + ")"));
+        F("A × B = (" + nf(A.x) + ")(" + nf(B.y) + ") − (" + nf(A.y) + ")(" + nf(B.x) + ")"));
       P("Operación",
-        F("A⃗ × B⃗ = " + nf(A.x * B.y) + " − " + sgn(A.y * B.x)) +
-        FF("A⃗ × B⃗ = " + nf(cz)));
+        F("A × B = " + nf(A.x * B.y) + " − " + sgn(A.y * B.x)) +
+        FF("A × B = " + nf(cz)));
       P("Interpretación geométrica",
-        F("Área del paralelogramo = |A⃗ × B⃗| = " + nf(Math.abs(cz)) + " u²") +
-        F("Área del triángulo = |A⃗ × B⃗| / 2 = " + nf(Math.abs(cz) / 2) + " u²") +
+        F("Área del paralelogramo = |A × B| = " + nf(Math.abs(cz)) + " u²") +
+        F("Área del triángulo = |A × B| / 2 = " + nf(Math.abs(cz) / 2) + " u²") +
         N(Math.abs(cz) < 1e-9 ? "El resultado es cero: los vectores son PARALELOS (colineales)."
                               : "El signo indica el sentido de giro: positivo antihorario, negativo horario."));
-      resHTML = '<span class="big">A⃗ × B⃗ = ' + nf(cz) + '</span>' +
+      resHTML = '<span class="big">A × B = ' + nf(cz) + '</span>' +
                 '<p>Área del paralelogramo: <b>' + nf(Math.abs(cz)) + ' u²</b> · Área del triángulo: <b>' + nf(Math.abs(cz) / 2) + ' u²</b>.</p>';
       break;
     }
@@ -286,14 +286,14 @@ function resolver() {
   const cosT = (mA && mB) ? Math.max(-1, Math.min(1, d / (mA * mB))) : NaN;
   const th   = isNaN(cosT) ? NaN : Math.acos(cosT) * 180 / Math.PI;
 
-  props.push(["Vector A⃗", vecTxt(A), "cel"]);
-  props.push(["Vector B⃗", vecTxt(B), "roj"]);
-  props.push(["Magnitud |A⃗|", nf(mA), "cel"]);
-  props.push(["Magnitud |B⃗|", nf(mB), "roj"]);
-  props.push(["Dirección de A⃗", nf(angDir(A)) + "°", "cel"]);
-  props.push(["Dirección de B⃗", nf(angDir(B)) + "°", "roj"]);
+  props.push(["Vector A", vecTxt(A), "cel"]);
+  props.push(["Vector B", vecTxt(B), "roj"]);
+  props.push(["Magnitud |A|", nf(mA), "cel"]);
+  props.push(["Magnitud |B|", nf(mB), "roj"]);
+  props.push(["Dirección de A", nf(angDir(A)) + "°", "cel"]);
+  props.push(["Dirección de B", nf(angDir(B)) + "°", "roj"]);
   props.push(["Producto punto", nf(d), ""]);
-  props.push(["Ángulo entre A⃗ y B⃗", isNaN(th) ? "—" : nf(th) + "°", ""]);
+  props.push(["Ángulo entre A y B", isNaN(th) ? "—" : nf(th) + "°", ""]);
   props.push(["Producto cruz", nf(cz), ""]);
   props.push(["Área paralelogramo", nf(Math.abs(cz)) + " u²", ""]);
   props.push(["¿Perpendiculares?", Math.abs(d) < 1e-9 ? "Sí (90°)" : "No", ""]);
@@ -320,16 +320,16 @@ function tabla(A, B, K) {
   const filas = [
     ["Suma", "(a₁+b₁, a₂+b₂)", "(" + nf(A.x) + "+" + sgn(B.x) + ", " + nf(A.y) + "+" + sgn(B.y) + ")", vecTxt({x:A.x+B.x, y:A.y+B.y})],
     ["Resta", "(a₁−b₁, a₂−b₂)", "(" + nf(A.x) + "−" + sgn(B.x) + ", " + nf(A.y) + "−" + sgn(B.y) + ")", vecTxt({x:A.x-B.x, y:A.y-B.y})],
-    ["Escalar k·A⃗", "(k·a₁, k·a₂)", "(" + nf(K) + "·" + sgn(A.x) + ", " + nf(K) + "·" + sgn(A.y) + ")", isNaN(K) ? "—" : vecTxt({x:K*A.x, y:K*A.y})],
-    ["Magnitud |A⃗|", "√(a₁²+a₂²)", "√(" + nf(A.x**2) + "+" + nf(A.y**2) + ")", nf(mA)],
-    ["Magnitud |B⃗|", "√(b₁²+b₂²)", "√(" + nf(B.x**2) + "+" + nf(B.y**2) + ")", nf(mB)],
-    ["Dirección de A⃗", "arctan(a₂/a₁)", "arctan(" + nf(A.y) + "/" + nf(A.x) + ")", nf(angDir(A)) + "°"],
+    ["Escalar k·A", "(k·a₁, k·a₂)", "(" + nf(K) + "·" + sgn(A.x) + ", " + nf(K) + "·" + sgn(A.y) + ")", isNaN(K) ? "—" : vecTxt({x:K*A.x, y:K*A.y})],
+    ["Magnitud |A|", "√(a₁²+a₂²)", "√(" + nf(A.x**2) + "+" + nf(A.y**2) + ")", nf(mA)],
+    ["Magnitud |B|", "√(b₁²+b₂²)", "√(" + nf(B.x**2) + "+" + nf(B.y**2) + ")", nf(mB)],
+    ["Dirección de A", "arctan(a₂/a₁)", "arctan(" + nf(A.y) + "/" + nf(A.x) + ")", nf(angDir(A)) + "°"],
     ["Producto punto", "a₁b₁ + a₂b₂", nf(A.x) + "·" + sgn(B.x) + " + " + nf(A.y) + "·" + sgn(B.y), nf(d)],
     ["Ángulo θ", "arccos(A·B / |A||B|)", "arccos(" + nf(d) + "/" + nf(mA*mB) + ")", isNaN(cosT) ? "—" : nf(Math.acos(cosT)*180/Math.PI) + "°"],
     ["Producto cruz", "a₁b₂ − a₂b₁", nf(A.x) + "·" + sgn(B.y) + " − " + nf(A.y) + "·" + sgn(B.x), nf(cz)],
-    ["Vector unitario û", "A⃗ / |A⃗|", "(" + nf(A.x) + ", " + nf(A.y) + ")/" + nf(mA), mA ? "(" + nf(A.x/mA,3) + ", " + nf(A.y/mA,3) + ")" : "—"],
-    ["Proyección de A⃗ en B⃗", "[(A·B)/|B|²]·B⃗", "[" + nf(d) + "/" + nf(mB*mB) + "]·B⃗", mB ? vecTxt({x:(d/(mB*mB))*B.x, y:(d/(mB*mB))*B.y}) : "—"],
-    ["Área del paralelogramo", "|A⃗ × B⃗|", "|" + nf(cz) + "|", nf(Math.abs(cz)) + " u²"]
+    ["Vector unitario û", "A / |A|", "(" + nf(A.x) + ", " + nf(A.y) + ")/" + nf(mA), mA ? "(" + nf(A.x/mA,3) + ", " + nf(A.y/mA,3) + ")" : "—"],
+    ["Proyección de A en B", "[(A·B)/|B|²]·B", "[" + nf(d) + "/" + nf(mB*mB) + "]·B", mB ? vecTxt({x:(d/(mB*mB))*B.x, y:(d/(mB*mB))*B.y}) : "—"],
+    ["Área del paralelogramo", "|A × B|", "|" + nf(cz) + "|", nf(Math.abs(cz)) + " u²"]
   ];
   $("tbody").innerHTML = filas.map(f =>
     '<tr><td class="op">' + f[0] + '</td><td>' + f[1] + '</td><td>' + f[2] + '</td><td><b>' + f[3] + '</b></td></tr>').join("");
@@ -482,15 +482,15 @@ function dibujar() {
   /* --- vectores principales --- */
   if (!["magnitud","unitario"].includes(OP)) {
     flecha(o.ox, o.oy, Bx, By, "#ef4444", 3.4, false);
-    rotulo("B⃗ " + vecTxt(B), Bx + 9, By - 6, "#ef4444");
+    rotulo("B " + vecTxt(B), Bx + 9, By - 6, "#ef4444");
   }
   flecha(o.ox, o.oy, Ax, Ay, "#38bdf8", 3.4, false);
-  rotulo("A⃗ " + vecTxt(A), Ax + 9, Ay - 6, "#38bdf8");
+  rotulo("A " + vecTxt(A), Ax + 9, Ay - 6, "#38bdf8");
 
   /* --- resultante --- */
   if (R && OP !== "proyeccion") {
     flecha(o.ox, o.oy, X(R.x, o), Y(R.y, o), "#ffffff", 4, false);
-    rotulo("R⃗ " + vecTxt(R), X(R.x, o) + 9, Y(R.y, o) + 20, "#ffffff");
+    rotulo("R " + vecTxt(R), X(R.x, o) + 9, Y(R.y, o) + 20, "#ffffff");
   }
 
   /* --- magnitud sobre el vector A --- */
@@ -499,7 +499,7 @@ function dibujar() {
     ctx.setLineDash([4, 5]); ctx.strokeStyle = "rgba(251,191,36,.7)"; ctx.lineWidth = 1.4;
     ctx.beginPath(); ctx.moveTo(Ax, Ay); ctx.lineTo(Ax, o.oy); ctx.lineTo(o.ox, o.oy); ctx.stroke();
     ctx.restore();
-    rotulo("|A⃗| = " + nf(mag(A)), (o.ox + Ax) / 2 - 30, (o.oy + Ay) / 2 - 10, "#fbbf24");
+    rotulo("|A| = " + nf(mag(A)), (o.ox + Ax) / 2 - 30, (o.oy + Ay) / 2 - 10, "#fbbf24");
   }
 }
 
@@ -542,4 +542,5 @@ function cargarEjemplo(el) {
 document.querySelectorAll("#chips .chip, .ej .cargar").forEach(b => b.onclick = () => cargarEjemplo(b));
 
 /* --- arranque --- */
+window.VECTORES_OK = true;   // marca que el archivo se cargó completo
 resolver();
