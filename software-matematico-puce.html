@@ -65,16 +65,13 @@ header.top::after{
 .logo-slot{
   width:96px;height:96px;flex:0 0 96px;border-radius:18px;
   background:linear-gradient(160deg, rgba(56,189,248,.10), rgba(255,255,255,.03));
-  border:1.5px dashed rgba(125,211,252,.45);
+  border:1px solid rgba(125,211,252,.45);
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;position:relative;overflow:hidden;
   transition:.25s;
 }
 .logo-slot:hover{border-color:var(--celeste);box-shadow:0 0 0 4px rgba(56,189,248,.10)}
-.logo-slot img{width:100%;height:100%;object-fit:contain;padding:6px}
-.logo-ph{text-align:center;color:var(--celeste-2);font-size:10.5px;letter-spacing:.14em;font-weight:700}
-.logo-ph svg{display:block;margin:0 auto 4px;opacity:.85}
-.logo-hint{font-size:9.5px;color:var(--gris-2);letter-spacing:.02em;margin-top:2px;font-weight:500}
+.logo-slot img{width:100%;height:100%;object-fit:cover;display:block}
 
 .titles h1{
   font-size:clamp(19px,2.5vw,30px);font-weight:700;letter-spacing:.01em;
@@ -278,16 +275,9 @@ footer span{color:var(--celeste-2)}
 <!-- ==================== ENCABEZADO ==================== -->
 <header class="top">
   <div class="wrap head-inner">
-    <!-- Espacio reservado para el logo (clic para cargar una imagen) -->
-    <div class="logo-slot" id="logoSlot" title="Clic para cargar el logo institucional">
-      <div class="logo-ph" id="logoPh">
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="1.5">
-          <path d="M12 3l8 3.5v5c0 4.6-3.2 8.6-8 9.5-4.8-.9-8-4.9-8-9.5v-5L12 3z"/>
-          <path d="M12 8v6M9 11h6"/>
-        </svg>
-        LOGO
-        <div class="logo-hint">cargar</div>
-      </div>
+    <!-- Logo institucional incrustado (clic para reemplazarlo por otra imagen) -->
+    <div class="logo-slot" id="logoSlot" title="Logo PUCE Ambato - clic para reemplazarlo">
+      <img id="logoImg" src="data:image/png;base64,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" alt="Pontificia Universidad Catolica del Ecuador - Sede Ambato">
       <input type="file" id="logoFile" accept="image/*" hidden>
     </div>
 
@@ -1461,13 +1451,14 @@ document.getElementById("btnCsv").addEventListener("click",()=>{
   a.download="cuadro_de_valores.csv"; a.click();
 });
 
-/* logo */
-const slot=document.getElementById("logoSlot"), file=document.getElementById("logoFile");
+/* logo: viene incrustado en el HTML; el clic solo sirve para reemplazarlo */
+const slot=document.getElementById("logoSlot"), file=document.getElementById("logoFile"),
+      logoImg=document.getElementById("logoImg");
 slot.addEventListener("click",()=>file.click());
 file.addEventListener("change",e=>{
   const f=e.target.files[0]; if(!f) return;
   const rd=new FileReader();
-  rd.onload=ev=>{ slot.innerHTML=`<img src="${ev.target.result}" alt="Logo institucional">`; slot.style.border="1px solid rgba(125,211,252,.45)"; };
+  rd.onload=ev=>{ logoImg.src=ev.target.result; };   /* solo cambia la imagen: el input sigue vivo */
   rd.readAsDataURL(f);
 });
 
