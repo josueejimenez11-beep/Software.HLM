@@ -576,7 +576,125 @@
   }
 
   /* ==========================================================================
-     10. VARIOS
+     10. IDIOMAS
+     El español vive en el HTML. Al arrancar se recorre el documento una vez,
+     se guarda cada nodo de texto con su original y se traduce buscando ese
+     original en el diccionario. Lo que no esté traducido se queda en español.
+     ========================================================================== */
+  function iniciarIdiomas() {
+    var raiz   = $('#idioma');
+    var boton  = $('#idiomaBtn');
+    var lista  = $('#idiomaLista');
+    var actual = $('#idiomaActual');
+    if (!raiz || !boton || !lista) return;
+
+    var DICC = window.IDIOMAS || {};
+    var META = window.IDIOMAS_META || {};
+
+    function normalizar(t) {
+      return t.replace(/ /g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
+    /* Inventario de nodos de texto traducibles, con su original en español */
+    var nodos = [];
+    (function recolectar() {
+      var salta = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, svg: 1 };
+      var caminante = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function (n) {
+          var p = n.parentNode;
+          if (!p || salta[p.tagName] || p.closest('svg') || p.closest('#idioma')) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          return normalizar(n.nodeValue).length > 1
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      });
+      var n;
+      while ((n = caminante.nextNode())) {
+        // Se conserva el espacio de los extremos: separa este nodo del texto
+        // vecino cuando la frase está partida por <b>, <strong> o <span>.
+        nodos.push({
+          nodo: n,
+          es:   normalizar(n.nodeValue),
+          pre:  /^\s/.test(n.nodeValue) ? ' ' : '',
+          post: /\s$/.test(n.nodeValue) ? ' ' : ''
+        });
+      }
+    })();
+
+    /* Atributos visibles que también se traducen */
+    var atributos = [];
+    $$('[placeholder],[aria-label],[alt],[title]').forEach(function (el) {
+      ['placeholder', 'aria-label', 'alt', 'title'].forEach(function (a) {
+        var v = el.getAttribute(a);
+        if (v && normalizar(v).length > 1) atributos.push({ el: el, attr: a, es: normalizar(v) });
+      });
+    });
+
+    function aplicar(codigo) {
+      var tabla = codigo === 'es' ? null : (DICC[codigo] || {});
+
+      nodos.forEach(function (r) {
+        var t = tabla && tabla[r.es];
+        r.nodo.nodeValue = r.pre + (t || r.es) + r.post;
+      });
+      atributos.forEach(function (r) {
+        var t = tabla && tabla[r.es];
+        r.el.setAttribute(r.attr, t || r.es);
+      });
+
+      document.documentElement.lang = (META[codigo] || {}).lang || codigo;
+      if (actual) actual.textContent = (META[codigo] || {}).nombre || codigo;
+
+      $$('.idioma__opcion', lista).forEach(function (b) {
+        var elegido = b.getAttribute('data-idioma') === codigo;
+        b.classList.toggle('activo', elegido);
+        b.setAttribute('aria-selected', String(elegido));
+      });
+
+      try { localStorage.setItem('idioma', codigo); } catch (e) {}
+    }
+
+    function abrir(si) {
+      lista.hidden = !si;
+      boton.setAttribute('aria-expanded', String(si));
+    }
+
+    boton.addEventListener('click', function (e) {
+      e.stopPropagation();
+      abrir(lista.hidden);
+    });
+
+    lista.addEventListener('click', function (e) {
+      var b = e.target.closest('.idioma__opcion');
+      if (!b) return;
+      aplicar(b.getAttribute('data-idioma'));
+      abrir(false);
+      boton.focus();
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!raiz.contains(e.target)) abrir(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !lista.hidden) { abrir(false); boton.focus(); }
+    });
+
+    /* Idioma inicial: el guardado, si no el del navegador, si no español */
+    var elegido = 'es';
+    try { elegido = localStorage.getItem('idioma') || ''; } catch (e) { elegido = ''; }
+    if (!elegido) {
+      var nav = (navigator.language || 'es').slice(0, 2).toLowerCase();
+      elegido = META[nav] ? nav : 'es';
+    }
+    if (!META[elegido]) elegido = 'es';
+    if (elegido !== 'es') aplicar(elegido);
+    else if (actual) actual.textContent = META.es.nombre;
+  }
+
+  /* ==========================================================================
+     11. VARIOS
      ========================================================================== */
   function iniciarVarios() {
     var anio = $('#anio');
@@ -594,6 +712,7 @@
     iniciarAcordeon();
     iniciarCotizador();
     iniciarFormulario();
+    iniciarIdiomas();
     iniciarVarios();
   }
 
