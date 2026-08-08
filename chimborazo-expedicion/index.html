@@ -34,7 +34,29 @@
 <header class="nav" id="nav">
   <div class="nav__wrap">
     <a class="marca" href="#inicio" aria-label="Chimborazo Rey Travel Explore — inicio">
-      <img src="assets/img/logo-travel-explore.png" alt="Logotipo Chimborazo Rey Travel Explore" width="276" height="135">
+      <svg class="marca__icono" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="mSol" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stop-color="#ffd98a"/>
+            <stop offset="100%" stop-color="#d99f1e"/>
+          </linearGradient>
+          <linearGradient id="mNieve" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#b9d7e6"/>
+          </linearGradient>
+        </defs>
+        <!-- el sol: el punto más cercano a él -->
+        <circle cx="33.5" cy="14" r="7.5" fill="url(#mSol)"/>
+        <!-- las dos cumbres: Whymper y Veintimilla -->
+        <path d="M1.5 41 L17 10 L25.5 24 L31 16 L46.5 41 Z" fill="url(#mNieve)"/>
+        <path d="M17 10 L25.5 24 L21 26.5 L12.6 21.5 Z" fill="#ffffff"/>
+        <path d="M31 16 L35.4 23 L31.6 24.6 L28.2 20.6 Z" fill="#ffffff"/>
+        <path d="M1.5 41 H46.5" stroke="#249c90" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      <span class="marca__texto">
+        <span class="marca__nombre">Chimborazo <b>Rey</b></span>
+        <span class="marca__linea">Travel Explore</span>
+      </span>
     </a>
 
     <nav class="menu" id="menu" aria-label="Navegación principal">
@@ -1206,7 +1228,29 @@
 <footer class="pie">
   <div class="wrap pie__grid">
     <div>
-      <img class="pie__logo" src="assets/img/logo-travel-explore.png" alt="Chimborazo Rey Travel Explore" width="276" height="135" loading="lazy">
+      <a class="marca marca--pie" href="#inicio" aria-label="Chimborazo Rey Travel Explore — inicio">
+        <svg class="marca__icono" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="pSol" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"  stop-color="#ffd98a"/>
+              <stop offset="100%" stop-color="#d99f1e"/>
+            </linearGradient>
+            <linearGradient id="pNieve" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"  stop-color="#8fb3c7"/>
+              <stop offset="100%" stop-color="#31536a"/>
+            </linearGradient>
+          </defs>
+          <circle cx="33.5" cy="14" r="7.5" fill="url(#pSol)"/>
+          <path d="M1.5 41 L17 10 L25.5 24 L31 16 L46.5 41 Z" fill="url(#pNieve)"/>
+          <path d="M17 10 L25.5 24 L21 26.5 L12.6 21.5 Z" fill="#dbe9f2"/>
+          <path d="M31 16 L35.4 23 L31.6 24.6 L28.2 20.6 Z" fill="#dbe9f2"/>
+          <path d="M1.5 41 H46.5" stroke="#249c90" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+        <span class="marca__texto">
+          <span class="marca__nombre">Chimborazo <b>Rey</b></span>
+          <span class="marca__linea">Travel Explore</span>
+        </span>
+      </a>
       <p>
         Lodge, restaurante de alta montaña y agencia de turismo de aventura a 4.250 m s. n. m.,
         en la comunidad Cruz del Arenal, a las faldas del nevado Chimborazo.
