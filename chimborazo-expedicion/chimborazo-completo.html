@@ -68,8 +68,12 @@
   --aire-seccion: clamp(64px, 8.5vw, 112px);
   --aire-bloque:  clamp(16px, 2.1vw, 26px);
   --aire-wrap:    clamp(18px, 3.4vw, 24px);
-  --alto-nav:     clamp(62px, 7vw, 78px);
   --suave:        cubic-bezier(.2,.7,.3,1);
+
+  /* Cabecera de dos bandas */
+  --alto-marca: clamp(58px, 5.6vw, 68px);
+  --alto-menu:  clamp(44px, 4.2vw, 52px);
+  --alto-nav:   calc(var(--alto-marca) + var(--alto-menu));
 
   --display: "Oswald", "Haettenschweiler", "Arial Narrow", Impact, sans-serif;
   --texto:   "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -115,48 +119,26 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
 
 :focus-visible{outline:2px solid var(--oro-2);outline-offset:3px;border-radius:4px}
 
-/* ===================== BARRA DE PROGRESO ================================ */
-.progreso{
-  position:fixed;top:0;left:0;right:0;height:3px;z-index:120;
-  background:rgba(13,26,38,.06);
-}
-.progreso span{
-  display:block;height:100%;width:0;
-  background:linear-gradient(90deg,var(--hielo),var(--hielo-2),var(--oro-2),var(--oro));
-  transition:width .1s linear;
-}
-
-/* ===================== NAVEGACIÓN =======================================
-   Contenedor negro flotante. Al ser siempre oscuro funciona igual sobre la
-   fotografía de portada y sobre el blanco de la página: un solo estado.
+/* ===================== CABECERA DE DOS BANDAS ===========================
+   Banda superior negra: marca y contacto. Banda inferior blanca: secciones.
+   Ancho completo, de borde a borde, fija en la parte superior.
    ======================================================================== */
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:110;
-  padding:clamp(10px,1.6vw,18px) var(--aire-wrap) 0;
-  pointer-events:none;           /* el aire alrededor no intercepta clics */
+  transition:box-shadow .4s var(--suave);
 }
-.nav__wrap{
-  pointer-events:auto;
-  position:relative;
+.nav.solida{box-shadow:0 6px 26px rgba(13,26,38,.13)}
+
+.banda__interior{
   max-width:var(--ancho);margin:0 auto;
-  min-height:var(--alto-nav);
-  padding:10px clamp(12px,1.6vw,18px) 10px clamp(14px,1.8vw,20px);
-  display:flex;align-items:center;justify-content:space-between;
-  gap:clamp(12px,2vw,24px);
-  background:var(--negro);
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:999px;
-  box-shadow:0 10px 30px rgba(6,12,20,.26);
-  transition:box-shadow .4s var(--suave), background .4s var(--suave), min-height .4s var(--suave);
-}
-.nav.solida .nav__wrap{
-  box-shadow:0 16px 44px rgba(6,12,20,.4);
-  background:rgba(11,14,18,.94);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
+  padding:0 var(--aire-wrap);
+  display:flex;align-items:center;gap:clamp(12px,2vw,28px);
 }
 
-/* --- Marca --- */
+/* --- Banda superior: marca y contacto --- */
+.banda--marca{background:var(--negro)}
+.banda--marca .banda__interior{min-height:var(--alto-marca);justify-content:space-between}
+
 .marca{display:flex;align-items:center;gap:clamp(8px,1.1vw,13px);flex-shrink:0}
 .marca__icono{
   width:clamp(34px,3.4vw,42px);height:auto;flex-shrink:0;
@@ -175,36 +157,80 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
   color:var(--turquesa);margin-top:4px;font-weight:600;
 }
 
-/* --- Menú --- */
-.menu{display:flex;align-items:center;gap:2px}
+/* --- Utilidades de contacto --- */
+.util{display:flex;align-items:center;gap:clamp(14px,2vw,30px)}
+.util__dato,
+.util__enlace{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:clamp(.74rem,.88vw,.83rem);letter-spacing:.01em;
+  color:rgba(255,255,255,.66);white-space:nowrap;
+  transition:color .25s var(--suave);
+}
+.util__dato svg,
+.util__enlace svg{width:15px;height:15px;fill:currentColor;flex-shrink:0}
+.util__externo{width:11px;height:11px;fill:none;opacity:.7}
+.util__enlace:hover{color:#fff}
+.util__enlace--fuerte{color:#fff;font-weight:600}
+.util__enlace--fuerte:hover{color:var(--oro-3)}
+
+/* --- Banda inferior: navegación --- */
+.banda--menu{background:var(--blanco);border-bottom:1px solid var(--borde)}
+.banda--menu .banda__interior{min-height:var(--alto-menu);padding-block:0}
+
+.menu{display:flex;align-items:stretch;width:100%;gap:clamp(2px,.6vw,8px)}
 .menu a{
-  padding:9px clamp(9px,1.05vw,14px);border-radius:999px;
-  font-size:clamp(.78rem,.92vw,.86rem);font-weight:500;letter-spacing:.02em;
-  color:rgba(255,255,255,.7);
-  transition:color .25s var(--suave), background .25s var(--suave);
-  white-space:nowrap;
+  display:inline-flex;align-items:center;
+  padding:0 clamp(9px,1.05vw,15px);
+  font-size:clamp(.79rem,.92vw,.88rem);font-weight:500;letter-spacing:.01em;
+  color:var(--tinta-2);white-space:nowrap;position:relative;
+  transition:color .25s var(--suave);
 }
-.menu a:hover{color:#fff;background:rgba(255,255,255,.09)}
-.menu a.activo{color:var(--oro-3);background:rgba(217,159,30,.16)}
+.menu a::after{
+  content:"";position:absolute;left:clamp(9px,1.05vw,15px);right:clamp(9px,1.05vw,15px);bottom:0;
+  height:3px;background:var(--oro-2);border-radius:3px 3px 0 0;
+  transform:scaleX(0);transform-origin:center;
+  transition:transform .3s var(--suave);
+}
+.menu a:hover{color:var(--tinta)}
+.menu a:hover::after{transform:scaleX(.5)}
+.menu a.activo{color:var(--oro)}
+.menu a.activo::after{transform:scaleX(1)}
 
-.menu__cta{
+/* Se cualifica con `.menu a` para ganarle en especificidad al enlace base */
+.menu a.menu__cta{
+  margin-left:auto;align-self:center;
   background:linear-gradient(135deg,var(--oro-2),var(--oro));
-  color:#fff;font-weight:700;margin-left:6px;
-  box-shadow:0 6px 18px rgba(156,107,10,.34);
+  color:#fff;font-weight:700;border-radius:999px;
+  padding:10px clamp(14px,1.6vw,22px);
+  box-shadow:0 5px 16px rgba(156,107,10,.3);
+  transition:filter .25s var(--suave), box-shadow .25s var(--suave);
 }
-.menu__cta:hover,
+.menu a.menu__cta::after{display:none}
+.menu a.menu__cta:hover,
 .menu a.menu__cta.activo{
-  background:linear-gradient(135deg,var(--oro-3),var(--oro-2));
-  color:#2a1c02;
+  color:#fff;filter:brightness(1.08);
+  box-shadow:0 8px 22px rgba(156,107,10,.42);
 }
 
-.hamburguesa{display:none;width:44px;height:40px;padding:9px 8px;border-radius:12px}
+/* --- Botón de menú en móvil --- */
+.hamburguesa{display:none;width:44px;height:40px;padding:9px 8px;border-radius:10px;flex-shrink:0}
 .hamburguesa span{display:block;height:2px;background:#fff;border-radius:2px;transition:.3s var(--suave)}
 .hamburguesa span+span{margin-top:6px}
-.hamburguesa:hover{background:rgba(255,255,255,.08)}
+.hamburguesa:hover{background:rgba(255,255,255,.1)}
 .hamburguesa[aria-expanded="true"] span:nth-child(1){transform:translateY(8px) rotate(45deg)}
 .hamburguesa[aria-expanded="true"] span:nth-child(2){opacity:0}
 .hamburguesa[aria-expanded="true"] span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+/* --- Barra de progreso de lectura, al pie de la cabecera --- */
+.progreso{
+  position:absolute;left:0;right:0;bottom:-1px;height:3px;
+  background:transparent;pointer-events:none;
+}
+.progreso span{
+  display:block;height:100%;width:0;
+  background:linear-gradient(90deg,var(--turquesa),var(--hielo-2),var(--oro-2),var(--oro));
+  transition:width .1s linear;
+}
 
 /* ===================== HERO ============================================= */
 /* Única zona oscura del sitio: la fotografía manda y el texto va en blanco. */
@@ -978,23 +1004,33 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
   .ficha__grid{grid-template-columns:repeat(2,1fr)}
   .hero__datos{grid-template-columns:repeat(2,1fr)}
 
-  /* El menú cuelga del propio contenedor negro */
-  .menu{
-    position:absolute;top:calc(100% + 10px);left:0;right:0;
-    flex-direction:column;align-items:stretch;gap:2px;
-    background:var(--negro);
-    border:1px solid rgba(255,255,255,.09);border-radius:24px;
-    box-shadow:0 18px 44px rgba(6,12,20,.42);
-    padding:12px;
-    max-height:calc(100svh - var(--alto-nav) - 40px);overflow:auto;
-    opacity:0;visibility:hidden;transform:translateY(-12px) scale(.98);
-    transform-origin:top center;
-    transition:opacity .32s var(--suave), transform .32s var(--suave), visibility .32s;
-  }
-  .menu.abierto{opacity:1;visibility:visible;transform:none}
-  .menu a{padding:14px 16px;border-radius:14px;font-size:1rem}
-  .menu__cta{margin:8px 0 0;text-align:center;justify-content:center}
+  /* En móvil la banda inferior se despliega desde el botón */
+  :root{--alto-nav:var(--alto-marca)}
+  .util{display:none}
   .hamburguesa{display:block}
+
+  .banda--menu{border-bottom:none}
+  .banda--menu .banda__interior{min-height:0;padding:0}
+  .menu{
+    flex-direction:column;align-items:stretch;gap:0;
+    max-height:0;overflow:hidden;
+    background:var(--blanco);
+    transition:max-height .42s var(--suave), box-shadow .42s var(--suave);
+  }
+  .menu.abierto{
+    max-height:min(74svh,560px);overflow:auto;
+    box-shadow:0 18px 40px rgba(13,26,38,.16);
+  }
+  .menu a{
+    padding:15px var(--aire-wrap);font-size:1rem;
+    border-bottom:1px solid var(--borde);
+  }
+  .menu a::after{left:var(--aire-wrap);right:auto;top:0;bottom:0;width:3px;height:auto;border-radius:0}
+  .menu a:hover::after,.menu a.activo::after{transform:scaleX(1)}
+  .menu a.menu__cta{
+    margin:14px var(--aire-wrap) 20px;align-self:stretch;justify-content:center;
+    border-bottom:none;padding:15px 22px;
+  }
 }
 
 @media (max-width:760px){
@@ -1059,15 +1095,16 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
 <!-- ============================================================
      BARRA DE PROGRESO DE LECTURA
      ============================================================ -->
-<div class="progreso" id="progreso" aria-hidden="true"><span id="progresoBarra"></span></div>
-
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 
 <!-- ============================================================
      NAVEGACIÓN
      ============================================================ -->
 <header class="nav" id="nav">
-  <div class="nav__wrap">
+
+  <!-- Banda superior: marca y contacto -->
+  <div class="banda banda--marca">
+   <div class="banda__interior">
     <a class="marca" href="#inicio" aria-label="Chimborazo Rey Travel Explore — inicio">
       <svg class="marca__icono" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
         <defs>
@@ -1094,6 +1131,39 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
       </span>
     </a>
 
+    <div class="util">
+      <span class="util__dato">
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M8 1.4a4.6 4.6 0 0 0-4.6 4.6c0 3.4 4.6 8.6 4.6 8.6s4.6-5.2 4.6-8.6A4.6 4.6 0 0 0 8 1.4Zm0 6.3a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4Z"/>
+        </svg>
+        Cruz del Arenal · Guaranda, Bolívar
+      </span>
+      <a class="util__enlace" href="mailto:gustavocc1982@hotmail.com">
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M2 3.5h12a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V4a.5.5 0 0 1 .5-.5Zm.9 1.4L8 8.4l5.1-3.5H2.9Z"/>
+        </svg>
+        Escríbanos
+      </a>
+      <a class="util__enlace util__enlace--fuerte" href="https://wa.me/593968596592" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M5.6 3.2c.3 0 .5.1.6.4l.8 1.8c.1.3.1.5-.1.7l-.6.7c-.1.2-.2.3 0 .6a7.4 7.4 0 0 0 2.8 2.5c.3.1.4.1.6-.1l.7-.7c.2-.2.4-.2.7-.1l1.8.8c.3.1.4.3.4.6 0 1.1-.9 2-2 2A9.6 9.6 0 0 1 3.6 5c0-1 .9-1.8 2-1.8Z"/>
+        </svg>
+        096 859 6592
+        <svg class="util__externo" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+          <path d="M4.5 1.5h6v6M10.5 1.5 5 7M8 9.5v1h-7v-7h1" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <button class="hamburguesa" id="hamburguesa" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+   </div>
+  </div>
+
+  <!-- Banda inferior: navegación de la propuesta -->
+  <div class="banda banda--menu">
+   <div class="banda__interior">
     <nav class="menu" id="menu" aria-label="Navegación principal">
       <a href="#montana">La montaña</a>
       <a href="#galeria">Galería</a>
@@ -1101,13 +1171,12 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
       <a href="#itinerario">Itinerario</a>
       <a href="#equipo">Equipo y seguridad</a>
       <a href="#inversion">Inversión</a>
-      <a href="#reserva" class="menu__cta">Reservar</a>
+      <a href="#reserva" class="menu__cta">Reservar expedición</a>
     </nav>
-
-    <button class="hamburguesa" id="hamburguesa" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
-      <span></span><span></span><span></span>
-    </button>
+   </div>
   </div>
+
+  <div class="progreso" id="progreso" aria-hidden="true"><span id="progresoBarra"></span></div>
 </header>
 
 <main id="contenido">
