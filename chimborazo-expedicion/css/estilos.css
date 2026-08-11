@@ -251,9 +251,9 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
   background:transparent;pointer-events:none;
 }
 .progreso span{
-  display:block;height:100%;width:0;
+  display:block;height:100%;width:100%;
   background:linear-gradient(90deg,var(--turquesa),var(--hielo-2),var(--oro-2),var(--oro));
-  transition:width .1s linear;
+  transform:scaleX(0);transform-origin:left center;
 }
 
 /* ===================== HERO ============================================= */
@@ -279,6 +279,8 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
   background-size:cover;background-position:center;
   opacity:0;transform:scale(1.12);
   transition:opacity 1.6s ease;
+  will-change:opacity, transform;
+  backface-visibility:hidden;
 }
 .hero__toma.viva{opacity:1;animation:kenburns 9s ease-out forwards}
 @keyframes kenburns{
@@ -293,10 +295,9 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
     radial-gradient(1100px 700px at 12% 80%, rgba(4,20,38,.6), transparent 66%);
 }
 .hero__grano{
-  position:absolute;inset:0;z-index:-1;opacity:.28;pointer-events:none;
+  position:absolute;inset:0;z-index:-1;opacity:.18;pointer-events:none;
   background-image:
-    repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1px, transparent 1px 3px);
-  mix-blend-mode:overlay;
+    repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px);
 }
 
 .hero__contenido{max-width:var(--ancho);margin:0 auto;padding:0 var(--aire-wrap);width:100%}
@@ -306,7 +307,7 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
   font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;
   color:#fff;font-weight:600;
   padding:8px 16px;border:1px solid rgba(255,255,255,.28);border-radius:999px;
-  background:rgba(10,20,30,.42);backdrop-filter:blur(6px);
+  background:rgba(8,16,25,.62);
   margin-bottom:26px;
 }
 .hero__kicker .rey{color:var(--oro-3)}
@@ -357,10 +358,9 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
   background:rgba(255,255,255,.22);
   border:1px solid rgba(255,255,255,.24);border-radius:var(--radio);
   overflow:hidden;max-width:840px;
-  backdrop-filter:blur(10px);
 }
 .hero__datos li{
-  background:rgba(9,18,28,.5);padding:18px 20px;
+  background:rgba(9,18,28,.68);padding:18px 20px;
   display:flex;flex-direction:column;gap:2px;
 }
 .hero__datos b{
@@ -400,8 +400,7 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
 }
 .btn--fantasma:hover{background:var(--hielo-3);border-color:var(--hielo-2);color:var(--hielo)}
 .hero .btn--fantasma{
-  border-color:rgba(255,255,255,.5);color:#fff;background:rgba(255,255,255,.12);
-  backdrop-filter:blur(6px);
+  border-color:rgba(255,255,255,.5);color:#fff;background:rgba(255,255,255,.16);
 }
 .hero .btn--fantasma:hover{background:rgba(255,255,255,.24);border-color:#fff;color:#fff}
 .btn--whats{
@@ -457,6 +456,10 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
 /* --- Revelado al hacer scroll --- */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1)}
 .reveal.visible{opacity:1;transform:none}
+
+/* Acota el repintado de cada caja a su propio rectángulo */
+.tarjeta,.plan,.bloque,.ratio,.paso__cuerpo,.foto,.logistica,
+.tarifario,.cotizador,.formulario{contain:layout paint style}
 
 /* ===================== LA MONTAÑA ======================================= */
 .montana__grid{

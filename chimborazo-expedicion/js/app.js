@@ -114,24 +114,47 @@
       .map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); })
       .filter(Boolean);
 
+    /* Medidas de la página. Se calculan aparte del scroll: leer la posición de
+       cada sección en cada fotograma obliga al navegador a rehacer la
+       maquetación y es lo que hacía que el desplazamiento se trabara. */
+    var topes = [];
+    var recorrido = 0;
+
+    function medir() {
+      recorrido = document.documentElement.scrollHeight - window.innerHeight;
+      // El margen sale de la altura real de la cabecera, más holgura: así la
+      // sección queda marcada también cuando se llega pinchando en el menú.
+      var margen = (nav ? nav.offsetHeight : 110) + 48;
+      topes = secciones.map(function (s) {
+        return { id: s.id, top: s.getBoundingClientRect().top + window.scrollY - margen };
+      });
+    }
+
+    /* Estado anterior: solo se toca el DOM cuando algo cambia de verdad */
+    var eraSolida = null, eraVisible = null, eraActual = null;
+
     function alDesplazar() {
       var y = window.scrollY || document.documentElement.scrollTop;
 
-      if (nav) nav.classList.toggle('solida', y > 40);
-      if (arriba) arriba.classList.toggle('visible', y > 700);
+      var solida = y > 40;
+      if (nav && solida !== eraSolida) { nav.classList.toggle('solida', solida); eraSolida = solida; }
 
-      if (barra) {
-        var alto = document.documentElement.scrollHeight - window.innerHeight;
-        barra.style.width = (alto > 0 ? (y / alto) * 100 : 0) + '%';
-      }
+      var visible = y > 700;
+      if (arriba && visible !== eraVisible) { arriba.classList.toggle('visible', visible); eraVisible = visible; }
+
+      // scaleX en lugar de width: lo resuelve la tarjeta gráfica, sin maquetar
+      if (barra) barra.style.transform = 'scaleX(' + (recorrido > 0 ? Math.min(y / recorrido, 1) : 0) + ')';
 
       var actual = '';
-      secciones.forEach(function (s) {
-        if (s.offsetTop - 140 <= y) actual = s.id;
-      });
-      enlaces.forEach(function (a) {
-        a.classList.toggle('activo', a.getAttribute('href') === '#' + actual);
-      });
+      for (var i = 0; i < topes.length; i++) {
+        if (topes[i].top <= y) actual = topes[i].id; else break;
+      }
+      if (actual !== eraActual) {
+        eraActual = actual;
+        enlaces.forEach(function (a) {
+          a.classList.toggle('activo', a.getAttribute('href') === '#' + actual);
+        });
+      }
     }
 
     var pendiente = false;
@@ -140,6 +163,21 @@
       pendiente = true;
       requestAnimationFrame(function () { alDesplazar(); pendiente = false; });
     }, { passive: true });
+
+    /* Se vuelve a medir cuando cambia el tamaño de la página: al girar el
+       móvil, al abrir una pregunta frecuente o cuando cargan las fotos. */
+    var remedir = null;
+    function pedirMedida() {
+      clearTimeout(remedir);
+      remedir = setTimeout(function () { medir(); alDesplazar(); }, 120);
+    }
+    window.addEventListener('resize', pedirMedida, { passive: true });
+    window.addEventListener('load', pedirMedida);
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(pedirMedida).observe(document.body);
+    }
+
+    medir();
     alDesplazar();
 
     if (boton && menu) {
