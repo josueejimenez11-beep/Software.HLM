@@ -626,6 +626,9 @@ body.is-nav-open { overflow: hidden; }
   position: relative;
   display: flex;
   align-items: flex-end;
+  /* Respaldo: el texto del hero es blanco, así que si la fotografía no
+     carga el fondo debe seguir siendo oscuro y no blanco sobre blanco. */
+  background-color: #262320;
   min-height: clamp(560px, 92vh, 980px);
   padding-block: calc(var(--navbar-h) + 3rem) clamp(3.5rem, 8vh, 6rem);
   overflow: hidden;
@@ -1481,19 +1484,24 @@ body.is-nav-open { overflow: hidden; }
 /* --------------------------------------------------------------------------
    15. Animaciones al hacer scroll (IntersectionObserver)
    -------------------------------------------------------------------------- */
-[data-animate] {
+/* IMPORTANTE: el estado oculto sólo se aplica bajo `.cr-js`, una clase que
+   main.js añade a <html> únicamente si TODO el JavaScript se cargó y evaluó
+   sin errores. Si falta un script, la ruta está mal o el visitante tiene el
+   JavaScript desactivado, la clase nunca aparece y el contenido se ve
+   normalmente: la página jamás queda en blanco. */
+.cr-js [data-animate] {
   opacity: 0;
   transition: opacity .75s var(--ease), transform .75s var(--ease);
   will-change: opacity, transform;
 }
 
-[data-animate="fade-up"]    { transform: translateY(28px); }
-[data-animate="fade-in"]    { transform: none; }
-[data-animate="fade-right"] { transform: translateX(-28px); }
-[data-animate="fade-left"]  { transform: translateX(28px); }
-[data-animate="zoom-in"]    { transform: scale(.965); }
+.cr-js [data-animate="fade-up"]    { transform: translateY(28px); }
+.cr-js [data-animate="fade-in"]    { transform: none; }
+.cr-js [data-animate="fade-right"] { transform: translateX(-28px); }
+.cr-js [data-animate="fade-left"]  { transform: translateX(28px); }
+.cr-js [data-animate="zoom-in"]    { transform: scale(.965); }
 
-[data-animate].is-visible {
+.cr-js [data-animate].is-visible {
   opacity: 1;
   transform: none;
 }
@@ -1501,8 +1509,8 @@ body.is-nav-open { overflow: hidden; }
 /* En pantallas pequeñas los desplazamientos horizontales podrían generar
    scroll lateral: se sustituyen por un desplazamiento vertical. */
 @media (max-width: 700px) {
-  [data-animate="fade-right"],
-  [data-animate="fade-left"] { transform: translateY(24px); }
+  .cr-js [data-animate="fade-right"],
+  .cr-js [data-animate="fade-left"] { transform: translateY(24px); }
 }
 
 /* --------------------------------------------------------------------------
@@ -1520,7 +1528,7 @@ body.is-nav-open { overflow: hidden; }
     scroll-behavior: auto !important;
   }
 
-  [data-animate] { opacity: 1 !important; transform: none !important; }
+  .cr-js [data-animate] { opacity: 1 !important; transform: none !important; }
   .hero__media img { animation: none; }
   .card:hover,
   .feature:hover,
@@ -1534,5 +1542,5 @@ body.is-nav-open { overflow: hidden; }
 @media print {
   .navbar, .float-wa, .hero__scroll, .lightbox, .modal { display: none !important; }
   body { color: #000; }
-  [data-animate] { opacity: 1 !important; transform: none !important; }
+  .cr-js [data-animate] { opacity: 1 !important; transform: none !important; }
 }

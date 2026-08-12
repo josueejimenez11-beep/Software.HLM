@@ -662,3 +662,17 @@ const CR = (() => {
     prefersReducedMotion
   };
 })();
+
+/* --------------------------------------------------------------------------
+   Señal de «JavaScript operativo»
+   --------------------------------------------------------------------------
+   Esta línea es la ÚLTIMA del archivo a propósito: sólo se ejecuta si todo lo
+   anterior —incluido idiomas.js, del que depende— se cargó y evaluó sin
+   errores. La clase `.cr-js` es lo que autoriza a global.css a ocultar los
+   bloques con `data-animate` para animarlos después.
+
+   Si falta un script, la ruta es incorrecta o el visitante tiene el
+   JavaScript desactivado, la clase nunca llega a añadirse y la página se ve
+   completa, sin animaciones. Nunca queda en blanco.
+   -------------------------------------------------------------------------- */
+document.documentElement.classList.add('cr-js');

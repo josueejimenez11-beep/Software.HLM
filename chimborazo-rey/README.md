@@ -159,7 +159,27 @@ se actualizan todos los enlaces de llamada, WhatsApp, correo e indicaciones de l
 
 ---
 
-## 6. Formularios
+## 6. Si la página se ve en blanco
+
+El sitio se ve completo aunque el JavaScript falle, pero si algo no aparece, revisa esto por orden:
+
+1. **¿Están las carpetas al lado del HTML?** `index.html` busca `css/`, `js/` e `images/` como
+   hermanas suyas. Si copias sólo el HTML a otra carpeta, no encontrará nada. La estructura del
+   apartado 2 debe respetarse tal cual.
+2. **Abre la consola del navegador** (F12 → pestaña «Console»). Un `404` te dice exactamente qué
+   archivo falta y con qué ruta lo está buscando.
+3. **`file://` frente a Live Server.** Ambos funcionan, pero con Live Server las rutas relativas
+   se comportan igual que en un servidor real. Es la forma recomendada de probarlo.
+
+Cómo está protegido: `global.css` sólo oculta los bloques animados bajo la clase `.cr-js`, que
+`main.js` añade a `<html>` en su última línea, es decir únicamente si todo el JavaScript se evaluó
+sin errores. Si falta un script, la clase nunca aparece y el contenido se muestra sin animaciones.
+El hero, además, tiene un color de fondo oscuro de respaldo para que su texto blanco siga siendo
+legible aunque la fotografía no cargue.
+
+---
+
+## 7. Formularios
 
 El sitio es estático y **no tiene backend**. Los tres formularios (reserva de mesa, solicitud de
 hospedaje y consulta de actividades):
@@ -173,7 +193,7 @@ Si más adelante se añade un servidor, basta con sustituir la llamada a `openWh
 
 ---
 
-## 7. Accesibilidad y rendimiento
+## 8. Accesibilidad y rendimiento
 
 - HTML semántico, un único `<h1>` por página y jerarquía de encabezados sin saltos.
 - Contraste WCAG AA verificado en los 445 textos del sitio, sobre fondos blancos y teñidos.
@@ -188,7 +208,7 @@ Si más adelante se añade un servidor, basta con sustituir la llamada a `openWh
 
 ---
 
-## 8. Utilidades
+## 9. Utilidades
 
 ```
 node assets/verificar-idiomas.js     # paridad de traducciones en los 4 idiomas
