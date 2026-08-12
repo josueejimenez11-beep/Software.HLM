@@ -95,7 +95,8 @@ function buildSvg({ w, h, palette, label, snow = true, seed = 1 }) {
 /* Definición de todas las imágenes del sitio. */
 const IMAGES = {
   inicio: [
-    ['hero-chimborazo.svg', 1920, 1080, 'FOTO PENDIENTE · Nevado Chimborazo'],
+    /* hero-chimborazo: ya es una fotografía real (images/inicio/hero-chimborazo.jpg),
+       por eso no se genera ningún placeholder para la portada. */
     ['destino-paramo.svg', 900, 700, 'FOTO PENDIENTE · Páramo andino'],
     ['destino-cultura.svg', 900, 700, 'FOTO PENDIENTE · Cultura andina'],
     ['destino-hospitalidad.svg', 900, 700, 'FOTO PENDIENTE · Hospitalidad'],

@@ -104,12 +104,17 @@ en la documentación disponible. Cada uno está marcado en el código y es fáci
 | Qué falta | Dónde se edita |
 |-----------|----------------|
 | **Platos y precios del menú** | `js/restaurante.js` → arreglo `MENU_ITEMS`. Hoy genera 2 tarjetas de marcador por categoría. El comentario del archivo incluye un ejemplo listo para copiar. Al cargar la carta real, elimina también la nota temporal `.menu-note` de `restaurante.html`. |
-| **Fotografías** | `images/inicio/`, `images/restaurante/`, `images/lodge/`, `images/travel/`. Sustituye cada SVG por la foto real conservando el nombre de archivo (o actualiza la ruta en el HTML). |
+| **Fotografías** | `images/inicio/`, `images/restaurante/`, `images/lodge/`, `images/travel/`. Sustituye cada SVG por la foto real conservando el nombre de archivo (o actualiza la ruta en el HTML). La portada (`images/inicio/hero-chimborazo.jpg`) ya es una fotografía real; el resto siguen siendo placeholders. |
 | **Mapa de Google Maps** | `index.html`, sección `#ubicacion`: sustituye el bloque `.map-frame` por el iframe oficial del negocio. No se incluyeron coordenadas porque no constan en la documentación. |
 | **Redes sociales** | Los cuatro `footer`: los enlaces `href="#"` de Facebook, Instagram y TikTok esperan las URL oficiales. No se inventaron nombres de usuario. |
 | **Tarifas de habitaciones** | `lodge.html`: las tarjetas muestran «Tarifa disponible bajo consulta» porque la documentación no especifica precios. |
 | **Duración, altitud, punto de encuentro, terreno e itinerario de cada actividad** | `js/travel.js` → arreglo `ACTIVITIES`. Los campos con valor `null` se muestran como pendientes en el modal. Las listas `itinerary` y `bring` están vacías: al añadirles claves, sus secciones aparecen automáticamente. |
 | **Niveles de dificultad** | `js/travel.js`. Los niveles mostrados son referenciales y deben confirmarse con la documentación oficial; el sitio lo advierte bajo la leyenda de niveles. |
+
+> **Nota sobre la portada.** La fotografía del hero mide 1290 × 727 px. En pantallas de 1920 px se
+> amplía alrededor de 1,6×, por lo que puede verse ligeramente menos nítida. Si dispones del archivo
+> original de la cámara, sustitúyelo por una versión de ~2400 px de ancho y actualiza los atributos
+> `width` y `height` de la etiqueta `<img>` del hero en `index.html`.
 
 ### Datos reales ya incorporados
 

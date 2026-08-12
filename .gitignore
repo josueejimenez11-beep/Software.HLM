@@ -1,0 +1,5 @@
+# Paquete generado para entrega: se regenera con
+#   zip -r chimborazo-rey.zip chimborazo-rey
+chimborazo-rey.zip
+node_modules/
+.DS_Store

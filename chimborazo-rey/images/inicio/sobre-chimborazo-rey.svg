@@ -11,9 +11,9 @@
   </defs>
   <rect width="1100" height="800" fill="url(#sky)"/>
   <circle cx="880" cy="160" r="60" fill="#ffffff" opacity=".55"/>
-  <path d="M0 800 L0 496 L198 400 L330 463.99999999999994 L851.9 385.0 L1100 480 L1100 800 Z" fill="#b9b2a6" opacity=".75"/>
-  <path d="M0 800 L0 624.0 L173.8 480.0 L413.8 198.5 L641.4 528.0 L1100 576.0 L1100 800 Z" fill="url(#ground)"/>
-  <path d="M314.8 302.5 L413.8 198.5 L534.8 318.5 L463.3 278.5 L430.3 318.5 L380.8 270.5 Z" fill="#ffffff" opacity=".92"/>
+  <path d="M0 800 L0 496 L198 400 L330 463.99999999999994 L981.9 362.5 L1100 480 L1100 800 Z" fill="#b9b2a6" opacity=".75"/>
+  <path d="M0 800 L0 624.0 L234.5 480.0 L558.2 257.5 L865.3 528.0 L1100 576.0 L1100 800 Z" fill="url(#ground)"/>
+  <path d="M459.2 361.5 L558.2 257.5 L679.2 377.5 L607.7 337.5 L574.7 377.5 L525.2 329.5 Z" fill="#ffffff" opacity=".92"/>
   <rect x="364.6" y="64" width="371" height="42" rx="21"
         fill="#000000" opacity=".38"/>
   <text x="550" y="93" text-anchor="middle"

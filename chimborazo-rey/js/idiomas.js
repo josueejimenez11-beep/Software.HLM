@@ -108,7 +108,7 @@ const translations = {
     'home.hero.cta1': 'Explorar Chimborazo Rey',
     'home.hero.cta2': 'Reservar experiencia',
     'home.hero.scroll': 'Descubre más',
-    'home.hero.imgAlt': 'Vista panorámica del Nevado Chimborazo',
+    'home.hero.imgAlt': 'El Nevado Chimborazo cubierto de nieve bajo un cielo teñido de tonos cálidos, con el páramo y un bosque de pinos en primer plano',
 
     'home.destino.eyebrow': 'El destino',
     'home.destino.title': 'Mucho más que un destino',
@@ -645,7 +645,7 @@ const translations = {
     'home.hero.cta1': 'Explore Chimborazo Rey',
     'home.hero.cta2': 'Book an experience',
     'home.hero.scroll': 'Discover more',
-    'home.hero.imgAlt': 'Panoramic view of the Chimborazo volcano',
+    'home.hero.imgAlt': 'The snow-capped Chimborazo volcano under a sky tinted with warm tones, with the páramo and a pine forest in the foreground',
 
     'home.destino.eyebrow': 'The destination',
     'home.destino.title': 'Far more than a destination',
@@ -1179,7 +1179,7 @@ const translations = {
     'home.hero.cta1': 'Découvrir Chimborazo Rey',
     'home.hero.cta2': 'Réserver une expérience',
     'home.hero.scroll': 'En savoir plus',
-    'home.hero.imgAlt': 'Vue panoramique du volcan Chimborazo',
+    'home.hero.imgAlt': 'Le volcan Chimborazo enneigé sous un ciel teinté de tons chauds, avec le páramo et une forêt de pins au premier plan',
 
     'home.destino.eyebrow': 'La destination',
     'home.destino.title': 'Bien plus qu’une destination',
@@ -1713,7 +1713,7 @@ const translations = {
     'home.hero.cta1': 'Chimborazo Rey entdecken',
     'home.hero.cta2': 'Erlebnis reservieren',
     'home.hero.scroll': 'Mehr entdecken',
-    'home.hero.imgAlt': 'Panoramablick auf den Vulkan Chimborazo',
+    'home.hero.imgAlt': 'Der schneebedeckte Vulkan Chimborazo unter einem in warmen Tönen gefärbten Himmel, mit dem Páramo und einem Kiefernwald im Vordergrund',
 
     'home.destino.eyebrow': 'Das Reiseziel',
     'home.destino.title': 'Weit mehr als ein Reiseziel',
