@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700" role="img" aria-label="FOTO PENDIENTE · Calefacción">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf6ee"/>
+      <stop offset="1" stop-color="#f0e4d1"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ab8557"/>
+      <stop offset="1" stop-color="#6a4b32"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="700" fill="url(#sky)"/>
+  <circle cx="720" cy="140" r="53" fill="#ffffff" opacity=".55"/>
+  <path d="M0 700 L0 434 L162 350 L270 406 L711.5 305.1 L900 420 L900 700 Z" fill="#d9bd93" opacity=".75"/>
+  <path d="M0 700 L0 546.0 L153.6 420.0 L365.8 212.3 L567.0 462.0 L900 504.0 L900 700 Z" fill="url(#ground)"/>
+  <path d="M284.8 303.3 L365.8 212.3 L464.8 317.3 L406.3 282.3 L379.3 317.3 L338.8 275.3 Z" fill="#ffffff" opacity=".92"/>
+  <rect x="297.72" y="56" width="305" height="38" rx="19"
+        fill="#000000" opacity=".38"/>
+  <text x="450" y="82" text-anchor="middle"
+        font-family="Georgia, serif" font-size="18" fill="#ffffff" opacity=".9"
+        letter-spacing="1">FOTO PENDIENTE · Calefacción</text>
+</svg>

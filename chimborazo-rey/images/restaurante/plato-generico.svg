@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="FOTO PENDIENTE · Plato">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf3e9"/>
+      <stop offset="1" stop-color="#f6e0c8"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b4703a"/>
+      <stop offset="1" stop-color="#7b4b2a"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#sky)"/>
+  <circle cx="640" cy="120" r="45" fill="#ffffff" opacity=".55"/>
+  <path d="M0 600 L0 372 L144 300 L240 348 L596.5 259.6 L800 360 L800 600 Z" fill="#e0a86a" opacity=".75"/>
+  <path d="M0 600 L0 468.0 L185.9 360.0 L442.6 170.6 L686.0 396.0 L800 432.0 L800 600 Z" fill="url(#ground)"/>
+  
+  <rect x="290.56" y="48" width="219" height="34" rx="17"
+        fill="#000000" opacity=".38"/>
+  <text x="400" y="71" text-anchor="middle"
+        font-family="Georgia, serif" font-size="16" fill="#ffffff" opacity=".9"
+        letter-spacing="1">FOTO PENDIENTE · Plato</text>
+</svg>

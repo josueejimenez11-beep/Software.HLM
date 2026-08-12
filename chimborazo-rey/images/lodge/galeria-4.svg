@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" width="900" height="1100" role="img" aria-label="FOTO PENDIENTE · Cocina">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf6ee"/>
+      <stop offset="1" stop-color="#f0e4d1"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ab8557"/>
+      <stop offset="1" stop-color="#6a4b32"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1100" fill="url(#sky)"/>
+  <circle cx="720" cy="220" r="83" fill="#ffffff" opacity=".55"/>
+  <path d="M0 1100 L0 682 L162 550 L270 638 L708.0 498.5 L900 660 L900 1100 Z" fill="#d9bd93" opacity=".75"/>
+  <path d="M0 1100 L0 858.0 L217.2 660.0 L517.0 391.3 L801.4 726.0 L900 792.0 L900 1100 Z" fill="url(#ground)"/>
+  <path d="M436.0 534.3 L517.0 391.3 L616.0 556.3 L557.5 501.3 L530.5 556.3 L490.0 490.3 Z" fill="#ffffff" opacity=".92"/>
+  <rect x="322.02" y="88" width="256" height="38" rx="19"
+        fill="#000000" opacity=".38"/>
+  <text x="450" y="114" text-anchor="middle"
+        font-family="Georgia, serif" font-size="18" fill="#ffffff" opacity=".9"
+        letter-spacing="1">FOTO PENDIENTE · Cocina</text>
+</svg>

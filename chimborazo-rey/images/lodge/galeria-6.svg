@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 950" width="900" height="950" role="img" aria-label="FOTO PENDIENTE · Atardecer">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf6ee"/>
+      <stop offset="1" stop-color="#f0e4d1"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ab8557"/>
+      <stop offset="1" stop-color="#6a4b32"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="950" fill="url(#sky)"/>
+  <circle cx="720" cy="190" r="71" fill="#ffffff" opacity=".55"/>
+  <path d="M0 950 L0 589 L162 475 L270 551 L759.2 407.7 L900 570 L900 950 Z" fill="#d9bd93" opacity=".75"/>
+  <path d="M0 950 L0 741.0 L200.3 570.0 L476.9 319.2 L739.2 627.0 L900 684.0 L900 950 Z" fill="url(#ground)"/>
+  <path d="M395.9 442.7 L476.9 319.2 L575.9 461.7 L517.4 414.2 L490.4 461.7 L449.9 404.7 Z" fill="#ffffff" opacity=".92"/>
+  <rect x="307.44" y="76" width="285" height="38" rx="19"
+        fill="#000000" opacity=".38"/>
+  <text x="450" y="102" text-anchor="middle"
+        font-family="Georgia, serif" font-size="18" fill="#ffffff" opacity=".9"
+        letter-spacing="1">FOTO PENDIENTE · Atardecer</text>
+</svg>

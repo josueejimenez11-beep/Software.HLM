@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1150" width="900" height="1150" role="img" aria-label="FOTO PENDIENTE · Entorno del restaurante">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf3e9"/>
+      <stop offset="1" stop-color="#f6e0c8"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b4703a"/>
+      <stop offset="1" stop-color="#7b4b2a"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1150" fill="url(#sky)"/>
+  <circle cx="720" cy="230" r="86" fill="#ffffff" opacity=".55"/>
+  <path d="M0 1150 L0 713 L162 575 L270 667 L788.1 574.2 L900 690 L900 1150 Z" fill="#e0a86a" opacity=".75"/>
+  <path d="M0 1150 L0 897.0 L153.0 690.0 L364.4 418.2 L564.8 759.0 L900 828.0 L900 1150 Z" fill="url(#ground)"/>
+  
+  <rect x="239.4" y="92" width="421" height="38" rx="19"
+        fill="#000000" opacity=".38"/>
+  <text x="450" y="118" text-anchor="middle"
+        font-family="Georgia, serif" font-size="18" fill="#ffffff" opacity=".9"
+        letter-spacing="1">FOTO PENDIENTE · Entorno del restaurante</text>
+</svg>

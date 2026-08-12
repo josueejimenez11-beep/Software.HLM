@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800" role="img" aria-label="FOTO PENDIENTE · Salón del restaurante">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf3e9"/>
+      <stop offset="1" stop-color="#f6e0c8"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b4703a"/>
+      <stop offset="1" stop-color="#7b4b2a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="800" fill="url(#sky)"/>
+  <circle cx="800" cy="160" r="60" fill="#ffffff" opacity=".55"/>
+  <path d="M0 800 L0 496 L180 400 L300 463.99999999999994 L774.5 385.0 L1000 480 L1000 800 Z" fill="#e0a86a" opacity=".75"/>
+  <path d="M0 800 L0 624.0 L158.0 480.0 L376.2 198.5 L583.1 528.0 L1000 576.0 L1000 800 Z" fill="url(#ground)"/>
+  
+  <rect x="276.79999999999995" y="64" width="446" height="42" rx="21"
+        fill="#000000" opacity=".38"/>
+  <text x="500" y="93" text-anchor="middle"
+        font-family="Georgia, serif" font-size="20" fill="#ffffff" opacity=".9"
+        letter-spacing="1">FOTO PENDIENTE · Salón del restaurante</text>
+</svg>

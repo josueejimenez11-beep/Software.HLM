@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es" data-title-key="home.meta.title">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Chimborazo Rey | Restaurante, Lodge y Turismo de Aventura en Ecuador</title>
+  <meta name="description" data-i18n-content="home.meta.desc"
+        content="Chimborazo Rey reúne restaurante de aventura, lodge hotel y turismo de aventura a los pies del Nevado Chimborazo, en Cruz del Arenal, Guaranda, Bolívar, Ecuador.">
+  <meta name="author" content="Chimborazo Rey">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Chimborazo Rey">
+  <meta property="og:title" data-i18n-content="home.meta.title"
+        content="Chimborazo Rey | Restaurante, Lodge y Turismo de Aventura en Ecuador">
+  <meta property="og:description" data-i18n-content="home.meta.desc"
+        content="Una experiencia turística integral a los pies del Nevado Chimborazo.">
+  <meta property="og:image" content="images/inicio/hero-chimborazo.svg">
+  <meta property="og:locale" content="es_EC">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🏔️</text></svg>">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/inicio.css">
+  <link rel="preload" as="image" href="images/inicio/hero-chimborazo.svg">
+
+  <script src="js/idiomas.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main" data-i18n="nav.skip">Ir al contenido principal</a>
+
+  <!-- ====================================================================
+       NAVBAR
+       ==================================================================== -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="index.html">
+        <span class="navbar__brand-name">Chimborazo Rey</span>
+        <span class="navbar__brand-tag" data-i18n="nav.brandTag">Restaurante · Lodge · Travel</span>
+      </a>
+
+      <nav class="navbar__nav" id="navbar-nav" data-i18n-aria-label="nav.primary" aria-label="Navegación principal">
+        <ul class="navbar__menu">
+          <li><a class="navbar__link" href="index.html" aria-current="page" data-i18n="nav.inicio">Inicio</a></li>
+          <li><a class="navbar__link" href="restaurante.html" data-i18n="nav.restaurante">Restaurante</a></li>
+          <li><a class="navbar__link" href="lodge.html" data-i18n="nav.lodge">Lodge Hotel</a></li>
+          <li><a class="navbar__link" href="travel.html" data-i18n="nav.travel">Travel Explore</a></li>
+          <li><a class="navbar__link" href="#contacto" data-i18n="nav.contacto">Contacto</a></li>
+        </ul>
+
+        <div class="navbar__actions">
+          <div class="lang">
+            <button type="button" class="lang__toggle" id="lang-toggle"
+                    aria-expanded="false" aria-haspopup="listbox"
+                    data-i18n-aria-label="nav.langLabel" aria-label="Seleccionar idioma">
+              <span class="lang__current-flag" aria-hidden="true">🇪🇨</span>
+              <span class="lang__current-code">ES</span>
+              <span class="lang__caret" aria-hidden="true"></span>
+            </button>
+
+            <div class="lang__list" role="listbox" aria-labelledby="lang-toggle">
+              <button type="button" class="lang__option" role="option" data-lang="es" aria-selected="true">
+                <span class="lang__flag" aria-hidden="true">🇪🇨</span><span>Español</span><span class="lang__code">ES</span>
+              </button>
+              <button type="button" class="lang__option" role="option" data-lang="en" aria-selected="false">
+                <span class="lang__flag" aria-hidden="true">🇺🇸</span><span>English</span><span class="lang__code">EN</span>
+              </button>
+              <button type="button" class="lang__option" role="option" data-lang="fr" aria-selected="false">
+                <span class="lang__flag" aria-hidden="true">🇫🇷</span><span>Français</span><span class="lang__code">FR</span>
+              </button>
+              <button type="button" class="lang__option" role="option" data-lang="de" aria-selected="false">
+                <span class="lang__flag" aria-hidden="true">🇩🇪</span><span>Deutsch</span><span class="lang__code">DE</span>
+              </button>
+            </div>
+          </div>
+
+          <a class="btn btn--light btn--sm" href="#contacto" data-i18n="nav.reservar">Reservar</a>
+        </div>
+      </nav>
+
+      <button type="button" class="navbar__burger" aria-expanded="false" aria-controls="navbar-nav"
+              data-i18n-aria-label="nav.menuOpen" aria-label="Abrir menú de navegación">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ==================================================================
+         HERO
+         ================================================================== -->
+    <section class="hero hero--inicio">
+      <div class="hero__media">
+        <img src="images/inicio/hero-chimborazo.svg" width="1920" height="1080"
+             data-i18n-alt="home.hero.imgAlt" alt="Vista panorámica del Nevado Chimborazo"
+             fetchpriority="high" decoding="async">
+      </div>
+
+      <div class="container">
+        <div class="hero__content">
+          <p class="hero__eyebrow" data-i18n="home.hero.eyebrow">Cruz del Arenal · Guaranda · Ecuador</p>
+          <h1 class="hero__title">Chimborazo Rey</h1>
+          <p class="hero__subtitle" data-i18n="home.hero.subtitle">Una experiencia en las alturas del Ecuador</p>
+          <p class="hero__text" data-i18n="home.hero.text">
+            Una propuesta turística integral que une gastronomía, hospedaje, naturaleza y turismo
+            de aventura a los pies del Nevado Chimborazo.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--light" href="#experiencias" data-i18n="home.hero.cta1">Explorar Chimborazo Rey</a>
+            <a class="btn btn--light" href="#contacto" data-i18n="home.hero.cta2">Reservar experiencia</a>
+          </div>
+        </div>
+      </div>
+
+      <a class="hero__scroll" href="#destino">
+        <span data-i18n="home.hero.scroll">Descubre más</span>
+        <span class="hero__scroll-line" aria-hidden="true"></span>
+      </a>
+    </section>
+
+    <!-- ==================================================================
+         PRESENTACIÓN DEL DESTINO
+         ================================================================== -->
+    <section class="section" id="destino">
+      <div class="container">
+        <div class="destino__intro">
+          <div data-animate="fade-right">
+            <p class="eyebrow" data-i18n="home.destino.eyebrow">El destino</p>
+            <h2 data-i18n="home.destino.title">Mucho más que un destino</h2>
+          </div>
+
+          <div class="prose" data-animate="fade-left">
+            <p data-i18n="home.destino.p1">
+              Chimborazo Rey nace para ofrecer una experiencia turística integral en uno de los
+              paisajes más imponentes del Ecuador.
+            </p>
+            <p data-i18n="home.destino.p2">
+              Nuestro proyecto combina la calidez de la hospitalidad familiar con la riqueza
+              cultural y natural de la comunidad de Cruz del Arenal.
+            </p>
+
+            <ul class="destino__pillars">
+              <li data-i18n="home.destino.pillar1">Restaurante de aventura</li>
+              <li data-i18n="home.destino.pillar2">Lodge Hotel</li>
+              <li data-i18n="home.destino.pillar3">Turismo de aventura</li>
+              <li data-i18n="home.destino.pillar4">Cultura andina</li>
+              <li data-i18n="home.destino.pillar5">Naturaleza</li>
+              <li data-i18n="home.destino.pillar6">Gastronomía</li>
+              <li data-i18n="home.destino.pillar7">Hospitalidad</li>
+              <li data-i18n="home.destino.pillar8">Turismo comunitario</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="destino__gallery">
+          <figure class="destino__figure" data-animate="fade-up">
+            <img src="images/inicio/destino-paramo.svg" width="900" height="700" loading="lazy" decoding="async"
+                 data-i18n-alt="home.destino.alt1" alt="Páramo andino en el entorno del Chimborazo">
+            <figcaption data-i18n="home.destino.cap1">Páramo andino</figcaption>
+          </figure>
+
+          <figure class="destino__figure" data-animate="fade-up" data-animate-delay="120">
+            <img src="images/inicio/destino-cultura.svg" width="900" height="700" loading="lazy" decoding="async"
+                 data-i18n-alt="home.destino.alt2" alt="Expresiones de la cultura andina de la zona">
+            <figcaption data-i18n="home.destino.cap2">Cultura viva</figcaption>
+          </figure>
+
+          <figure class="destino__figure" data-animate="fade-up" data-animate-delay="240">
+            <img src="images/inicio/destino-hospitalidad.svg" width="900" height="700" loading="lazy" decoding="async"
+                 data-i18n-alt="home.destino.alt3" alt="Hospitalidad familiar en Chimborazo Rey">
+            <figcaption data-i18n="home.destino.cap3">Hospitalidad familiar</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         TRES EXPERIENCIAS
+         ================================================================== -->
+    <section class="section section--surface" id="experiencias">
+      <div class="container">
+        <div class="section-head section-head--center" data-animate="fade-up">
+          <p class="eyebrow" data-i18n="home.exp.eyebrow">Tres experiencias</p>
+          <h2 data-i18n="home.exp.title">Un solo lugar, tres formas de vivirlo</h2>
+          <p class="section-lead" data-i18n="home.exp.lead">
+            Cada área de Chimborazo Rey ha sido pensada para un momento distinto del viaje.
+          </p>
+        </div>
+
+        <div class="experiences">
+          <article class="experience-card" data-animate="fade-up">
+            <div class="experience-card__media">
+              <img src="images/inicio/card-restaurante.svg" width="900" height="1100" loading="lazy" decoding="async"
+                   data-i18n-alt="home.exp.restoAlt" alt="Restaurante de Aventura de Chimborazo Rey">
+            </div>
+            <span class="experience-card__index" aria-hidden="true">01</span>
+            <p class="experience-card__kicker" data-i18n="home.exp.restoKicker">Gastronomía de altura</p>
+            <h3 class="experience-card__title" data-i18n="home.exp.restoTitle">Restaurante de Aventura</h3>
+            <p class="experience-card__text" data-i18n="home.exp.restoText">
+              Cocina nacional e internacional, opciones veganas y vegetarianas, coffee shop y cerveza artesanal propia.
+            </p>
+            <a class="experience-card__link" href="restaurante.html" data-i18n="home.exp.restoLink">Descubrir restaurante</a>
+          </article>
+
+          <article class="experience-card" data-animate="fade-up" data-animate-delay="120">
+            <div class="experience-card__media">
+              <img src="images/inicio/card-lodge.svg" width="900" height="1100" loading="lazy" decoding="async"
+                   data-i18n-alt="home.exp.lodgeAlt" alt="Lodge Hotel de Chimborazo Rey">
+            </div>
+            <span class="experience-card__index" aria-hidden="true">02</span>
+            <p class="experience-card__kicker" data-i18n="home.exp.lodgeKicker">Descanso en la montaña</p>
+            <h3 class="experience-card__title" data-i18n="home.exp.lodgeTitle">Lodge Hotel</h3>
+            <p class="experience-card__text" data-i18n="home.exp.lodgeText">
+              Habitaciones familiares, grupales y matrimoniales con calefacción, seguridad permanente y vista al nevado.
+            </p>
+            <a class="experience-card__link" href="lodge.html" data-i18n="home.exp.lodgeLink">Descubrir Lodge</a>
+          </article>
+
+          <article class="experience-card" data-animate="fade-up" data-animate-delay="240">
+            <div class="experience-card__media">
+              <img src="images/inicio/card-travel.svg" width="900" height="1100" loading="lazy" decoding="async"
+                   data-i18n-alt="home.exp.travelAlt" alt="Actividades de aventura en el Chimborazo">
+            </div>
+            <span class="experience-card__index" aria-hidden="true">03</span>
+            <p class="experience-card__kicker" data-i18n="home.exp.travelKicker">Aventura y montaña</p>
+            <h3 class="experience-card__title" data-i18n="home.exp.travelTitle">Travel Explore</h3>
+            <p class="experience-card__text" data-i18n="home.exp.travelText">
+              Ascensos, cabalgatas, ciclismo de descenso y trekking nocturno con guías especializados.
+            </p>
+            <a class="experience-card__link" href="travel.html" data-i18n="home.exp.travelLink">Explorar aventuras</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         SOBRE CHIMBORAZO REY
+         ================================================================== -->
+    <section class="section" id="nosotros">
+      <div class="container">
+        <div class="split">
+          <div class="split__media" data-animate="zoom-in">
+            <img src="images/inicio/sobre-chimborazo-rey.svg" width="1100" height="800" loading="lazy" decoding="async"
+                 data-i18n-alt="home.about.alt" alt="Instalaciones de Chimborazo Rey en Cruz del Arenal">
+          </div>
+
+          <div data-animate="fade-left">
+            <p class="eyebrow" data-i18n="home.about.eyebrow">Sobre nosotros</p>
+            <h2 data-i18n="home.about.title">Un referente turístico para Guaranda y Bolívar</h2>
+            <div class="prose" style="margin-top:1.35rem">
+              <p data-i18n="home.about.p1">
+                Chimborazo Rey aprovecha su ubicación estratégica en la vía Guaranda – Ambato.
+              </p>
+              <p data-i18n="home.about.p2">
+                Trabajamos junto a la comunidad de Cruz del Arenal promoviendo el turismo comunitario.
+              </p>
+            </div>
+            <blockquote class="about__quote" data-i18n="home.about.quote">
+              Queremos que cada visitante se lleve una historia del páramo, no solamente una fotografía.
+            </blockquote>
+          </div>
+        </div>
+
+        <div class="stats" style="margin-top:clamp(3rem,6vw,5rem)" data-animate="fade-up">
+          <div class="stat">
+            <p class="stat__value">4.250 <span data-i18n="home.about.stat1">m s. n. m.</span></p>
+            <p class="stat__label" data-i18n="home.about.stat1Label">Altitud aproximada</p>
+          </div>
+          <div class="stat">
+            <p class="stat__value" data-i18n="home.about.stat2">3</p>
+            <p class="stat__label" data-i18n="home.about.stat2Label">Áreas de experiencia</p>
+          </div>
+          <div class="stat">
+            <p class="stat__value" data-i18n="home.about.stat3">4</p>
+            <p class="stat__label" data-i18n="home.about.stat3Label">Idiomas de atención web</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         MISIÓN Y VISIÓN
+         ================================================================== -->
+    <section class="section section--surface" id="proposito">
+      <div class="container">
+        <div class="section-head section-head--center" data-animate="fade-up">
+          <p class="eyebrow" data-i18n="home.purpose.eyebrow">Propósito</p>
+          <h2 data-i18n="home.purpose.title">Misión y Visión</h2>
+        </div>
+
+        <div class="purpose">
+          <article class="purpose-card" data-animate="fade-up">
+            <span class="purpose-card__label" data-i18n="home.purpose.misionLabel">Misión</span>
+            <h3 class="purpose-card__title" data-i18n="home.purpose.misionTitle">Turismo integral de alta calidad</h3>
+            <p class="purpose-card__text" data-i18n="home.purpose.misionText">
+              Brindar una experiencia turística integral de alta calidad.
+            </p>
+            <ul class="purpose-card__list">
+              <li data-i18n="home.purpose.misionItem1">Hospedaje cálido y seguro</li>
+              <li data-i18n="home.purpose.misionItem2">Gastronomía de altura</li>
+              <li data-i18n="home.purpose.misionItem3">Experiencias turísticas acompañadas</li>
+              <li data-i18n="home.purpose.misionItem4">Desarrollo sostenible y comunitario</li>
+            </ul>
+          </article>
+
+          <article class="purpose-card" data-animate="fade-up" data-animate-delay="140">
+            <span class="purpose-card__label" data-i18n="home.purpose.visionLabel">Visión 2030</span>
+            <h3 class="purpose-card__title" data-i18n="home.purpose.visionTitle">Referente del turismo comunitario andino</h3>
+            <p class="purpose-card__text" data-i18n="home.purpose.visionText">
+              Convertirnos en un referente de turismo comunitario y sostenible de Bolívar.
+            </p>
+            <ul class="purpose-card__list">
+              <li data-i18n="home.purpose.visionItem1">Excelencia en el servicio</li>
+              <li data-i18n="home.purpose.visionItem2">Impacto económico local</li>
+              <li data-i18n="home.purpose.visionItem3">Valoración cultural</li>
+              <li data-i18n="home.purpose.visionItem4">Cuidado ambiental</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         VALORES
+         ================================================================== -->
+    <section class="section" id="valores">
+      <div class="container">
+        <div class="section-head section-head--center" data-animate="fade-up">
+          <p class="eyebrow" data-i18n="home.values.eyebrow">Valores</p>
+          <h2 data-i18n="home.values.title">Lo que sostiene nuestro trabajo</h2>
+        </div>
+
+        <div class="values">
+          <article class="value-card" data-animate="fade-up">
+            <span class="value-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 20c0-8 6-14 16-15 0 10-6 15-13 15H4z"/><path d="M4 20c3-4 6-6 9-7"/>
+              </svg>
+            </span>
+            <h3 class="value-card__title" data-i18n="home.values.v1Title">Sostenibilidad y guardianía ambiental</h3>
+            <p class="value-card__text" data-i18n="home.values.v1Text">
+              Cuidamos el páramo que nos rodea y promovemos prácticas responsables.
+            </p>
+          </article>
+
+          <article class="value-card" data-animate="fade-up" data-animate-delay="90">
+            <span class="value-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="8" r="3"/><circle cx="17" cy="8.5" r="2.5"/>
+                <path d="M2 20c0-3.3 3.1-5 7-5s7 1.7 7 5"/><path d="M17 15c3 .3 5 1.9 5 5"/>
+              </svg>
+            </span>
+            <h3 class="value-card__title" data-i18n="home.values.v2Title">Desarrollo y colaboración comunitarios</h3>
+            <p class="value-card__text" data-i18n="home.values.v2Text">
+              Trabajamos con la comunidad de Cruz del Arenal para generar beneficios compartidos.
+            </p>
+          </article>
+
+          <article class="value-card" data-animate="fade-up" data-animate-delay="180">
+            <span class="value-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 21s-7-4.4-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 12c0 4.6-7 9-7 9z"/>
+              </svg>
+            </span>
+            <h3 class="value-card__title" data-i18n="home.values.v3Title">Hospitalidad familiar y auténtica</h3>
+            <p class="value-card__text" data-i18n="home.values.v3Text">
+              Recibimos a cada visitante como parte de la familia.
+            </p>
+          </article>
+
+          <article class="value-card" data-animate="fade-up" data-animate-delay="270">
+            <span class="value-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.4l6-.8L12 3z"/>
+              </svg>
+            </span>
+            <h3 class="value-card__title" data-i18n="home.values.v4Title">Excelencia e innovación</h3>
+            <p class="value-card__text" data-i18n="home.values.v4Text">
+              Mejoramos continuamente nuestros servicios.
+            </p>
+          </article>
+
+          <article class="value-card" data-animate="fade-up" data-animate-delay="360">
+            <span class="value-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 19 6-9 3.5 5L15 12l6 7H3z"/><circle cx="17" cy="5.5" r="2"/>
+              </svg>
+            </span>
+            <h3 class="value-card__title" data-i18n="home.values.v5Title">Respeto e identidad cultural</h3>
+            <p class="value-card__text" data-i18n="home.values.v5Text">
+              Valoramos y compartimos la cultura andina de este territorio.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         UBICACIÓN
+         ================================================================== -->
+    <section class="section section--surface" id="ubicacion">
+      <div class="container">
+        <div class="location">
+          <div data-animate="fade-right">
+            <p class="eyebrow" data-i18n="home.location.eyebrow">Ubicación</p>
+            <h2 data-i18n="home.location.title">En las faldas del Chimborazo</h2>
+            <p class="section-lead" data-i18n="home.location.text">
+              Nos encontramos en el sector Cruz del Arenal, en la vía Guaranda – Ambato.
+            </p>
+
+            <dl class="location__data">
+              <div class="location__row">
+                <dt class="location__key" data-i18n="home.location.country">País</dt>
+                <dd class="location__val" data-i18n="home.location.countryVal">Ecuador</dd>
+              </div>
+              <div class="location__row">
+                <dt class="location__key" data-i18n="home.location.province">Provincia</dt>
+                <dd class="location__val" data-i18n="home.location.provinceVal">Bolívar</dd>
+              </div>
+              <div class="location__row">
+                <dt class="location__key" data-i18n="home.location.canton">Cantón</dt>
+                <dd class="location__val" data-i18n="home.location.cantonVal">Guaranda</dd>
+              </div>
+              <div class="location__row">
+                <dt class="location__key" data-i18n="home.location.sector">Sector</dt>
+                <dd class="location__val" data-i18n="home.location.sectorVal">Cruz del Arenal</dd>
+              </div>
+              <div class="location__row">
+                <dt class="location__key" data-i18n="home.location.road">Vía</dt>
+                <dd class="location__val" data-i18n="home.location.roadVal">Guaranda – Ambato</dd>
+              </div>
+              <div class="location__row">
+                <dt class="location__key" data-i18n="home.location.altitude">Altitud</dt>
+                <dd class="location__val" data-i18n="home.location.altitudeVal">4.250 m s. n. m. aprox.</dd>
+              </div>
+            </dl>
+
+            <div class="actions-row">
+              <a class="btn" href="#" data-contact="maps" data-i18n="contact.directions">Cómo llegar</a>
+            </div>
+          </div>
+
+          <div data-animate="fade-left">
+            <!-- ================================================================
+                 MAPA: sustituye este bloque por el iframe oficial de Google Maps
+                 del negocio, por ejemplo:
+
+                 <iframe src="https://www.google.com/maps/embed?pb=EMBED_OFICIAL"
+                         title="Ubicación de Chimborazo Rey" loading="lazy"
+                         referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+
+                 No se incluyen coordenadas porque no constan en la documentación.
+                 ================================================================ -->
+            <div class="map-frame">
+              <img src="images/inicio/ubicacion-mapa.svg" width="1200" height="800" loading="lazy" decoding="async"
+                   data-i18n-alt="home.location.mapAlt" alt="Espacio reservado para el mapa de ubicación">
+            </div>
+            <p class="map-note" data-i18n="home.location.mapNote">
+              Mapa pendiente de configuración.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         CONTACTO
+         ================================================================== -->
+    <section class="section contact--inicio" id="contacto">
+      <div class="container">
+        <div class="section-head section-head--center" data-animate="fade-up">
+          <p class="eyebrow" data-i18n="contact.eyebrow">Contacto</p>
+          <h2 data-i18n="contact.title">Vive la experiencia Chimborazo Rey</h2>
+          <p class="section-lead" data-i18n="contact.lead">
+            Escríbenos para reservar una mesa, consultar disponibilidad de hospedaje o planificar tu próxima aventura.
+          </p>
+        </div>
+
+        <div class="contact-card" data-animate="fade-up">
+          <div class="contact-grid">
+            <div>
+              <div class="contact-item">
+                <div>
+                  <p class="contact-item__label" data-i18n="contact.infoLabel">Información</p>
+                  <p class="contact-item__value" data-i18n="contact.infoValue">Guido Castro</p>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div>
+                  <p class="contact-item__label" data-i18n="contact.phoneLabel">Teléfono</p>
+                  <p class="contact-item__value"><a href="#" data-contact="tel" data-fill="true">0968596592</a></p>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div>
+                  <p class="contact-item__label" data-i18n="contact.emailLabel">Correo</p>
+                  <p class="contact-item__value"><a href="#" data-contact="email" data-fill="true">gustavocc1982@hotmail.com</a></p>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div>
+                  <p class="contact-item__label" data-i18n="contact.locationLabel">Ubicación</p>
+                  <p class="contact-item__value" data-i18n="contact.locationValue">Cruz del Arenal · Guaranda · Bolívar · Ecuador</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="actions-row" style="margin-top:0">
+                <a class="btn" href="#" data-contact="tel" data-i18n="contact.call">Llamar</a>
+                <a class="btn btn--ghost" href="#" data-contact="whatsapp" data-i18n="contact.whatsapp">WhatsApp</a>
+                <a class="btn btn--ghost" href="#" data-contact="email" data-i18n="contact.email">Enviar correo</a>
+                <a class="btn btn--ghost" href="#" data-contact="maps" data-i18n="contact.directions">Cómo llegar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         CTA FINAL
+         ================================================================== -->
+    <section class="cta-band">
+      <div class="container" data-animate="fade-up">
+        <h2 class="cta-band__title" data-i18n="home.cta.title">¿Listo para subir a los 4.250 metros?</h2>
+        <p class="cta-band__text" data-i18n="home.cta.text">
+          Reserva tu mesa, consulta disponibilidad en el Lodge o planifica tu aventura en la montaña.
+        </p>
+        <div class="actions-row" style="justify-content:center">
+          <a class="btn" href="restaurante.html" data-i18n="nav.restaurante">Restaurante</a>
+          <a class="btn btn--ghost" href="lodge.html" data-i18n="nav.lodge">Lodge Hotel</a>
+          <a class="btn btn--ghost" href="travel.html" data-i18n="nav.travel">Travel Explore</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       FOOTER
+       ==================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__brand-name">Chimborazo Rey</p>
+          <p class="footer__brand-tag" data-i18n="footer.tagline">Restaurante · Lodge · Travel Explore</p>
+          <p class="footer__brand-text" data-i18n="footer.about">
+            Una experiencia turística integral a los pies del Nevado Chimborazo.
+          </p>
+
+          <!-- ==============================================================
+               REDES SOCIALES: enlaces placeholder.
+               Sustituye cada href="#" por la URL oficial cuando esté disponible.
+               No se han inventado nombres de usuario.
+               ============================================================== -->
+          <h2 class="footer__title" style="margin-top:1.75rem" data-i18n="footer.socialTitle">Síguenos</h2>
+          <div class="footer__socials">
+            <a class="social-btn" href="#" data-i18n-aria-label="footer.social.facebook" aria-label="Facebook de Chimborazo Rey">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.5 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+            </a>
+            <a class="social-btn" href="#" data-i18n-aria-label="footer.social.instagram" aria-label="Instagram de Chimborazo Rey">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c0 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2 0-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c0-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.8.1-1.1 0-1.7.2-2.1.3-.5.2-.9.4-1.2.8-.4.3-.6.7-.8 1.2-.1.4-.3 1-.3 2.1-.1 1.3-.1 1.7-.1 4.8s0 3.5.1 4.8c0 1.1.2 1.7.3 2.1.2.5.4.9.8 1.2.3.4.7.6 1.2.8.4.1 1 .3 2.1.3 1.3.1 1.7.1 4.8.1s3.5 0 4.8-.1c1.1 0 1.7-.2 2.1-.3.5-.2.9-.4 1.2-.8.4-.3.6-.7.8-1.2.1-.4.3-1 .3-2.1.1-1.3.1-1.7.1-4.8s0-3.5-.1-4.8c0-1.1-.2-1.7-.3-2.1-.2-.5-.4-.9-.8-1.2-.3-.4-.7-.6-1.2-.8-.4-.1-1-.3-2.1-.3-1.3-.1-1.7-.1-4.8-.1zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8zm0 8a3.1 3.1 0 1 0 0-6.2 3.1 3.1 0 0 0 0 6.2zm6.3-8.2a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"/></svg>
+            </a>
+            <a class="social-btn" href="#" data-i18n-aria-label="footer.social.tiktok" aria-label="TikTok de Chimborazo Rey">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 2h-3v13.2a2.6 2.6 0 1 1-2.1-2.6V9.5a5.9 5.9 0 1 0 5.1 5.9V9.2a7.5 7.5 0 0 0 4.4 1.4V7.5a4.5 4.5 0 0 1-4.4-4.4V2z"/></svg>
+            </a>
+            <a class="social-btn" href="#" data-contact="whatsapp" data-i18n-aria-label="footer.social.whatsapp" aria-label="WhatsApp de Chimborazo Rey">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a9.9 9.9 0 0 0-8.5 15l-1.3 4.8 5-1.3A9.9 9.9 0 1 0 12 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.2-3 .8.8-2.9-.2-.3A8.1 8.1 0 0 1 12 3.8zm-3.1 4c-.2 0-.5.1-.7.4-.2.3-.9.9-.9 2.1s.9 2.4 1.1 2.6c.1.2 1.8 2.8 4.4 3.8 2.2.8 2.6.7 3.1.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3l-2-1c-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4 0-.5.2-.7l.5-.6c.1-.2.1-.3.2-.5v-.5l-.8-2c-.2-.5-.4-.5-.6-.5h-.5z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <nav aria-label="Footer">
+          <h2 class="footer__title" data-i18n="footer.navTitle">Navegación</h2>
+          <ul class="footer__list">
+            <li><a href="index.html" data-i18n="nav.inicio">Inicio</a></li>
+            <li><a href="restaurante.html" data-i18n="nav.restaurante">Restaurante</a></li>
+            <li><a href="lodge.html" data-i18n="nav.lodge">Lodge Hotel</a></li>
+            <li><a href="travel.html" data-i18n="nav.travel">Travel Explore</a></li>
+            <li><a href="#contacto" data-i18n="nav.contacto">Contacto</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h2 class="footer__title" data-i18n="footer.contactTitle">Contacto</h2>
+          <ul class="footer__list">
+            <li><span data-i18n="contact.infoValue">Guido Castro</span></li>
+            <li><a href="#" data-contact="tel" data-fill="true">0968596592</a></li>
+            <li><a href="#" data-contact="email" data-fill="true">gustavocc1982@hotmail.com</a></li>
+            <li><a href="#" data-contact="whatsapp" data-i18n="contact.whatsapp">WhatsApp</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer__title" data-i18n="footer.locationTitle">Ubicación</h2>
+          <ul class="footer__list">
+            <li><span data-i18n="home.location.sectorVal">Cruz del Arenal</span></li>
+            <li><span data-i18n="home.location.cantonVal">Guaranda</span></li>
+            <li><span data-i18n="home.location.provinceVal">Bolívar</span></li>
+            <li><span data-i18n="home.location.countryVal">Ecuador</span></li>
+          </ul>
+
+          <h2 class="footer__title" style="margin-top:1.75rem" data-i18n="footer.langTitle">Idioma</h2>
+          <div class="footer__lang">
+            <button type="button" class="footer__lang-btn" data-lang="es" aria-pressed="true">ES</button>
+            <button type="button" class="footer__lang-btn" data-lang="en" aria-pressed="false">EN</button>
+            <button type="button" class="footer__lang-btn" data-lang="fr" aria-pressed="false">FR</button>
+            <button type="button" class="footer__lang-btn" data-lang="de" aria-pressed="false">DE</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© <span data-year>2026</span> Chimborazo Rey. <span data-i18n="footer.rights">Todos los derechos reservados.</span></p>
+        <p data-i18n="footer.credits">Cruz del Arenal · Guaranda · Bolívar · Ecuador</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Botón flotante de WhatsApp -->
+  <a class="float-wa" href="#" data-contact="whatsapp"
+     data-i18n-aria-label="contact.waFloatLabel" aria-label="Escríbenos por WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a9.9 9.9 0 0 0-8.5 15l-1.3 4.8 5-1.3A9.9 9.9 0 1 0 12 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.2-3 .8.8-2.9-.2-.3A8.1 8.1 0 0 1 12 3.8zm-3.1 4c-.2 0-.5.1-.7.4-.2.3-.9.9-.9 2.1s.9 2.4 1.1 2.6c.1.2 1.8 2.8 4.4 3.8 2.2.8 2.6.7 3.1.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3l-2-1c-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4 0-.5.2-.7l.5-.6c.1-.2.1-.3.2-.5v-.5l-.8-2c-.2-.5-.4-.5-.6-.5h-.5z"/></svg>
+    <span class="float-wa__text" data-i18n="contact.waFloat">Escríbenos</span>
+  </a>
+</body>
+</html>

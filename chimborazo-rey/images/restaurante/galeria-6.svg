@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 950" width="900" height="950" role="img" aria-label="FOTO PENDIENTE · Salón principal">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf3e9"/>
+      <stop offset="1" stop-color="#f6e0c8"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b4703a"/>
+      <stop offset="1" stop-color="#7b4b2a"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="950" fill="url(#sky)"/>
+  <circle cx="720" cy="190" r="71" fill="#ffffff" opacity=".55"/>
+  <path d="M0 950 L0 589 L162 475 L270 551 L746.2 502.0 L900 570 L900 950 Z" fill="#e0a86a" opacity=".75"/>
+  <path d="M0 950 L0 741.0 L182.3 570.0 L434.2 256.7 L673.0 627.0 L900 684.0 L900 950 Z" fill="url(#ground)"/>
+  
+  <rect x="278.28" y="76" width="343" height="38" rx="19"
+        fill="#000000" opacity=".38"/>
+  <text x="450" y="102" text-anchor="middle"
+        font-family="Georgia, serif" font-size="18" fill="#ffffff" opacity=".9"
+        letter-spacing="1">FOTO PENDIENTE · Salón principal</text>
+</svg>

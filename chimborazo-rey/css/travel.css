@@ -1,0 +1,385 @@
+/* ==========================================================================
+   CHIMBORAZO REY · travel.css
+   Identidad: aventura, naturaleza, nieve, libertad y montaña.
+   Azul montaña, celeste glaciar, negro, gris y verde en pequeños detalles.
+   ========================================================================== */
+
+:root {
+  --color-primary: #1e5f8c;        /* azul montaña */
+  --color-primary-dark: #124460;
+  --color-primary-soft: #e8f2f9;   /* celeste glaciar */
+  --color-secondary: #6fb3d9;
+  --color-accent: #2f6b4f;         /* verde natural, sólo en detalles */
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+.hero--travel {
+  --hero-overlay: linear-gradient(180deg, rgba(11, 26, 38, .5) 0%, rgba(11, 26, 38, .28) 45%, rgba(11, 26, 38, .74) 100%);
+}
+
+.hero__brand-line {
+  display: block;
+  margin-bottom: .35rem;
+  font-size: clamp(.9rem, 1.6vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .82);
+}
+
+.hero__altitude {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 1.5rem;
+  padding: .45rem 1rem;
+  border: 1px solid rgba(255, 255, 255, .4);
+  border-radius: 999px;
+  font-size: .76rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: rgba(255, 255, 255, .92);
+}
+
+/* --------------------------------------------------------------------------
+   Actividades
+   -------------------------------------------------------------------------- */
+.adventures {
+  display: grid;
+  gap: clamp(1.25rem, 2.6vw, 2rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
+}
+
+.adventure-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-background);
+  transition: transform var(--t-base), box-shadow var(--t-base), border-color var(--t-base);
+}
+
+.adventure-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-secondary);
+  box-shadow: var(--shadow-md);
+}
+
+.adventure-card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--color-surface-alt);
+}
+
+.adventure-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--t-slow);
+}
+
+.adventure-card:hover .adventure-card__media img { transform: scale(1.06); }
+
+.adventure-card__difficulty {
+  position: absolute;
+  top: .9rem;
+  left: .9rem;
+}
+
+.adventure-card__price {
+  position: absolute;
+  bottom: .9rem;
+  right: .9rem;
+  padding: .38rem .85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .95);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+.adventure-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+  flex: 1;
+  padding: clamp(1.35rem, 2.6vw, 1.75rem);
+}
+
+.adventure-card__title { font-size: var(--fs-h3); }
+
+.adventure-card__text {
+  font-size: .93rem;
+  color: var(--color-text-soft);
+}
+
+.adventure-card__meta {
+  display: grid;
+  gap: .5rem 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+  margin-top: .3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.adventure-card__meta div {
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+}
+
+.adventure-card__meta dt {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.adventure-card__meta dd {
+  margin: 0;
+  font-size: .88rem;
+  font-weight: 600;
+}
+
+.adventure-card__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: auto;
+  padding-top: 1.1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Modal de detalle de actividad
+   -------------------------------------------------------------------------- */
+.adventure-modal__header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-right: 3rem;
+}
+
+.adventure-modal__title { flex: 1 1 100%; }
+
+.adventure-modal__media {
+  margin: 1.25rem 0 1.75rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.adventure-modal__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.adventure-modal__facts {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  margin-bottom: 1.75rem;
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  background: var(--color-primary-soft);
+}
+
+.adventure-modal__fact dt {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-primary-dark);
+  opacity: .8;
+}
+
+.adventure-modal__fact dd {
+  margin: .2rem 0 0;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.adventure-modal__section { margin-bottom: 1.6rem; }
+
+.adventure-modal__section h3 {
+  margin-bottom: .8rem;
+  font-family: var(--font-body);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.adventure-modal__section p { color: var(--color-text-soft); }
+
+.adventure-modal__list { display: grid; gap: .6rem; }
+
+.adventure-modal__list li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: .93rem;
+  color: var(--color-text-soft);
+}
+
+.adventure-modal__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--color-secondary);
+}
+
+.adventure-modal__list--steps { counter-reset: step; }
+
+.adventure-modal__list--steps li::before {
+  counter-increment: step;
+  content: counter(step);
+  width: auto;
+  height: auto;
+  top: 0;
+  border-radius: 0;
+  background: none;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.adventure-modal__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.adventure-modal__price {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+.adventure-modal__price small {
+  display: block;
+  font-family: var(--font-body);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Seguridad
+   -------------------------------------------------------------------------- */
+.safety {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  align-items: center;
+}
+
+.safety__list {
+  display: grid;
+  gap: .85rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  margin-top: 1.75rem;
+}
+
+.safety__list li {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .8rem .95rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  font-size: .88rem;
+  color: var(--color-text-soft);
+  transition: border-color var(--t-fast), background-color var(--t-fast);
+}
+
+.safety__list li:hover {
+  border-color: var(--color-secondary);
+  background: var(--color-primary-soft);
+}
+
+.safety__list svg {
+  width: 17px;
+  height: 17px;
+  fill: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.safety__disclaimer {
+  display: flex;
+  gap: .85rem;
+  align-items: flex-start;
+  margin-top: 1.75rem;
+  padding: 1.15rem 1.35rem;
+  border-left: 3px solid var(--color-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--color-surface);
+  font-size: .89rem;
+  color: var(--color-text-soft);
+}
+
+/* --------------------------------------------------------------------------
+   Niveles de dificultad
+   -------------------------------------------------------------------------- */
+.difficulty-legend {
+  display: grid;
+  gap: clamp(.85rem, 2vw, 1.25rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+}
+
+.difficulty-legend__item {
+  padding: 1.25rem 1.35rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  background: var(--color-background);
+  transition: transform var(--t-base), box-shadow var(--t-base);
+}
+
+.difficulty-legend__item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.difficulty-legend__text {
+  margin-top: .8rem;
+  font-size: .86rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   Consulta de experiencias
+   -------------------------------------------------------------------------- */
+.travel-contact {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  align-items: start;
+}
+
+.travel-contact__aside {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: var(--radius-lg);
+  background: var(--color-primary-soft);
+}

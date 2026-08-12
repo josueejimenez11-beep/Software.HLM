@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es" data-title-key="lodge.meta.title">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Lodge Hotel | Chimborazo Rey</title>
+  <meta name="description" data-i18n-content="lodge.meta.desc"
+        content="Lodge Hotel Chimborazo Rey: habitaciones familiares, grupales y matrimoniales con calefacción, seguridad 24 horas y vista al Nevado Chimborazo.">
+  <meta name="author" content="Chimborazo Rey">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Chimborazo Rey">
+  <meta property="og:title" data-i18n-content="lodge.meta.title" content="Lodge Hotel | Chimborazo Rey">
+  <meta property="og:description" data-i18n-content="lodge.meta.desc"
+        content="Una experiencia de hospedaje a 4.250 metros sobre el nivel del mar.">
+  <meta property="og:image" content="images/lodge/hero-lodge.svg">
+  <meta property="og:locale" content="es_EC">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🏔️</text></svg>">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/lodge.css">
+  <link rel="preload" as="image" href="images/lodge/hero-lodge.svg">
+
+  <script src="js/idiomas.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/lodge.js" defer></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main" data-i18n="nav.skip">Ir al contenido principal</a>
+
+  <!-- ====================================================================
+       NAVBAR
+       ==================================================================== -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="index.html">
+        <span class="navbar__brand-name">Chimborazo Rey</span>
+        <span class="navbar__brand-tag" data-i18n="nav.brandTag">Restaurante · Lodge · Travel</span>
+      </a>
+
+      <nav class="navbar__nav" id="navbar-nav" data-i18n-aria-label="nav.primary" aria-label="Navegación principal">
+        <ul class="navbar__menu">
+          <li><a class="navbar__link" href="index.html" data-i18n="nav.inicio">Inicio</a></li>
+          <li><a class="navbar__link" href="restaurante.html" data-i18n="nav.restaurante">Restaurante</a></li>
+          <li><a class="navbar__link" href="lodge.html" aria-current="page" data-i18n="nav.lodge">Lodge Hotel</a></li>
+          <li><a class="navbar__link" href="travel.html" data-i18n="nav.travel">Travel Explore</a></li>
+          <li><a class="navbar__link" href="#contacto" data-i18n="nav.contacto">Contacto</a></li>
+        </ul>
+
+        <div class="navbar__actions">
+          <div class="lang">
+            <button type="button" class="lang__toggle" id="lang-toggle"
+                    aria-expanded="false" aria-haspopup="listbox"
+                    data-i18n-aria-label="nav.langLabel" aria-label="Seleccionar idioma">
+              <span class="lang__current-flag" aria-hidden="true">🇪🇨</span>
+              <span class="lang__current-code">ES</span>
+              <span class="lang__caret" aria-hidden="true"></span>
+            </button>
+
+            <div class="lang__list" role="listbox" aria-labelledby="lang-toggle">
+              <button type="button" class="lang__option" role="option" data-lang="es" aria-selected="true">
+                <span class="lang__flag" aria-hidden="true">🇪🇨</span><span>Español</span><span class="lang__code">ES</span>
+              </button>
+              <button type="button" class="lang__option" role="option" data-lang="en" aria-selected="false">
+                <span class="lang__flag" aria-hidden="true">🇺🇸</span><span>English</span><span class="lang__code">EN</span>
+              </button>
+              <button type="button" class="lang__option" role="option" data-lang="fr" aria-selected="false">
+                <span class="lang__flag" aria-hidden="true">🇫🇷</span><span>Français</span><span class="lang__code">FR</span>
+              </button>
+              <button type="button" class="lang__option" role="option" data-lang="de" aria-selected="false">
+                <span class="lang__flag" aria-hidden="true">🇩🇪</span><span>Deutsch</span><span class="lang__code">DE</span>
+              </button>
+            </div>
+          </div>
+
+          <a class="btn btn--light btn--sm" href="#reservas" data-i18n="nav.reservar">Reservar</a>
+        </div>
+      </nav>
+
+      <button type="button" class="navbar__burger" aria-expanded="false" aria-controls="navbar-nav"
+              data-i18n-aria-label="nav.menuOpen" aria-label="Abrir menú de navegación">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ==================================================================
+         HERO
+         ================================================================== -->
+    <section class="hero hero--lodge">
+      <div class="hero__media">
+        <img src="images/lodge/hero-lodge.svg" width="1920" height="1080"
+             data-i18n-alt="lodge.hero.imgAlt" alt="Lodge Hotel de Chimborazo Rey con vista a la montaña"
+             fetchpriority="high" decoding="async">
+      </div>
+
+      <div class="container">
+        <div class="hero__content">
+          <p class="hero__eyebrow" data-i18n="lodge.hero.eyebrow">Lodge Hotel</p>
+          <h1 class="hero__title">
+            <span class="hero__brand-line" data-i18n="lodge.hero.brand">Chimborazo Rey</span>
+            <span data-i18n="lodge.hero.title">Descansa entre las montañas</span>
+          </h1>
+          <p class="hero__text" data-i18n="lodge.hero.text">
+            Una experiencia de hospedaje aproximadamente a 4.250 metros sobre el nivel del mar, a las faldas del Chimborazo.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--light" href="#reservas" data-i18n="lodge.hero.cta1">Consultar alojamiento</a>
+            <a class="btn btn--light" href="#servicios" data-i18n="lodge.hero.cta2">Ver servicios</a>
+          </div>
+
+          <p class="hero__altitude" data-i18n="lodge.hero.altitude">4.250 m s. n. m. aprox.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         INTRODUCCIÓN
+         ================================================================== -->
+    <section class="section section--tight">
+      <div class="container container--narrow">
+        <div class="section-head section-head--center" data-animate="fade-up">
+          <p class="eyebrow" data-i18n="lodge.intro.eyebrow">El Lodge</p>
+          <h2 data-i18n="lodge.intro.title">Calidez andina a 4.250 metros</h2>
+        </div>
+
+        <div class="prose" data-animate="fade-up" style="text-align:center">
+          <p data-i18n="lodge.intro.p1">
+            El Lodge Hotel de Chimborazo Rey fue pensado para quienes llegan del páramo buscando silencio y calor.
+          </p>
+          <p data-i18n="lodge.intro.p2">
+            Cada espacio combina la hospitalidad familiar con los servicios necesarios para descansar a gran altitud.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         ALOJAMIENTO
+         ================================================================== -->
+    <section class="section" id="habitaciones">
+      <div class="container">
+        <div class="section-head" data-animate="fade-up">
+          <p class="eyebrow" data-i18n="lodge.rooms.eyebrow">Alojamiento</p>
+          <h2 data-i18n="lodge.rooms.title">Habitaciones</h2>
+          <p class="section-lead" data-i18n="lodge.rooms.lead">
+            Elige el espacio que mejor se adapte a tu viaje y consulta disponibilidad para tus fechas.
+          </p>
+        </div>
+
+        <div class="rooms">
+          <!-- Habitación familiar -->
+          <article class="lodge-room-card" data-animate="fade-up">
+            <div class="lodge-room-card__media">
+              <img src="images/lodge/habitacion-familiar.svg" width="1000" height="750" loading="lazy" decoding="async"
+                   data-i18n-alt="lodge.rooms.familyAlt" alt="Habitación familiar del Lodge Hotel">
+              <span class="lodge-room-card__badge" data-i18n="lodge.rooms.familyBadge">Familias</span>
+            </div>
+            <div class="lodge-room-card__body">
+              <h3 class="lodge-room-card__title" data-i18n="lodge.rooms.familyTitle">Habitaciones familiares</h3>
+              <p class="lodge-room-card__text" data-i18n="lodge.rooms.familyText">
+                Espacios amplios pensados para que la familia comparta el descanso.
+              </p>
+              <ul class="lodge-room-card__services">
+                <li data-i18n="lodge.rooms.svcHeating">Calefacción</li>
+                <li data-i18n="lodge.rooms.svcWifi">Internet</li>
+                <li data-i18n="lodge.rooms.svcTv">TV por cable</li>
+                <li data-i18n="lodge.rooms.svcView">Vista al nevado</li>
+              </ul>
+              <div class="lodge-room-card__foot">
+                <!-- La documentación no especifica tarifas: no se publican precios. -->
+                <span class="lodge-room-card__price-note" data-i18n="lodge.rooms.priceNote">Tarifa disponible bajo consulta.</span>
+                <button type="button" class="btn btn--sm btn--block" data-room="familiar" data-i18n="lodge.rooms.cta">
+                  Consultar disponibilidad
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Habitación grupal -->
+          <article class="lodge-room-card" data-animate="fade-up" data-animate-delay="120">
+            <div class="lodge-room-card__media">
+              <img src="images/lodge/habitacion-grupal.svg" width="1000" height="750" loading="lazy" decoding="async"
+                   data-i18n-alt="lodge.rooms.groupAlt" alt="Habitación grupal del Lodge Hotel">
+              <span class="lodge-room-card__badge" data-i18n="lodge.rooms.groupBadge">Grupos</span>
+            </div>
+            <div class="lodge-room-card__body">
+              <h3 class="lodge-room-card__title" data-i18n="lodge.rooms.groupTitle">Habitaciones grupales</h3>
+              <p class="lodge-room-card__text" data-i18n="lodge.rooms.groupText">
+                Ideales para grupos de viajeros, expediciones y salidas organizadas hacia el nevado.
+              </p>
+              <ul class="lodge-room-card__services">
+                <li data-i18n="lodge.rooms.svcHeating">Calefacción</li>
+                <li data-i18n="lodge.rooms.svcSecurity">Seguridad 24 h</li>
+                <li data-i18n="lodge.rooms.svcKitchen">Área de cocina</li>
+                <li data-i18n="lodge.rooms.svcLounge">Sala de estar</li>
+              </ul>
+              <div class="lodge-room-card__foot">
+                <span class="lodge-room-card__price-note" data-i18n="lodge.rooms.priceNote">Tarifa disponible bajo consulta.</span>
+                <button type="button" class="btn btn--sm btn--block" data-room="grupal" data-i18n="lodge.rooms.cta">
+                  Consultar disponibilidad
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Habitación matrimonial -->
+          <article class="lodge-room-card" data-animate="fade-up" data-animate-delay="240">
+            <div class="lodge-room-card__media">
+              <img src="images/lodge/habitacion-matrimonial.svg" width="1000" height="750" loading="lazy" decoding="async"
+                   data-i18n-alt="lodge.rooms.coupleAlt" alt="Habitación matrimonial del Lodge Hotel">
+              <span class="lodge-room-card__badge" data-i18n="lodge.rooms.coupleBadge">Parejas</span>
+            </div>
+            <div class="lodge-room-card__body">
+              <h3 class="lodge-room-card__title" data-i18n="lodge.rooms.coupleTitle">Habitaciones matrimoniales</h3>
+              <p class="lodge-room-card__text" data-i18n="lodge.rooms.coupleText">
+                Un espacio íntimo y cálido para disfrutar del silencio del páramo en pareja.
+              </p>
+              <ul class="lodge-room-card__services">
+                <li data-i18n="lodge.rooms.svcHeating">Calefacción</li>
+                <li data-i18n="lodge.rooms.svcWifi">Internet</li>
+                <li data-i18n="lodge.rooms.svcTv">TV por cable</li>
+                <li data-i18n="lodge.rooms.svcView">Vista al nevado</li>
+              </ul>
+              <div class="lodge-room-card__foot">
+                <span class="lodge-room-card__price-note" data-i18n="lodge.rooms.priceNote">Tarifa disponible bajo consulta.</span>
+                <button type="button" class="btn btn--sm btn--block" data-room="matrimonial" data-i18n="lodge.rooms.cta">
+                  Consultar disponibilidad
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         SERVICIOS
+         ================================================================== -->
+    <section class="section section--surface" id="servicios">
+      <div class="container">
+        <div class="section-head section-head--center" data-animate="fade-up">
+          <p class="eyebrow" data-i18n="lodge.services.eyebrow">Servicios</p>
+          <h2 data-i18n="lodge.services.title">Todo lo necesario para descansar</h2>
+        </div>
+
+        <div class="services">
+          <div class="service-item" data-animate="fade-up">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3s5 4 5 8a5 5 0 0 1-10 0c0-2 1-3.2 2-4.2 0 1.6 1 2.2 1.5 2.2.5-2 1.5-4 1.5-6z"/>
+              </svg>
+            </span>
+            <p class="service-item__name" data-i18n="lodge.services.s1">Sistema de calefacción</p>
+          </div>
+
+          <div class="service-item" data-animate="fade-up" data-animate-delay="60">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3 8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/>
+              </svg>
+            </span>
+            <p class="service-item__name" data-i18n="lodge.services.s2">Seguridad 24 horas</p>
+          </div>
+
+          <div class="service-item" data-animate="fade-up" data-animate-delay="120">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.2"/>
+              </svg>
+            </span>
+            <p class="service-item__name" data-i18n="lodge.services.s3">Cámaras de seguridad</p>
+          </div>
+
+          <div class="service-item" data-animate="fade-up" data-animate-delay="180">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2.5 9a14 14 0 0 1 19 0"/><path d="M6 12.5a9 9 0 0 1 12 0"/><path d="M9.5 16a4 4 0 0 1 5 0"/><path d="M12 19.5h.01"/>
+              </svg>
+            </span>
+            <p class="service-item__name" data-i18n="lodge.services.s4">Internet</p>
+          </div>
+
+          <div class="service-item" data-animate="fade-up">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="5" width="18" height="12" rx="1.5"/><path d="m8 21 4-3 4 3"/>
+              </svg>
+            </span>
+            <p class="service-item__name" data-i18n="lodge.services.s5">Televisión por cable</p>
+          </div>
+
+          <div class="service-item" data-animate="fade-up" data-animate-delay="60">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 9h16v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V9z"/><path d="M2 9h20"/><path d="M9 5.5V3M15 5.5V3"/>
+              </svg>
+            </span>
+            <p class="service-item__name" data-i18n="lodge.services.s6">Área de cocina completa</p>
+          </div>
+
+          <div class="service-item" data-animate="fade-up" data-animate-delay="120">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12V9a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3"/><rect x="3" y="12" width="18" height="6" rx="1.5"/><path d="M6 18v2M18 18v2"/>
+              </svg>
+            </span>
+            <p class="service-item__name" data-i18n="lodge.services.s7">Sala de estar</p>
+          </div>
+
+          <div class="service-item" data-animate="fade-up" data-animate-delay="180">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 5 6 2 6-2v13l-6 2-6-2-6 2V7l6-2z"/><path d="M9 5v13M15 7v13"/>
+              </svg>
+            </span>
+            <p class="service-item__name" data-i18n="lodge.services.s8">Paquetes turísticos</p>
+          </div>
+
+          <div class="service-item" data-animate="fade-up">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 19 6-9 3.5 5L15 12l6 7H3z"/><path d="m7.5 12 1.5-2.2 1.5 2.2"/>
+              </svg>
+            </span>
+            <p class="service-item__name" data-i18n="lodge.services.s9">Vista al Nevado Chimborazo</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         EXPERIENCIA LODGE
+         ================================================================== -->
+    <section class="section" id="experiencia">
+      <div class="container">
+        <div class="section-head section-head--center" data-animate="fade-up">
+          <p class="eyebrow" data-i18n="lodge.experience.eyebrow">La experiencia</p>
+          <h2 data-i18n="lodge.experience.title">Momentos del Lodge</h2>
+          <p class="section-lead" data-i18n="lodge.experience.lead">
+            Del calor de la chimenea al primer sol sobre el nevado.
+          </p>
+        </div>
+
+        <div class="lodge-experience">
+          <figure class="lodge-experience__item" data-animate="fade-up">
+            <img src="images/lodge/experiencia-calefaccion.svg" width="900" height="700" loading="lazy" decoding="async"
+                 data-i18n-alt="lodge.experience.e1Title" alt="Calor en la altura">
+            <figcaption class="lodge-experience__caption">
+              <p class="lodge-experience__title" data-i18n="lodge.experience.e1Title">Calor en la altura</p>
+              <p class="lodge-experience__text" data-i18n="lodge.experience.e1Text">Sistema de calefacción para las noches del páramo.</p>
+            </figcaption>
+          </figure>
+
+          <figure class="lodge-experience__item" data-animate="fade-up" data-animate-delay="100">
+            <img src="images/lodge/experiencia-sala.svg" width="900" height="700" loading="lazy" decoding="async"
+                 data-i18n-alt="lodge.experience.e2Title" alt="Sala de estar">
+            <figcaption class="lodge-experience__caption">
+              <p class="lodge-experience__title" data-i18n="lodge.experience.e2Title">Sala de estar</p>
+              <p class="lodge-experience__text" data-i18n="lodge.experience.e2Text">Un espacio común para compartir la jornada.</p>
+            </figcaption>
+          </figure>
+
+          <figure class="lodge-experience__item" data-animate="fade-up" data-animate-delay="200">
+            <img src="images/lodge/experiencia-amanecer.svg" width="900" height="700" loading="lazy" decoding="async"
+                 data-i18n-alt="lodge.experience.e3Title" alt="Amaneceres">
+            <figcaption class="lodge-experience__caption">
+              <p class="lodge-experience__title" data-i18n="lodge.experience.e3Title">Amaneceres</p>
+              <p class="lodge-experience__text" data-i18n="lodge.experience.e3Text">La primera luz sobre el Nevado Chimborazo.</p>
+            </figcaption>
+          </figure>
+
+          <figure class="lodge-experience__item" data-animate="fade-up" data-animate-delay="300">
+            <img src="images/lodge/experiencia-arquitectura.svg" width="900" height="700" loading="lazy" decoding="async"
+                 data-i18n-alt="lodge.experience.e4Title" alt="Arquitectura de montaña">
+            <figcaption class="lodge-experience__caption">
+              <p class="lodge-experience__title" data-i18n="lodge.experience.e4Title">Arquitectura de montaña</p>
+              <p class="lodge-experience__text" data-i18n="lodge.experience.e4Text">Materiales cálidos en diálogo con el paisaje.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         GALERÍA
+         ================================================================== -->
+    <section class="section section--surface" id="galeria">
+      <div class="container">
+        <div class="section-head section-head--center" data-animate="fade-up">
+          <p class="eyebrow" data-i18n="lodge.gallery.eyebrow">Galería</p>
+          <h2 data-i18n="lodge.gallery.title">Recorre el Lodge</h2>
+          <p class="section-lead" data-i18n="lodge.gallery.lead">Haz clic en cualquier fotografía para verla en detalle.</p>
+        </div>
+
+        <div class="gallery" data-lightbox data-animate="fade-up">
+          <button type="button" class="gallery__item">
+            <img src="images/lodge/galeria-1.svg" width="900" height="1150" loading="lazy" decoding="async"
+                 data-i18n-alt="lodge.gallery.g1" alt="Habitación del Lodge">
+          </button>
+          <button type="button" class="gallery__item">
+            <img src="images/lodge/galeria-2.svg" width="900" height="700" loading="lazy" decoding="async"
+                 data-i18n-alt="lodge.gallery.g2" alt="Vista al Nevado Chimborazo">
+          </button>
+          <button type="button" class="gallery__item">
+            <img src="images/lodge/galeria-3.svg" width="900" height="900" loading="lazy" decoding="async"
+                 data-i18n-alt="lodge.gallery.g3" alt="Sala de estar">
+          </button>
+          <button type="button" class="gallery__item">
+            <img src="images/lodge/galeria-4.svg" width="900" height="1100" loading="lazy" decoding="async"
+                 data-i18n-alt="lodge.gallery.g4" alt="Área de cocina">
+          </button>
+          <button type="button" class="gallery__item">
+            <img src="images/lodge/galeria-5.svg" width="900" height="700" loading="lazy" decoding="async"
+                 data-i18n-alt="lodge.gallery.g5" alt="Exteriores del Lodge">
+          </button>
+          <button type="button" class="gallery__item">
+            <img src="images/lodge/galeria-6.svg" width="900" height="950" loading="lazy" decoding="async"
+                 data-i18n-alt="lodge.gallery.g6" alt="Atardecer en el páramo">
+          </button>
+          <button type="button" class="gallery__item">
+            <img src="images/lodge/galeria-7.svg" width="900" height="700" loading="lazy" decoding="async"
+                 data-i18n-alt="lodge.gallery.g7" alt="Espacios de descanso">
+          </button>
+          <button type="button" class="gallery__item">
+            <img src="images/lodge/galeria-8.svg" width="900" height="1150" loading="lazy" decoding="async"
+                 data-i18n-alt="lodge.gallery.g8" alt="Entorno del Lodge">
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         SOLICITAR HOSPEDAJE
+         ================================================================== -->
+    <section class="section" id="reservas">
+      <div class="container">
+        <div class="section-head" data-animate="fade-up">
+          <p class="eyebrow" data-i18n="lodge.booking.eyebrow">Reservas</p>
+          <h2 data-i18n="lodge.booking.title">Solicitar hospedaje</h2>
+          <p class="section-lead" data-i18n="lodge.booking.lead">
+            Cuéntanos tus fechas y prepararemos un mensaje de WhatsApp con el resumen de tu solicitud.
+          </p>
+        </div>
+
+        <div class="booking">
+          <div class="form-card" data-animate="fade-up">
+            <form class="form" id="form-hospedaje" novalidate>
+              <div class="form__grid">
+                <div class="field">
+                  <label for="lodge-nombre"><span data-i18n="form.name">Nombre completo</span> <span class="req">*</span></label>
+                  <input type="text" id="lodge-nombre" name="nombre" required autocomplete="name">
+                  <p class="field__error"></p>
+                </div>
+
+                <div class="field">
+                  <label for="lodge-nacionalidad"><span data-i18n="lodge.booking.nationality">Nacionalidad</span></label>
+                  <input type="text" id="lodge-nacionalidad" name="nacionalidad" autocomplete="country-name">
+                  <p class="field__error"></p>
+                </div>
+
+                <div class="field">
+                  <label for="lodge-telefono"><span data-i18n="form.phone">Teléfono</span> <span class="req">*</span></label>
+                  <input type="tel" id="lodge-telefono" name="telefono" required data-validate="phone" autocomplete="tel">
+                  <p class="field__error"></p>
+                </div>
+
+                <div class="field">
+                  <label for="lodge-correo"><span data-i18n="form.email">Correo electrónico</span> <span class="req">*</span></label>
+                  <input type="email" id="lodge-correo" name="correo" required autocomplete="email">
+                  <p class="field__error"></p>
+                </div>
+
+                <div class="field">
+                  <label for="lodge-habitacion"><span data-i18n="lodge.booking.roomType">Tipo de habitación</span> <span class="req">*</span></label>
+                  <select id="lodge-habitacion" name="habitacion" required>
+                    <option value="" data-i18n="form.selectOption">Selecciona una opción</option>
+                    <option value="familiar" data-i18n="lodge.rooms.familyTitle">Habitaciones familiares</option>
+                    <option value="grupal" data-i18n="lodge.rooms.groupTitle">Habitaciones grupales</option>
+                    <option value="matrimonial" data-i18n="lodge.rooms.coupleTitle">Habitaciones matrimoniales</option>
+                  </select>
+                  <p class="field__error"></p>
+                </div>
+
+                <div class="field">
+                  <label for="lodge-huespedes"><span data-i18n="lodge.booking.guests">Número de huéspedes</span> <span class="req">*</span></label>
+                  <input type="number" id="lodge-huespedes" name="huespedes" required min="1" max="100" value="2">
+                  <p class="field__error"></p>
+                </div>
+
+                <div class="field">
+                  <label for="lodge-entrada"><span data-i18n="lodge.booking.checkin">Fecha de entrada</span> <span class="req">*</span></label>
+                  <input type="date" id="lodge-entrada" name="entrada" required data-not-past="true">
+                  <p class="field__error"></p>
+                </div>
+
+                <div class="field">
+                  <label for="lodge-salida"><span data-i18n="lodge.booking.checkout">Fecha de salida</span> <span class="req">*</span></label>
+                  <input type="date" id="lodge-salida" name="salida" required data-not-past="true" data-after="#lodge-entrada">
+                  <p class="field__error"></p>
+                </div>
+
+                <div class="field field--full">
+                  <p class="booking__nights" id="lodge-noches"></p>
+                </div>
+
+                <div class="field field--full">
+                  <label for="lodge-comentarios">
+                    <span data-i18n="form.comments">Comentarios</span> <span data-i18n="form.optional">(opcional)</span>
+                  </label>
+                  <textarea id="lodge-comentarios" name="comentarios"
+                            data-i18n-placeholder="form.commentsPh" placeholder="Cuéntanos cualquier detalle adicional"></textarea>
+                  <p class="field__error"></p>
+                </div>
+              </div>
+
+              <p class="form__note" data-i18n="form.localNote">
+                Este sitio no dispone de servidor: el formulario valida los datos en tu navegador.
+              </p>
+
+              <div class="form__actions">
+                <button type="submit" class="btn" data-i18n="lodge.booking.submit">Solicitar hospedaje</button>
+                <button type="button" class="btn btn--ghost" data-wa-direct data-i18n="form.whatsapp">Consultar por WhatsApp</button>
+              </div>
+
+              <p class="form__feedback" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <aside class="booking__aside" data-animate="fade-left">
+            <h3 data-i18n="lodge.booking.asideTitle">Buenas prácticas en altura</h3>
+            <ul class="check-list" style="margin-top:1.25rem">
+              <li data-i18n="lodge.booking.aside1">Llega con tiempo y descansa antes de cualquier ascenso.</li>
+              <li data-i18n="lodge.booking.aside2">Hidrátate con frecuencia y evita comidas muy pesadas la primera noche.</li>
+              <li data-i18n="lodge.booking.aside3">Trae ropa térmica: las noches del páramo son frías.</li>
+              <li data-i18n="lodge.booking.aside4">Consúltanos por paquetes que combinan hospedaje y actividades.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         CONTACTO
+         ================================================================== -->
+    <section class="section section--surface" id="contacto">
+      <div class="container container--narrow">
+        <div class="section-head section-head--center" data-animate="fade-up">
+          <p class="eyebrow" data-i18n="contact.eyebrow">Contacto</p>
+          <h2 data-i18n="contact.title">Vive la experiencia Chimborazo Rey</h2>
+        </div>
+
+        <div class="contact-grid" data-animate="fade-up">
+          <div>
+            <div class="contact-item">
+              <div>
+                <p class="contact-item__label" data-i18n="contact.infoLabel">Información</p>
+                <p class="contact-item__value" data-i18n="contact.infoValue">Guido Castro</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div>
+                <p class="contact-item__label" data-i18n="contact.phoneLabel">Teléfono</p>
+                <p class="contact-item__value"><a href="#" data-contact="tel" data-fill="true">0968596592</a></p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div>
+                <p class="contact-item__label" data-i18n="contact.emailLabel">Correo</p>
+                <p class="contact-item__value"><a href="#" data-contact="email" data-fill="true">gustavocc1982@hotmail.com</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions-row" style="margin-top:0">
+            <a class="btn" href="#" data-contact="tel" data-i18n="contact.call">Llamar</a>
+            <a class="btn btn--ghost" href="#" data-contact="whatsapp" data-i18n="contact.whatsapp">WhatsApp</a>
+            <a class="btn btn--ghost" href="#" data-contact="email" data-i18n="contact.email">Enviar correo</a>
+            <a class="btn btn--ghost" href="#" data-contact="maps" data-i18n="contact.directions">Cómo llegar</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         CTA FINAL
+         ================================================================== -->
+    <section class="cta-band">
+      <div class="container" data-animate="fade-up">
+        <h2 class="cta-band__title" data-i18n="lodge.cta.title">Suma aventura a tu estadía</h2>
+        <p class="cta-band__text" data-i18n="lodge.cta.text">
+          Combina tu hospedaje con las experiencias de Travel Explore o una cena en el Restaurante de Aventura.
+        </p>
+        <div class="actions-row" style="justify-content:center">
+          <a class="btn" href="travel.html" data-i18n="lodge.cta.btn1">Ver aventuras</a>
+          <a class="btn btn--ghost" href="restaurante.html" data-i18n="lodge.cta.btn2">Conocer el restaurante</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       FOOTER
+       ==================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__brand-name">Chimborazo Rey</p>
+          <p class="footer__brand-tag" data-i18n="footer.tagline">Restaurante · Lodge · Travel Explore</p>
+          <p class="footer__brand-text" data-i18n="footer.about">
+            Una experiencia turística integral a los pies del Nevado Chimborazo.
+          </p>
+
+          <!-- Redes sociales: sustituye href="#" por las URL oficiales. -->
+          <h2 class="footer__title" style="margin-top:1.75rem" data-i18n="footer.socialTitle">Síguenos</h2>
+          <div class="footer__socials">
+            <a class="social-btn" href="#" data-i18n-aria-label="footer.social.facebook" aria-label="Facebook de Chimborazo Rey">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.5 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+            </a>
+            <a class="social-btn" href="#" data-i18n-aria-label="footer.social.instagram" aria-label="Instagram de Chimborazo Rey">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c0 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2 0-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c0-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.8.1-1.1 0-1.7.2-2.1.3-.5.2-.9.4-1.2.8-.4.3-.6.7-.8 1.2-.1.4-.3 1-.3 2.1-.1 1.3-.1 1.7-.1 4.8s0 3.5.1 4.8c0 1.1.2 1.7.3 2.1.2.5.4.9.8 1.2.3.4.7.6 1.2.8.4.1 1 .3 2.1.3 1.3.1 1.7.1 4.8.1s3.5 0 4.8-.1c1.1 0 1.7-.2 2.1-.3.5-.2.9-.4 1.2-.8.4-.3.6-.7.8-1.2.1-.4.3-1 .3-2.1.1-1.3.1-1.7.1-4.8s0-3.5-.1-4.8c0-1.1-.2-1.7-.3-2.1-.2-.5-.4-.9-.8-1.2-.3-.4-.7-.6-1.2-.8-.4-.1-1-.3-2.1-.3-1.3-.1-1.7-.1-4.8-.1zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8zm0 8a3.1 3.1 0 1 0 0-6.2 3.1 3.1 0 0 0 0 6.2zm6.3-8.2a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"/></svg>
+            </a>
+            <a class="social-btn" href="#" data-i18n-aria-label="footer.social.tiktok" aria-label="TikTok de Chimborazo Rey">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 2h-3v13.2a2.6 2.6 0 1 1-2.1-2.6V9.5a5.9 5.9 0 1 0 5.1 5.9V9.2a7.5 7.5 0 0 0 4.4 1.4V7.5a4.5 4.5 0 0 1-4.4-4.4V2z"/></svg>
+            </a>
+            <a class="social-btn" href="#" data-contact="whatsapp" data-i18n-aria-label="footer.social.whatsapp" aria-label="WhatsApp de Chimborazo Rey">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a9.9 9.9 0 0 0-8.5 15l-1.3 4.8 5-1.3A9.9 9.9 0 1 0 12 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.2-3 .8.8-2.9-.2-.3A8.1 8.1 0 0 1 12 3.8zm-3.1 4c-.2 0-.5.1-.7.4-.2.3-.9.9-.9 2.1s.9 2.4 1.1 2.6c.1.2 1.8 2.8 4.4 3.8 2.2.8 2.6.7 3.1.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3l-2-1c-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4 0-.5.2-.7l.5-.6c.1-.2.1-.3.2-.5v-.5l-.8-2c-.2-.5-.4-.5-.6-.5h-.5z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <nav aria-label="Footer">
+          <h2 class="footer__title" data-i18n="footer.navTitle">Navegación</h2>
+          <ul class="footer__list">
+            <li><a href="index.html" data-i18n="nav.inicio">Inicio</a></li>
+            <li><a href="restaurante.html" data-i18n="nav.restaurante">Restaurante</a></li>
+            <li><a href="lodge.html" data-i18n="nav.lodge">Lodge Hotel</a></li>
+            <li><a href="travel.html" data-i18n="nav.travel">Travel Explore</a></li>
+            <li><a href="#contacto" data-i18n="nav.contacto">Contacto</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h2 class="footer__title" data-i18n="footer.contactTitle">Contacto</h2>
+          <ul class="footer__list">
+            <li><span data-i18n="contact.infoValue">Guido Castro</span></li>
+            <li><a href="#" data-contact="tel" data-fill="true">0968596592</a></li>
+            <li><a href="#" data-contact="email" data-fill="true">gustavocc1982@hotmail.com</a></li>
+            <li><a href="#" data-contact="whatsapp" data-i18n="contact.whatsapp">WhatsApp</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer__title" data-i18n="footer.locationTitle">Ubicación</h2>
+          <ul class="footer__list">
+            <li><span data-i18n="home.location.sectorVal">Cruz del Arenal</span></li>
+            <li><span data-i18n="home.location.cantonVal">Guaranda</span></li>
+            <li><span data-i18n="home.location.provinceVal">Bolívar</span></li>
+            <li><span data-i18n="home.location.countryVal">Ecuador</span></li>
+          </ul>
+
+          <h2 class="footer__title" style="margin-top:1.75rem" data-i18n="footer.langTitle">Idioma</h2>
+          <div class="footer__lang">
+            <button type="button" class="footer__lang-btn" data-lang="es" aria-pressed="true">ES</button>
+            <button type="button" class="footer__lang-btn" data-lang="en" aria-pressed="false">EN</button>
+            <button type="button" class="footer__lang-btn" data-lang="fr" aria-pressed="false">FR</button>
+            <button type="button" class="footer__lang-btn" data-lang="de" aria-pressed="false">DE</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© <span data-year>2026</span> Chimborazo Rey. <span data-i18n="footer.rights">Todos los derechos reservados.</span></p>
+        <p data-i18n="footer.credits">Cruz del Arenal · Guaranda · Bolívar · Ecuador</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Botón flotante de WhatsApp -->
+  <a class="float-wa" href="#" data-contact="whatsapp"
+     data-i18n-aria-label="contact.waFloatLabel" aria-label="Escríbenos por WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a9.9 9.9 0 0 0-8.5 15l-1.3 4.8 5-1.3A9.9 9.9 0 1 0 12 2zm0 1.8a8.1 8.1 0 1 1-4.2 15l-.3-.2-3 .8.8-2.9-.2-.3A8.1 8.1 0 0 1 12 3.8zm-3.1 4c-.2 0-.5.1-.7.4-.2.3-.9.9-.9 2.1s.9 2.4 1.1 2.6c.1.2 1.8 2.8 4.4 3.8 2.2.8 2.6.7 3.1.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3l-2-1c-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4 0-.5.2-.7l.5-.6c.1-.2.1-.3.2-.5v-.5l-.8-2c-.2-.5-.4-.5-.6-.5h-.5z"/></svg>
+    <span class="float-wa__text" data-i18n="contact.waFloat">Escríbenos</span>
+  </a>
+
+  <!-- Lightbox de la galería -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true"
+       data-i18n-aria-label="lodge.gallery.title" aria-label="Galería del Lodge">
+    <button type="button" class="lightbox__btn lightbox__btn--close" data-i18n-aria-label="gallery.close" aria-label="Cerrar">×</button>
+    <button type="button" class="lightbox__btn lightbox__btn--prev" data-i18n-aria-label="gallery.prev" aria-label="Anterior">‹</button>
+    <button type="button" class="lightbox__btn lightbox__btn--next" data-i18n-aria-label="gallery.next" aria-label="Siguiente">›</button>
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" alt="">
+      <figcaption class="lightbox__caption"></figcaption>
+    </figure>
+  </div>
+</body>
+</html>

@@ -1,0 +1,267 @@
+/* ==========================================================================
+   CHIMBORAZO REY · lodge.css
+   Identidad: acogedor, tranquilo, premium y cálido.
+   Café, beige, dorado suave y gris cálido sobre fondo blanco.
+   ========================================================================== */
+
+:root {
+  --color-primary: #a1743d;        /* dorado suave / café */
+  --color-primary-dark: #6c4c26;
+  --color-primary-soft: #f7efe3;   /* beige cálido */
+  --color-secondary: #6a4b32;
+  --color-accent: #c9a26b;
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+.hero--lodge {
+  --hero-overlay: linear-gradient(180deg, rgba(28, 21, 13, .5) 0%, rgba(28, 21, 13, .3) 45%, rgba(28, 21, 13, .72) 100%);
+}
+
+.hero__brand-line {
+  display: block;
+  margin-bottom: .35rem;
+  font-size: clamp(.9rem, 1.6vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .82);
+}
+
+.hero__altitude {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 1.5rem;
+  padding: .45rem 1rem;
+  border: 1px solid rgba(255, 255, 255, .4);
+  border-radius: 999px;
+  font-size: .76rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: rgba(255, 255, 255, .92);
+}
+
+/* --------------------------------------------------------------------------
+   Alojamiento
+   -------------------------------------------------------------------------- */
+.rooms {
+  display: grid;
+  gap: clamp(1.25rem, 2.6vw, 2rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+}
+
+.lodge-room-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-background);
+  transition: transform var(--t-base), box-shadow var(--t-base), border-color var(--t-base);
+}
+
+.lodge-room-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+}
+
+.lodge-room-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--color-surface-alt);
+}
+
+.lodge-room-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--t-slow);
+}
+
+.lodge-room-card:hover .lodge-room-card__media img { transform: scale(1.06); }
+
+.lodge-room-card__badge {
+  position: absolute;
+  top: .9rem;
+  left: .9rem;
+  padding: .3rem .8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .94);
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-primary-dark);
+}
+
+.lodge-room-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+  flex: 1;
+  padding: clamp(1.35rem, 2.6vw, 1.85rem);
+}
+
+.lodge-room-card__title { font-size: var(--fs-h3); }
+
+.lodge-room-card__text {
+  font-size: .93rem;
+  color: var(--color-text-soft);
+}
+
+.lodge-room-card__services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-top: .25rem;
+}
+
+.lodge-room-card__services li {
+  padding: .3rem .7rem;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  font-size: .76rem;
+  color: var(--color-text-muted);
+}
+
+.lodge-room-card__foot {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.lodge-room-card__price-note {
+  display: block;
+  margin-bottom: .85rem;
+  font-size: .8rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Servicios
+   -------------------------------------------------------------------------- */
+.services {
+  display: grid;
+  gap: clamp(.85rem, 2vw, 1.35rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+}
+
+.service-item {
+  display: flex;
+  align-items: center;
+  gap: .95rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  background: var(--color-background);
+  transition: transform var(--t-base), border-color var(--t-base), background-color var(--t-base);
+}
+
+.service-item:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-accent);
+  background: var(--color-primary-soft);
+}
+
+.service-item__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  flex-shrink: 0;
+  transition: background-color var(--t-base);
+}
+
+.service-item:hover .service-item__icon { background: #ffffff; }
+
+.service-item__icon svg { width: 21px; height: 21px; }
+
+.service-item__name {
+  font-size: .93rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* --------------------------------------------------------------------------
+   Experiencia Lodge
+   -------------------------------------------------------------------------- */
+.lodge-experience {
+  display: grid;
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+}
+
+.lodge-experience__item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  aspect-ratio: 4 / 5;
+}
+
+.lodge-experience__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease);
+}
+
+.lodge-experience__item:hover img { transform: scale(1.06); }
+
+.lodge-experience__caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 3rem 1.35rem 1.35rem;
+  background: linear-gradient(180deg, transparent, rgba(24, 19, 14, .85));
+  color: #ffffff;
+}
+
+.lodge-experience__title {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.lodge-experience__text {
+  margin-top: .3rem;
+  font-size: .85rem;
+  color: rgba(255, 255, 255, .82);
+}
+
+/* --------------------------------------------------------------------------
+   Solicitud de hospedaje
+   -------------------------------------------------------------------------- */
+.booking {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  align-items: start;
+}
+
+.booking__aside {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: var(--radius-lg);
+  background: var(--color-primary-soft);
+}
+
+.booking__nights {
+  display: none;
+  margin-top: .25rem;
+  padding: .8rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-soft);
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+.booking__nights.is-visible { display: block; }

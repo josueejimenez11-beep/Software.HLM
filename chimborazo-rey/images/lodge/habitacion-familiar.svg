@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" width="1000" height="750" role="img" aria-label="FOTO PENDIENTE · Habitación familiar">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf6ee"/>
+      <stop offset="1" stop-color="#f0e4d1"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ab8557"/>
+      <stop offset="1" stop-color="#6a4b32"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="750" fill="url(#sky)"/>
+  <circle cx="800" cy="150" r="56" fill="#ffffff" opacity=".55"/>
+  <path d="M0 750 L0 465 L180 375 L300 434.99999999999994 L829.0 320.2 L1000 450 L1000 750 Z" fill="#d9bd93" opacity=".75"/>
+  <path d="M0 750 L0 585.0 L231.2 450.0 L550.5 187.7 L853.3 495.0 L1000 540.0 L1000 750 Z" fill="url(#ground)"/>
+  <path d="M460.5 285.2 L550.5 187.7 L660.5 300.2 L595.5 262.7 L565.5 300.2 L520.5 255.2 Z" fill="#ffffff" opacity=".92"/>
+  <rect x="287.6" y="60" width="425" height="42" rx="21"
+        fill="#000000" opacity=".38"/>
+  <text x="500" y="89" text-anchor="middle"
+        font-family="Georgia, serif" font-size="20" fill="#ffffff" opacity=".9"
+        letter-spacing="1">FOTO PENDIENTE · Habitación familiar</text>
+</svg>

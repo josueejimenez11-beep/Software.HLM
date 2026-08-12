@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" width="1000" height="750" role="img" aria-label="FOTO PENDIENTE · Cabalgatas">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eef6fb"/>
+      <stop offset="1" stop-color="#d5e9f5"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5b8fb3"/>
+      <stop offset="1" stop-color="#2c5470"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="750" fill="url(#sky)"/>
+  <circle cx="800" cy="150" r="56" fill="#ffffff" opacity=".55"/>
+  <path d="M0 750 L0 465 L180 375 L300 434.99999999999994 L790.6 326.8 L1000 450 L1000 750 Z" fill="#9dc6e0" opacity=".75"/>
+  <path d="M0 750 L0 585.0 L170.7 450.0 L406.4 227.5 L630.0 495.0 L1000 540.0 L1000 750 Z" fill="url(#ground)"/>
+  <path d="M316.4 325.0 L406.4 227.5 L516.4 340.0 L451.4 302.5 L421.4 340.0 L376.4 295.0 Z" fill="#ffffff" opacity=".92"/>
+  <rect x="336.2" y="60" width="328" height="42" rx="21"
+        fill="#000000" opacity=".38"/>
+  <text x="500" y="89" text-anchor="middle"
+        font-family="Georgia, serif" font-size="20" fill="#ffffff" opacity=".9"
+        letter-spacing="1">FOTO PENDIENTE · Cabalgatas</text>
+</svg>
