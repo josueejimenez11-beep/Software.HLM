@@ -96,7 +96,34 @@ en los cuatro idiomas. Actualmente: **485 claves × 4 idiomas, sin errores**.
 
 ---
 
-## 4. Contenido pendiente de cargar
+## 4. Color
+
+El fondo general del sitio sigue siendo blanco. El color entra por cuatro vías:
+
+- **La marca.** «Chimborazo» va en el color del soporte y **«Rey» siempre en dorado**
+  (`--color-gold` sobre fotografías, `--color-gold-deep` sobre blanco), en el navbar,
+  el hero y el footer de las cuatro páginas. La clase es `.brand-accent`.
+- **Las secciones alternas** (`.section--surface`) toman un tinte muy suave del color de
+  su página: crema en Restaurante, beige dorado en Lodge y celeste en Travel Explore.
+- **Las tarjetas de valores** de la portada tienen cada una su propio color —verde páramo,
+  azul cielo, fuego, dorado y terracota— en el icono y en un degradado de fondo que se
+  desvanece hacia el blanco.
+- **La banda final de llamada a la acción** se tiñe con el color secundario de cada página.
+
+Tres tokens gradúan la intensidad y evitan que dos superficies se confundan:
+
+| Token                   | Uso                                                              |
+|-------------------------|------------------------------------------------------------------|
+| `--color-primary-soft`  | Fondo de las secciones alternas y de los iconos                   |
+| `--color-primary-mid`   | Bloques que se apoyan **sobre** una sección ya teñida             |
+| `--color-primary`       | Botones, enlaces, antetítulos y bordes activos                    |
+
+Todos los colores de texto se eligieron para superar la relación de contraste 4,5:1 de
+WCAG AA sobre el fondo donde realmente se muestran, tintes incluidos.
+
+---
+
+## 5. Contenido pendiente de cargar
 
 El sitio está completo y funcional, pero hay datos que **no se han inventado** porque no constan
 en la documentación disponible. Cada uno está marcado en el código y es fácil de reemplazar.
@@ -132,7 +159,7 @@ se actualizan todos los enlaces de llamada, WhatsApp, correo e indicaciones de l
 
 ---
 
-## 5. Formularios
+## 6. Formularios
 
 El sitio es estático y **no tiene backend**. Los tres formularios (reserva de mesa, solicitud de
 hospedaje y consulta de actividades):
@@ -146,9 +173,10 @@ Si más adelante se añade un servidor, basta con sustituir la llamada a `openWh
 
 ---
 
-## 6. Accesibilidad y rendimiento
+## 7. Accesibilidad y rendimiento
 
 - HTML semántico, un único `<h1>` por página y jerarquía de encabezados sin saltos.
+- Contraste WCAG AA verificado en los 445 textos del sitio, sobre fondos blancos y teñidos.
 - `alt` descriptivo y traducido en todas las imágenes; `label` en todos los campos de formulario.
 - Navegación completa por teclado: menú, selector de idioma, galería y modales; foco visible,
   cierre con `Escape`, foco atrapado dentro de las superposiciones y enlace «saltar al contenido».
@@ -160,7 +188,7 @@ Si más adelante se añade un servidor, basta con sustituir la llamada a `openWh
 
 ---
 
-## 7. Utilidades
+## 8. Utilidades
 
 ```
 node assets/verificar-idiomas.js     # paridad de traducciones en los 4 idiomas

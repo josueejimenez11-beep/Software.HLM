@@ -5,9 +5,10 @@
    ========================================================================== */
 
 :root {
-  --color-primary: #c05621;        /* naranja fuego */
+  --color-primary: #b04c1d;        /* naranja fuego */
   --color-primary-dark: #8f3d13;
   --color-primary-soft: #fdf0e4;   /* beige cálido */
+  --color-primary-mid: #f8ddc4;
   --color-secondary: #7b4b2a;      /* madera */
   --color-accent: #d99a5b;
 }
@@ -255,7 +256,7 @@
   padding: 1.1rem 1.25rem;
   border: 1px dashed var(--color-line-strong);
   border-radius: var(--radius);
-  background: var(--color-surface);
+  background: var(--color-background);
   font-size: .86rem;
   color: var(--color-text-muted);
 }
@@ -275,7 +276,7 @@
 .reserve__aside {
   padding: clamp(1.5rem, 3vw, 2.25rem);
   border-radius: var(--radius-lg);
-  background: var(--color-primary-soft);
+  background: var(--color-primary-mid);
 }
 
 .reserve__aside .check-list li::before { border-color: var(--color-primary); }

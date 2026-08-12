@@ -8,6 +8,7 @@
   --color-primary: #1e5f8c;        /* azul montaña */
   --color-primary-dark: #124460;
   --color-primary-soft: #e8f2f9;   /* celeste glaciar */
+  --color-primary-mid: #d3e6f3;
   --color-secondary: #6fb3d9;
   --color-accent: #2f6b4f;         /* verde natural, sólo en detalles */
 }
@@ -381,5 +382,5 @@
 .travel-contact__aside {
   padding: clamp(1.5rem, 3vw, 2.25rem);
   border-radius: var(--radius-lg);
-  background: var(--color-primary-soft);
+  background: var(--color-primary-mid);
 }

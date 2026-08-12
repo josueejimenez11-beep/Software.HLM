@@ -5,9 +5,10 @@
    ========================================================================== */
 
 :root {
-  --color-primary: #a1743d;        /* dorado suave / café */
+  --color-primary: #8e6533;        /* dorado suave / café */
   --color-primary-dark: #6c4c26;
   --color-primary-soft: #f7efe3;   /* beige cálido */
+  --color-primary-mid: #eedfc6;
   --color-secondary: #6a4b32;
   --color-accent: #c9a26b;
 }
@@ -162,10 +163,12 @@
   transition: transform var(--t-base), border-color var(--t-base), background-color var(--t-base);
 }
 
+/* La sección de servicios ya está teñida con `soft`: el hover usa `mid`
+   para que la tarjeta siga despegándose del fondo. */
 .service-item:hover {
   transform: translateY(-3px);
   border-color: var(--color-accent);
-  background: var(--color-primary-soft);
+  background: var(--color-primary-mid);
 }
 
 .service-item__icon {
@@ -250,7 +253,7 @@
 .booking__aside {
   padding: clamp(1.5rem, 3vw, 2.25rem);
   border-radius: var(--radius-lg);
-  background: var(--color-primary-soft);
+  background: var(--color-primary-mid);
 }
 
 .booking__nights {

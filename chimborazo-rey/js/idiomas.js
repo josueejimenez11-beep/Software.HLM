@@ -215,8 +215,6 @@ const translations = {
     /* ---------------- RESTAURANTE ---------------- */
     'resto.meta.title': 'Restaurante de Aventura | Chimborazo Rey',
     'resto.meta.desc': 'Restaurante de Aventura Chimborazo Rey: cocina nacional e internacional, opciones veganas y vegetarianas, coffee shop y cerveza artesanal a 4.250 m s. n. m.',
-
-    'resto.hero.brand': 'Chimborazo Rey',
     'resto.hero.eyebrow': 'Restaurante de Aventura',
     'resto.hero.title': 'Sabores en las alturas',
     'resto.hero.text': 'Una experiencia gastronómica a 4.250 metros sobre el nivel del mar, con el entorno del Chimborazo como compañía.',
@@ -303,8 +301,6 @@ const translations = {
     /* ---------------- LODGE ---------------- */
     'lodge.meta.title': 'Lodge Hotel | Chimborazo Rey',
     'lodge.meta.desc': 'Lodge Hotel Chimborazo Rey: habitaciones familiares, grupales y matrimoniales con calefacción, seguridad 24 horas y vista al Nevado Chimborazo.',
-
-    'lodge.hero.brand': 'Chimborazo Rey',
     'lodge.hero.eyebrow': 'Lodge Hotel',
     'lodge.hero.title': 'Descansa entre las montañas',
     'lodge.hero.text': 'Una experiencia de hospedaje aproximadamente a 4.250 metros sobre el nivel del mar, a las faldas del Chimborazo.',
@@ -404,8 +400,6 @@ const translations = {
     /* ---------------- TRAVEL EXPLORE ---------------- */
     'travel.meta.title': 'Travel Explore | Chimborazo Rey',
     'travel.meta.desc': 'Travel Explore Chimborazo Rey: ascenso al Chimborazo y al Carihuairazo, cabalgatas, descenso en bicicleta y trekking nocturno con guías especializados.',
-
-    'travel.hero.brand': 'Chimborazo Rey',
     'travel.hero.eyebrow': 'Travel Explore',
     'travel.hero.title': 'La montaña te espera',
     'travel.hero.text': 'Experiencias únicas en el páramo andino, acompañadas por guías especializados y equipamiento de montaña.',
@@ -751,8 +745,6 @@ const translations = {
 
     'resto.meta.title': 'Adventure Restaurant | Chimborazo Rey',
     'resto.meta.desc': 'Chimborazo Rey Adventure Restaurant: national and international cuisine, vegan and vegetarian options, coffee shop and craft beer at 4,250 m a.s.l.',
-
-    'resto.hero.brand': 'Chimborazo Rey',
     'resto.hero.eyebrow': 'Adventure Restaurant',
     'resto.hero.title': 'Flavours in the highlands',
     'resto.hero.text': 'A dining experience at 4,250 metres above sea level, with the Chimborazo landscape as your companion.',
@@ -838,8 +830,6 @@ const translations = {
 
     'lodge.meta.title': 'Lodge Hotel | Chimborazo Rey',
     'lodge.meta.desc': 'Chimborazo Rey Lodge Hotel: family, group and double rooms with heating, 24-hour security and views of the Chimborazo volcano.',
-
-    'lodge.hero.brand': 'Chimborazo Rey',
     'lodge.hero.eyebrow': 'Lodge Hotel',
     'lodge.hero.title': 'Rest among the mountains',
     'lodge.hero.text': 'A lodging experience at approximately 4,250 metres above sea level, at the foot of Chimborazo.',
@@ -938,8 +928,6 @@ const translations = {
 
     'travel.meta.title': 'Travel Explore | Chimborazo Rey',
     'travel.meta.desc': 'Chimborazo Rey Travel Explore: Chimborazo and Carihuairazo summit climbs, horseback rides, downhill cycling and night trekking with specialised guides.',
-
-    'travel.hero.brand': 'Chimborazo Rey',
     'travel.hero.eyebrow': 'Travel Explore',
     'travel.hero.title': 'The mountain is waiting',
     'travel.hero.text': 'Unique experiences in the Andean páramo, accompanied by specialised guides and mountain equipment.',
@@ -1285,8 +1273,6 @@ const translations = {
 
     'resto.meta.title': 'Restaurant d’Aventure | Chimborazo Rey',
     'resto.meta.desc': 'Restaurant d’Aventure Chimborazo Rey : cuisine nationale et internationale, options véganes et végétariennes, coffee shop et bière artisanale à 4 250 m d’altitude.',
-
-    'resto.hero.brand': 'Chimborazo Rey',
     'resto.hero.eyebrow': 'Restaurant d’Aventure',
     'resto.hero.title': 'Saveurs des hauteurs',
     'resto.hero.text': 'Une expérience gastronomique à 4 250 mètres d’altitude, avec les paysages du Chimborazo pour compagnie.',
@@ -1372,8 +1358,6 @@ const translations = {
 
     'lodge.meta.title': 'Lodge Hotel | Chimborazo Rey',
     'lodge.meta.desc': 'Lodge Hotel Chimborazo Rey : chambres familiales, de groupe et doubles avec chauffage, sécurité 24 heures et vue sur le volcan Chimborazo.',
-
-    'lodge.hero.brand': 'Chimborazo Rey',
     'lodge.hero.eyebrow': 'Lodge Hotel',
     'lodge.hero.title': 'Reposez-vous au cœur des montagnes',
     'lodge.hero.text': 'Une expérience d’hébergement à environ 4 250 mètres d’altitude, au pied du Chimborazo.',
@@ -1472,8 +1456,6 @@ const translations = {
 
     'travel.meta.title': 'Travel Explore | Chimborazo Rey',
     'travel.meta.desc': 'Travel Explore Chimborazo Rey : ascension du Chimborazo et du Carihuairazo, randonnées à cheval, descente à vélo et trekking nocturne avec des guides spécialisés.',
-
-    'travel.hero.brand': 'Chimborazo Rey',
     'travel.hero.eyebrow': 'Travel Explore',
     'travel.hero.title': 'La montagne vous attend',
     'travel.hero.text': 'Des expériences uniques dans le páramo andin, accompagnées par des guides spécialisés et du matériel de montagne.',
@@ -1819,8 +1801,6 @@ const translations = {
 
     'resto.meta.title': 'Abenteuerrestaurant | Chimborazo Rey',
     'resto.meta.desc': 'Abenteuerrestaurant Chimborazo Rey: nationale und internationale Küche, vegane und vegetarische Optionen, Coffee Shop und Craft-Bier auf 4.250 m ü. M.',
-
-    'resto.hero.brand': 'Chimborazo Rey',
     'resto.hero.eyebrow': 'Abenteuerrestaurant',
     'resto.hero.title': 'Aromen in der Höhe',
     'resto.hero.text': 'Ein kulinarisches Erlebnis auf 4.250 Metern über dem Meeresspiegel, begleitet von der Landschaft des Chimborazo.',
@@ -1906,8 +1886,6 @@ const translations = {
 
     'lodge.meta.title': 'Lodge Hotel | Chimborazo Rey',
     'lodge.meta.desc': 'Lodge Hotel Chimborazo Rey: Familien-, Gruppen- und Doppelzimmer mit Heizung, 24-Stunden-Sicherheit und Blick auf den Vulkan Chimborazo.',
-
-    'lodge.hero.brand': 'Chimborazo Rey',
     'lodge.hero.eyebrow': 'Lodge Hotel',
     'lodge.hero.title': 'Erholen Sie sich zwischen den Bergen',
     'lodge.hero.text': 'Ein Übernachtungserlebnis auf etwa 4.250 Metern über dem Meeresspiegel, am Fuße des Chimborazo.',
@@ -2006,8 +1984,6 @@ const translations = {
 
     'travel.meta.title': 'Travel Explore | Chimborazo Rey',
     'travel.meta.desc': 'Travel Explore Chimborazo Rey: Besteigung des Chimborazo und des Carihuairazo, Ausritte, Downhill-Radtouren und Nachttrekking mit spezialisierten Guides.',
-
-    'travel.hero.brand': 'Chimborazo Rey',
     'travel.hero.eyebrow': 'Travel Explore',
     'travel.hero.title': 'Der Berg wartet auf Sie',
     'travel.hero.text': 'Einzigartige Erlebnisse im andinen Páramo, begleitet von spezialisierten Guides und Bergausrüstung.',

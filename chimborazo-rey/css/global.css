@@ -14,7 +14,7 @@
   --color-surface-alt: #f4f2ee;
   --color-text: #1c1b19;
   --color-text-soft: #55504a;
-  --color-text-muted: #837c74;
+  --color-text-muted: #6e675f;   /* 5,6:1 sobre blanco y >=4,8:1 sobre los tintes */
   --color-line: #e6e2db;
   --color-line-strong: #cfc9c0;
 
@@ -22,8 +22,17 @@
   --color-primary: #6f6357;
   --color-primary-dark: #4d443b;
   --color-primary-soft: #f0ece5;
+  --color-primary-mid: #e4ded3;    /* un paso más profundo que `soft`:
+                                      para bloques sobre secciones teñidas */
   --color-secondary: #8a8177;
   --color-accent: #b8a288;
+
+  /* Dorado de marca: acompaña siempre a la palabra «Rey».
+     `--color-gold` se usa sobre fondos oscuros o fotografías (7,7:1) y
+     `--color-gold-deep` sobre el fondo blanco (4,6:1). */
+  --color-gold: #dfb457;
+  --color-gold-deep: #946713;
+  --color-gold-soft: #f8f0dc;
 
   /* Overlay del hero */
   --hero-overlay: linear-gradient(180deg, rgba(18, 17, 16, .52) 0%, rgba(18, 17, 16, .34) 45%, rgba(18, 17, 16, .66) 100%);
@@ -162,7 +171,18 @@ hr {
 
 .section--tight { padding-block: clamp(3rem, 6vw, 5rem); }
 
-.section--surface { background: var(--color-surface); }
+/* Las secciones alternas toman un tinte muy suave del color de cada página:
+   naranja en Restaurante, beige dorado en Lodge, celeste en Travel Explore.
+   El fondo general del sitio sigue siendo blanco. */
+.section--surface { background: var(--color-primary-soft); }
+
+/* Palabra «Rey» del logotipo: dorada en cualquier soporte.
+   Sobre fondo claro cambia al dorado profundo para mantener el contraste. */
+.brand-accent { color: var(--color-gold); }
+
+.on-light .brand-accent,
+.navbar.is-scrolled .brand-accent,
+.footer .brand-accent { color: var(--color-gold-deep); }
 
 .skip-link {
   position: absolute;
@@ -1316,7 +1336,8 @@ body.is-nav-open { overflow: hidden; }
 .cta-band {
   position: relative;
   padding-block: clamp(3.5rem, 7vw, 6rem);
-  background: var(--color-surface);
+  /* Cada página tiñe la banda con su propio color secundario. */
+  background: linear-gradient(180deg, var(--color-background) 0%, var(--color-primary-soft) 100%);
   border-block: 1px solid var(--color-line);
   text-align: center;
 }
