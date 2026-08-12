@@ -1164,7 +1164,7 @@ body.is-nav-open { overflow: hidden; }
 
 .field select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23837c74' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%236e675f' stroke-width='1.6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 12px;
@@ -1355,9 +1355,8 @@ body.is-nav-open { overflow: hidden; }
    -------------------------------------------------------------------------- */
 .footer {
   padding-block: clamp(3.25rem, 6vw, 5rem) 2rem;
-  background: #17161500;
-  border-top: 1px solid var(--color-line);
   background-color: var(--color-background);
+  border-top: 1px solid var(--color-line);
 }
 
 .footer__grid {
