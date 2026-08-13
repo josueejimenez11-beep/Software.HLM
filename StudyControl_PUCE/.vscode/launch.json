@@ -1,0 +1,15 @@
+{
+  // Con este archivo, la tecla F5 inicia SIEMPRE study_control.py,
+  // sin importar cual de los nueve archivos tenga abierto el editor.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Sistema de Estudio (PUCE)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/study_control.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

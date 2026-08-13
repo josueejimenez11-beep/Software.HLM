@@ -418,3 +418,21 @@ class VentanaPromedios(VentanaModulo):
         llenar_tabla(self.tabla_notas, [])
         self.texto_notas.focus_set()
         self.actualizar_mensaje("🧹 Calculadora reiniciada", COLORES["texto_suave"])
+
+# =============================================================================
+# AVISO PARA QUIEN EJECUTE ESTE ARCHIVO POR EQUIVOCACION
+# =============================================================================
+# Este archivo es una PIEZA del Sistema de Estudio: guarda la ventana del Modulo 3
+# y por si solo no abre ninguna ventana. El programa se inicia siempre desde
+# study_control.py. El bloque de abajo solo sirve para avisarlo con claridad.
+# =============================================================================
+
+if __name__ == "__main__":
+    print("")
+    print("  Este archivo (modulo_promedios.py) es una pieza del Sistema de Estudio.")
+    print("  Por si solo no abre ninguna ventana.")
+    print("")
+    print("  Para iniciar el programa ejecute:")
+    print("")
+    print("      python study_control.py")
+    print("")

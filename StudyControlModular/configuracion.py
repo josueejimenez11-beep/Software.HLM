@@ -125,3 +125,21 @@ FUENTES = {}
 # ------------------- Referencias globales de imagenes (PNG) ------------------
 # Tkinter elimina las imagenes de memoria si no se conserva una referencia.
 IMAGENES_EN_MEMORIA = []
+
+# =============================================================================
+# AVISO PARA QUIEN EJECUTE ESTE ARCHIVO POR EQUIVOCACION
+# =============================================================================
+# Este archivo es una PIEZA del Sistema de Estudio: guarda los colores, medidas y rutas
+# y por si solo no abre ninguna ventana. El programa se inicia siempre desde
+# study_control.py. El bloque de abajo solo sirve para avisarlo con claridad.
+# =============================================================================
+
+if __name__ == "__main__":
+    print("")
+    print("  Este archivo (configuracion.py) es una pieza del Sistema de Estudio.")
+    print("  Por si solo no abre ninguna ventana.")
+    print("")
+    print("  Para iniciar el programa ejecute:")
+    print("")
+    print("      python study_control.py")
+    print("")

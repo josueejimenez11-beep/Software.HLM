@@ -940,3 +940,21 @@ class VentanaModulo(tk.Toplevel):
     def confirmar(self, titulo, mensaje):
         """Cuadro de confirmacion Si/No asociado a esta ventana."""
         return messagebox.askyesno(titulo, mensaje, parent=self)
+
+# =============================================================================
+# AVISO PARA QUIEN EJECUTE ESTE ARCHIVO POR EQUIVOCACION
+# =============================================================================
+# Este archivo es una PIEZA del Sistema de Estudio: guarda los componentes visuales reutilizables
+# y por si solo no abre ninguna ventana. El programa se inicia siempre desde
+# study_control.py. El bloque de abajo solo sirve para avisarlo con claridad.
+# =============================================================================
+
+if __name__ == "__main__":
+    print("")
+    print("  Este archivo (interfaz.py) es una pieza del Sistema de Estudio.")
+    print("  Por si solo no abre ninguna ventana.")
+    print("")
+    print("  Para iniciar el programa ejecute:")
+    print("")
+    print("      python study_control.py")
+    print("")

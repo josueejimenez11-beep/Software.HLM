@@ -382,3 +382,21 @@ class VentanaMaterias(VentanaModulo):
         self.campo_horario.asignar(registro.get("horario", ""))
         self.actualizar_mensaje("✏ Editando: %s" % registro.get("materia", ""),
                                 COLORES["celeste_claro"])
+
+# =============================================================================
+# AVISO PARA QUIEN EJECUTE ESTE ARCHIVO POR EQUIVOCACION
+# =============================================================================
+# Este archivo es una PIEZA del Sistema de Estudio: guarda la ventana del Modulo 1
+# y por si solo no abre ninguna ventana. El programa se inicia siempre desde
+# study_control.py. El bloque de abajo solo sirve para avisarlo con claridad.
+# =============================================================================
+
+if __name__ == "__main__":
+    print("")
+    print("  Este archivo (modulo_materias.py) es una pieza del Sistema de Estudio.")
+    print("  Por si solo no abre ninguna ventana.")
+    print("")
+    print("  Para iniciar el programa ejecute:")
+    print("")
+    print("      python study_control.py")
+    print("")

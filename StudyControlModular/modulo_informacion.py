@@ -60,3 +60,21 @@ def mostrar_informacion(ventana_padre):
            len(DATOS.materias), len(DATOS.horario), len(DATOS.notas))
     )
     messagebox.showinfo("Informacion del Sistema", detalle, parent=ventana_padre)
+
+# =============================================================================
+# AVISO PARA QUIEN EJECUTE ESTE ARCHIVO POR EQUIVOCACION
+# =============================================================================
+# Este archivo es una PIEZA del Sistema de Estudio: guarda el cuadro de dialogo del Modulo 4
+# y por si solo no abre ninguna ventana. El programa se inicia siempre desde
+# study_control.py. El bloque de abajo solo sirve para avisarlo con claridad.
+# =============================================================================
+
+if __name__ == "__main__":
+    print("")
+    print("  Este archivo (modulo_informacion.py) es una pieza del Sistema de Estudio.")
+    print("  Por si solo no abre ninguna ventana.")
+    print("")
+    print("  Para iniciar el programa ejecute:")
+    print("")
+    print("      python study_control.py")
+    print("")

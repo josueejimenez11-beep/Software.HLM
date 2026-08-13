@@ -175,3 +175,21 @@ def crear_archivos_si_no_existen():
     for ruta in (ARCHIVO_MATERIAS, ARCHIVO_HORARIO, ARCHIVO_NOTAS):
         if not os.path.exists(ruta):
             escribir_json(ruta, [])
+
+# =============================================================================
+# AVISO PARA QUIEN EJECUTE ESTE ARCHIVO POR EQUIVOCACION
+# =============================================================================
+# Este archivo es una PIEZA del Sistema de Estudio: guarda la lectura y escritura de los archivos JSON
+# y por si solo no abre ninguna ventana. El programa se inicia siempre desde
+# study_control.py. El bloque de abajo solo sirve para avisarlo con claridad.
+# =============================================================================
+
+if __name__ == "__main__":
+    print("")
+    print("  Este archivo (datos.py) es una pieza del Sistema de Estudio.")
+    print("  Por si solo no abre ninguna ventana.")
+    print("")
+    print("  Para iniciar el programa ejecute:")
+    print("")
+    print("      python study_control.py")
+    print("")
