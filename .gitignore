@@ -1,0 +1,3 @@
+# Archivos que genera Python al ejecutar: no forman parte del proyecto
+__pycache__/
+*.pyc
