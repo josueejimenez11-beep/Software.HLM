@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software de habilidad lógico matemático — Gráficas y caracterización</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<!-- ==================== ENCABEZADO ==================== -->
+<header class="top">
+  <div class="wrap head-inner">
+    <!-- Logo institucional incrustado (clic para reemplazarlo por otra imagen) -->
+    <div class="logo-slot" id="logoSlot" title="Logo PUCE Ambato - clic para reemplazarlo">
+      <img id="logoImg" src="data:image/png;base64,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" alt="Pontificia Universidad Catolica del Ecuador - Sede Ambato">
+      <input type="file" id="logoFile" accept="image/*" hidden>
+    </div>
+
+    <div class="titles">
+      <h1>Pontificia Universidad Católica del Ecuador</h1>
+      <div class="sub">Software de habilidad lógico matemático - Gráficas y caracterización</div>
+      <div class="badge-row">
+        <span class="badge">Modo oscuro</span>
+        <span class="badge">Análisis de funciones</span>
+        <span class="badge">Cálculo numérico</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ==================== ENTRADA ==================== -->
+  <section class="card">
+    <div class="card-head"><span class="dot"></span><h2>Ingreso del ejercicio</h2><span class="tag">escribe cualquier función de x</span></div>
+    <div class="card-body">
+      <div class="input-row">
+        <div class="fx-prefix">f(x)&nbsp;=</div>
+        <input id="expr" type="text" spellcheck="false" autocomplete="off"
+               placeholder="Ej.: x^2 - 2x - 3   ·   1/(x-2)   ·   sqrt(x-1)   ·   sin(x)+x/2">
+        <button class="btn btn-main" id="btnAnalizar">Analizar y graficar</button>
+      </div>
+
+      <div class="ejemplos">
+        <div class="lbl">Ejemplos rápidos</div>
+        <div class="chips" id="chips">
+          <button class="chip" data-f="-2x-1">-2x-1</button>
+          <button class="chip" data-f="x^2-4">x^2-4</button>
+          <button class="chip" data-f="x^2-2x-3">x^2-2x-3</button>
+          <button class="chip" data-f="x^3-3x">x^3-3x</button>
+          <button class="chip" data-f="1/(x-2)">1/(x-2)</button>
+          <button class="chip" data-f="sqrt(x-1)">sqrt(x-1)</button>
+        </div>
+      </div>
+
+      <div class="ayuda">
+        Operadores: <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>^</code> &nbsp;·&nbsp;
+        Funciones: <code>sqrt</code> <code>abs</code> <code>sin</code> <code>cos</code> <code>tan</code> <code>ln</code> <code>log</code> <code>exp</code> <code>cbrt</code> &nbsp;·&nbsp;
+        Constantes: <code>pi</code> <code>e</code> &nbsp;·&nbsp; Se admite multiplicación implícita: <code>2x</code>, <code>3(x-1)</code>, <code>x(x+2)</code>.
+      </div>
+
+      <div id="msg"></div>
+    </div>
+  </section>
+
+  <!-- ==================== GRÁFICA + PROCEDIMIENTO ==================== -->
+  <div class="grid-2 dual">
+
+    <section class="card">
+      <div class="card-head"><span class="dot"></span><h2>Gráfica</h2><span class="tag" id="tagFx">f(x) = —</span></div>
+      <div class="card-body">
+        <div class="canvas-box">
+          <canvas id="lienzo"></canvas>
+          <div id="tooltip"></div>
+        </div>
+
+        <div class="controles">
+          <div class="ctrl"><label>X mín</label><input type="number" id="xmin" value="-10" step="1"></div>
+          <div class="ctrl"><label>X máx</label><input type="number" id="xmax" value="10" step="1"></div>
+          <div class="ctrl"><label>Y mín</label><input type="number" id="ymin" value="-10" step="1"></div>
+          <div class="ctrl"><label>Y máx</label><input type="number" id="ymax" value="10" step="1"></div>
+          <label class="switch"><input type="checkbox" id="chkAuto" checked> Escala Y automática</label>
+          <label class="switch"><input type="checkbox" id="chkGrid" checked> Cuadrícula</label>
+          <label class="switch"><input type="checkbox" id="chkPuntos" checked> Puntos notables</label>
+          <label class="switch"><input type="checkbox" id="chkAsin" checked> Asíntotas</label>
+          <div class="btn-group">
+            <button class="btn btn-ghost" id="btnZoomIn">＋ Zoom</button>
+            <button class="btn btn-ghost" id="btnZoomOut">－ Zoom</button>
+            <button class="btn btn-ghost" id="btnReset">⟲ Reiniciar</button>
+            <button class="btn btn-ghost" id="btnPng">⤓ PNG</button>
+          </div>
+        </div>
+
+        <div class="leyenda">
+          <span><i class="key" style="background:#38bdf8"></i> Curva f(x)</span>
+          <span><i class="key" style="background:#fff"></i> Raíces (corte eje X)</span>
+          <span><i class="key" style="background:#5eead4"></i> Corte eje Y</span>
+          <span><i class="key" style="background:#fbbf24"></i> Máx / mín</span>
+          <span><i class="key" style="background:#fb7185"></i> Asíntotas</span>
+          <span class="nota">Rueda del mouse = zoom · arrastrar = desplazar</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><span class="dot"></span><h2>Procedimiento</h2><span class="tag">paso a paso</span></div>
+      <div class="card-body">
+        <ol class="pasos" id="procedimiento">
+          <div class="vacio">Ingresa un ejercicio y presiona <b>Analizar y graficar</b>.</div>
+        </ol>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== VALORES + CARACTERÍSTICAS ==================== -->
+  <div class="grid-2 dual">
+
+    <section class="card">
+      <div class="card-head"><span class="dot"></span><h2>Cuadro de valores</h2><span class="tag">tabulación x → f(x)</span></div>
+      <div class="card-body">
+        <div class="tabla-ctrl">
+          <div class="ctrl"><label>Desde</label><input type="number" id="tmin" value="-5" step="1"></div>
+          <div class="ctrl"><label>Hasta</label><input type="number" id="tmax" value="5" step="1"></div>
+          <div class="ctrl"><label>Paso</label><input type="number" id="tpaso" value="1" step="0.25" min="0.01"></div>
+          <button class="btn btn-ghost" id="btnTabla">Generar tabla</button>
+          <button class="btn btn-ghost" id="btnCsv">⤓ CSV</button>
+        </div>
+        <div class="tabla-scroll">
+          <table id="tabla">
+            <thead><tr><th>x</th><th>f(x)</th><th>Par ordenado</th><th>Ubicación</th></tr></thead>
+            <tbody><tr><td colspan="4"><div class="vacio">Sin datos todavía.</div></td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><span class="dot"></span><h2>Características y resultado</h2><span class="tag">caracterización</span></div>
+      <div class="card-body">
+        <div class="props" id="props">
+          <div class="vacio" style="grid-column:1/-1">Aún no se ha caracterizado ninguna función.</div>
+        </div>
+        <div class="resultado" id="resultado" style="display:none">
+          <div class="k">Resultado</div>
+          <p id="resultadoTxt"></p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    Software de habilidad lógico matemático · <span>Gráficas y caracterización</span> — Pontificia Universidad Católica del Ecuador
+  </footer>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
