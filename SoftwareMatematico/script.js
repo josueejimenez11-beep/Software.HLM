@@ -1,0 +1,1057 @@
+/* =============================================================
+   LOGICA DEL PROGRAMA  -  Software de habilidad logico matematico
+   Pontificia Universidad Catolica del Ecuador
+   Contiene el analizador de expresiones, el calculo numerico,
+   el dibujo de la grafica en el lienzo y los eventos de la
+   interfaz.
+   ============================================================= */
+
+"use strict";
+
+/* ============================================================
+   1) ANALIZADOR DE EXPRESIONES  (tokenizador → RPN → evaluador)
+   ============================================================ */
+const FUNCS = {
+  sin:Math.sin, cos:Math.cos, tan:Math.tan,
+  asin:Math.asin, acos:Math.acos, atan:Math.atan,
+  sinh:Math.sinh, cosh:Math.cosh, tanh:Math.tanh,
+  sqrt:Math.sqrt, cbrt:Math.cbrt, abs:Math.abs, exp:Math.exp,
+  ln:Math.log, log:Math.log10, log10:Math.log10,
+  floor:Math.floor, ceil:Math.ceil, round:Math.round, sign:Math.sign
+};
+const CONSTS = { pi:Math.PI, e:Math.E, tau:2*Math.PI };
+const OPS = {
+  "+":{p:2,a:"L"}, "-":{p:2,a:"L"},
+  "*":{p:3,a:"L"}, "/":{p:3,a:"L"},
+  "^":{p:4,a:"R"},
+  "u":{p:3.5,a:"R"}   // menos unario: menor prioridad que ^ ⟹ -x^2 = -(x^2)
+};
+
+function normalizar(s){
+  return String(s).toLowerCase()
+    .replace(/^\s*(f\s*\(\s*x\s*\)|y|g\s*\(\s*x\s*\))\s*=/,"")  // quita "f(x)=" o "y="
+    .replace(/[−–—]/g,"-").replace(/[×·]/g,"*").replace(/÷/g,"/")
+    .replace(/√/g,"sqrt").replace(/²/g,"^2").replace(/³/g,"^3")
+    .replace(/\bsen\b/g,"sin").replace(/\btg\b/g,"tan").replace(/\bctg\b/g,"1/tan")
+    .replace(/\braiz\b/g,"sqrt").replace(/\bexponente\b/g,"exp")
+    .replace(/\{|\[/g,"(").replace(/\}|\]/g,")")
+    .replace(/\s+/g,"");
+}
+
+function tokenizar(s){
+  const tk=[]; let i=0;
+  while(i<s.length){
+    const c=s[i];
+    if(/[0-9.]/.test(c)){
+      let j=i; while(j<s.length && /[0-9.]/.test(s[j])) j++;
+      const v=parseFloat(s.slice(i,j));
+      if(isNaN(v)) throw new Error("Número no válido: «"+s.slice(i,j)+"»");
+      tk.push({t:"num",v}); i=j; continue;
+    }
+    if(/[a-z]/.test(c)){
+      let j=i; while(j<s.length && /[a-z0-9]/.test(s[j])) j++;
+      let nom=s.slice(i,j);
+      // separa nombres compuestos no reconocidos:  "2xy" -> x*y ;  "xsin(x)" -> x*sin(x)
+      while(nom.length){
+        let cortado=false;
+        for(const cand of Object.keys(FUNCS).concat(Object.keys(CONSTS)).sort((a,b)=>b.length-a.length)){
+          if(nom.startsWith(cand)){
+            tk.push(FUNCS[cand] ? {t:"fun",v:cand} : {t:"num",v:CONSTS[cand]});
+            nom=nom.slice(cand.length); cortado=true; break;
+          }
+        }
+        if(!cortado){
+          const ch=nom[0];
+          if(ch==="x") tk.push({t:"var"});
+          else throw new Error("Símbolo desconocido: «"+ch+"». La variable debe ser x.");
+          nom=nom.slice(1);
+        }
+      }
+      i=j; continue;
+    }
+    if("+-*/^".includes(c)){ tk.push({t:"op",v:c}); i++; continue; }
+    if(c==="("){ tk.push({t:"("}); i++; continue; }
+    if(c===")"){ tk.push({t:")"}); i++; continue; }
+    if(c===","){ tk.push({t:","}); i++; continue; }
+    throw new Error("Carácter no permitido: «"+c+"»");
+  }
+  return tk;
+}
+
+/* Inserta la multiplicación implícita: 2x, 3(x+1), x(x-2), 2sin(x), (x+1)(x-1) */
+function implicitas(tk){
+  const out=[];
+  for(let i=0;i<tk.length;i++){
+    out.push(tk[i]);
+    const a=tk[i], b=tk[i+1]; if(!b) break;
+    const finValor = a.t==="num"||a.t==="var"||a.t===")";
+    const iniValor = b.t==="num"||b.t==="var"||b.t==="fun"||b.t==="(";
+    if(finValor && iniValor) out.push({t:"op",v:"*"});
+  }
+  return out;
+}
+
+function aRPN(tk){
+  const sal=[], pila=[];
+  let prev=null;
+  for(const t of tk){
+    if(t.t==="num"||t.t==="var"){ sal.push(t); }
+    else if(t.t==="fun"){ pila.push(t); }
+    else if(t.t==="op"){
+      let op=t.v;
+      const unario = (op==="-"||op==="+") && (!prev || prev.t==="op" || prev.t==="(" || prev.t===",");
+      if(unario){ if(op==="-") pila.push({t:"op",v:"u"}); prev=t; continue; }
+      while(pila.length){
+        const top=pila[pila.length-1];
+        if(top.t==="fun" || (top.t==="op" && (OPS[top.v].p>OPS[op].p || (OPS[top.v].p===OPS[op].p && OPS[op].a==="L")))){
+          sal.push(pila.pop());
+        } else break;
+      }
+      pila.push({t:"op",v:op});
+    }
+    else if(t.t==="("){ pila.push(t); }
+    else if(t.t===")"){
+      let ok=false;
+      while(pila.length){ const p=pila.pop(); if(p.t==="("){ ok=true; break; } sal.push(p); }
+      if(!ok) throw new Error("Paréntesis desbalanceados: sobra un «)».");
+      if(pila.length && pila[pila.length-1].t==="fun") sal.push(pila.pop());
+    }
+    prev=t;
+  }
+  while(pila.length){ const p=pila.pop(); if(p.t==="(") throw new Error("Paréntesis desbalanceados: falta un «)»."); sal.push(p); }
+  return sal;
+}
+
+function compilar(txt){
+  const limpio = normalizar(txt);
+  if(!limpio) throw new Error("Escribe una expresión.");
+  const rpn = aRPN(implicitas(tokenizar(limpio)));
+  if(!rpn.length) throw new Error("Expresión vacía.");
+  const f = function(x){
+    const st=[];
+    for(const t of rpn){
+      if(t.t==="num") st.push(t.v);
+      else if(t.t==="var") st.push(x);
+      else if(t.t==="fun"){
+        if(!st.length) throw new Error(`La función «${t.v}» necesita un argumento.`);
+        st.push(FUNCS[t.v](st.pop()));
+      }
+      else{
+        if(t.v==="u"){
+          if(!st.length) throw new Error("Falta el número al que se aplica el signo «−».");
+          st.push(-st.pop()); continue;
+        }
+        if(st.length<2) throw new Error(`Faltan operandos para el operador «${t.v}».`);
+        const b=st.pop(), a=st.pop();
+        switch(t.v){
+          case "+": st.push(a+b); break;
+          case "-": st.push(a-b); break;
+          case "*": st.push(a*b); break;
+          case "/": st.push(a/b); break;
+          case "^": st.push(Math.pow(a,b)); break;
+        }
+      }
+    }
+    if(st.length!==1) throw new Error("La expresión está incompleta o mal escrita.");
+    return st[0];
+  };
+  f(1); f(2.3);              // prueba de compilación
+  return f;
+}
+
+/* ============================================================
+   2) UTILIDADES NUMÉRICAS
+   ============================================================ */
+const def = v => typeof v==="number" && isFinite(v);
+const casi = (a,b,t=1e-7) => Math.abs(a-b)<=t*Math.max(1,Math.abs(a),Math.abs(b));
+
+function fmt(n,d=4){
+  if(!def(n)) return "indefinido";
+  if(Math.abs(n)<1e-10) return "0";
+  if(Math.abs(n)>=1e7||Math.abs(n)<1e-4) return n.toExponential(3);
+  let s=n.toFixed(d);
+  if(s.includes(".")) s=s.replace(/0+$/,"").replace(/\.$/,"");
+  return s;
+}
+/* Aproxima a fracción sencilla para mostrar resultados "bonitos" */
+function fmtFrac(n){
+  if(!def(n)) return "indefinido";
+  if(Number.isInteger(n)) return String(n);
+  for(let q=2;q<=12;q++){ const p=n*q; if(Math.abs(p-Math.round(p))<1e-9) return `${Math.round(p)}/${q}`; }
+  return fmt(n);
+}
+/* "Limpia" un valor numérico acercándolo a 0, a un entero o a una fracción simple */
+function redondear(v){
+  if(!def(v)) return v;
+  if(Math.abs(v)<1e-4) return 0;
+  const r=Math.round(v);
+  if(Math.abs(v-r) < 1e-4*Math.max(1,Math.abs(r))) return r;
+  for(let q=2;q<=12;q++){ const p=v*q; if(Math.abs(p-Math.round(p))<1e-4) return Math.round(p)/q; }
+  return Math.round(v*1e6)/1e6;
+}
+const d1 = (f,x,h=1e-5) => (f(x+h)-f(x-h))/(2*h);
+const d2 = (f,x,h=1e-4) => (f(x+h)-2*f(x)+f(x-h))/(h*h);
+
+/* Detecta coeficientes si la función es polinómica (grado ≤ 6) */
+function coefsPolinomio(f,maxG=6){
+  for(let g=0; g<=maxG; g++){
+    const n=g+1, A=[], B=[];
+    for(let i=0;i<n;i++){
+      const x=i-Math.floor(n/2), y=f(x);
+      if(!def(y)) return null;
+      const fila=[]; for(let k=g;k>=0;k--) fila.push(Math.pow(x,k));
+      A.push(fila); B.push(y);
+    }
+    const c = gauss(A,B); if(!c) continue;
+    // verificación en puntos de control
+    let ok=true;
+    for(const x of [0.37,-1.63,2.71,-3.14,4.2]){
+      const y=f(x); if(!def(y)){ ok=false; break; }
+      let p=0; for(let k=0;k<c.length;k++) p+=c[k]*Math.pow(x,c.length-1-k);
+      if(!def(p) || Math.abs(p-y)>1e-6*Math.max(1,Math.abs(y))){ ok=false; break; }
+    }
+    if(ok){
+      const lim=c.map(v=>{
+        const r=Math.round(v*1e6)/1e6;
+        return Math.abs(r-Math.round(r))<1e-6 ? Math.round(r) : r;
+      });
+      while(lim.length>1 && Math.abs(lim[0])<1e-12) lim.shift();
+      return lim;   // [a_n, ..., a_1, a_0]
+    }
+  }
+  return null;
+}
+function gauss(A,B){
+  const n=B.length, M=A.map((f,i)=>f.concat([B[i]]));
+  for(let i=0;i<n;i++){
+    let p=i; for(let r=i+1;r<n;r++) if(Math.abs(M[r][i])>Math.abs(M[p][i])) p=r;
+    if(Math.abs(M[p][i])<1e-12) return null;
+    [M[i],M[p]]=[M[p],M[i]];
+    for(let r=0;r<n;r++){ if(r===i) continue;
+      const k=M[r][i]/M[i][i]; for(let c=i;c<=n;c++) M[r][c]-=k*M[i][c];
+    }
+  }
+  return M.map((fila,i)=>fila[n]/M[i][i]);
+}
+function polinomioTexto(c){
+  const g=c.length-1; let s="";
+  c.forEach((a,i)=>{
+    const k=g-i; if(Math.abs(a)<1e-12) return;
+    const sg = a<0 ? " - " : (s? " + " : "");
+    let co=Math.abs(a); let ct=(casi(co,1)&&k>0)?"":fmt(co);
+    s += sg + ct + (k>1?`x^${k}`:(k===1?"x":""));
+  });
+  return s||"0";
+}
+
+/* ============================================================
+   3) ANÁLISIS / CARACTERIZACIÓN
+   ============================================================ */
+function analizar(f, textoOriginal){
+  const R = { expr:textoOriginal, f };
+  const A=-60, B=60, PASO=0.005;
+
+  /* --- dominio: puntos donde no está definida --- */
+  const huecos=[]; let ini=null;
+  for(let x=A; x<=B; x+=PASO){
+    const y=f(x);
+    const malo = !def(y);
+    if(malo && ini===null) ini=x;
+    if(!malo && ini!==null){ huecos.push([ini,x-PASO]); ini=null; }
+  }
+  if(ini!==null) huecos.push([ini,B]);
+  /* afina las fronteras del dominio por bisección */
+  const frontera=(xDef,xNoDef)=>{
+    for(let k=0;k<60;k++){ const m=(xDef+xNoDef)/2; if(def(f(m))) xDef=m; else xNoDef=m; }
+    const v=(xDef+xNoDef)/2;
+    return Math.abs(v-Math.round(v))<1e-6 ? Math.round(v) : Math.round(v*1e6)/1e6;
+  };
+  R.huecos = huecos.map(([a,b])=>[
+    a>-59.9 ? frontera(a-PASO,a) : a,
+    b< 59.9 ? frontera(b+PASO,b) : b
+  ]);
+  R.coefs = coefsPolinomio(f);
+
+  /* --- polos / asíntotas verticales ---
+     Un polo exige que |f| CREZCA sin control al acercarse a c; que la función
+     tome valores grandes (como todo polinomio) no basta.                      */
+  const polos=[];
+  const mag = t => { const v=f(t); return def(v)?Math.abs(v):Infinity; };
+  const maxLado = (c,d) => {
+    const fin=[mag(c-d),mag(c+d)].filter(v=>isFinite(v));
+    return fin.length?Math.max(...fin):Infinity;
+  };
+  const localizar = x0 => {                    // busca c resolviendo 1/f(c) = 0
+    const h = t => { const v=f(t); return def(v)? 1/v : 0; };
+    let lo=x0-PASO, hi=x0+PASO;
+    const hl=h(lo);
+    if(hl*h(hi)<0){
+      for(let k=0;k<70;k++){ const m=(lo+hi)/2, hm=h(m); if(hm===0) return m; if(hl*hm<0) hi=m; else lo=m; }
+    } else {
+      for(let k=0;k<80;k++){
+        const a=lo+(hi-lo)/3, b=hi-(hi-lo)/3;
+        if(Math.abs(h(a))<Math.abs(h(b))) hi=b; else lo=a;
+      }
+    }
+    return (lo+hi)/2;
+  };
+  for(let x=A; x<=B; x+=PASO){
+    const y=f(x), yi=f(x-PASO), yd=f(x+PASO);
+    let candidato;
+    if(!def(y)) candidato = def(yi)||def(yd);                     // punto aislado o frontera
+    else if(Math.abs(y)>1e3)                                       // pico local de |f|
+      candidato = Math.abs(y)>=(def(yi)?Math.abs(yi):0) && Math.abs(y)>=(def(yd)?Math.abs(yd):0);
+    else candidato=false;
+    if(!candidato) continue;
+
+    const c = localizar(x);
+    const m1=maxLado(c,1e-2), m2=maxLado(c,1e-6), m3=maxLado(c,1e-10);
+    if(!(m3>m2+5 && m2>m1+5 && m3>15)) continue;                   // sin crecimiento sostenido → no es polo
+
+    const r = Math.abs(c-Math.round(c))<1e-3 ? Math.round(c) : Math.round(c*1e4)/1e4;
+    if(!polos.some(p=>Math.abs(p-r)<1e-2)) polos.push(r);
+  }
+  R.asintotasV = polos.sort((a,b)=>a-b);
+
+  /* --- raíces (cambio de signo + bisección) --- */
+  const raices=[];
+  for(let x=A; x<B; x+=PASO){
+    const a=x, b=x+PASO, fa=f(a), fb=f(b);
+    if(!def(fa)||!def(fb)) continue;
+    if(Math.abs(fa)>1e6||Math.abs(fb)>1e6) continue;
+    if(fa===0){ agregar(a); continue; }
+    if(fa*fb<0){
+      let lo=a, hi=b;
+      for(let k=0;k<80;k++){ const m=(lo+hi)/2, fm=f(m); if(!def(fm)) break; if(f(lo)*fm<=0) hi=m; else lo=m; }
+      agregar((lo+hi)/2);
+    } else if(Math.abs(fa)<1e-9 && Math.abs(d1(f,a))<1e-6){ agregar(a); }
+  }
+  function agregar(r){
+    const v = Math.abs(r-Math.round(r))<1e-6 ? Math.round(r) : Math.round(r*1e8)/1e8;
+    if(!raices.some(o=>Math.abs(o-v)<1e-4) && !R.asintotasV.some(p=>Math.abs(p-v)<1e-3)) raices.push(v);
+  }
+  R.raices = raices.sort((a,b)=>a-b);
+
+  /* --- corte con eje Y --- */
+  const y0=f(0); R.cortaY = def(y0) ? y0 : null;
+
+  /* --- simetría --- */
+  let par=true, impar=true, muestras=0;
+  for(const x of [0.4,0.9,1.7,2.3,3.1,4.6,5.3]){
+    const a=f(x), b=f(-x);
+    if(!def(a)||!def(b)){ par=impar=false; break; }
+    muestras++;
+    if(!casi(a,b,1e-6)) par=false;
+    if(!casi(-a,b,1e-6)) impar=false;
+  }
+  R.simetria = muestras===0 ? "no determinada" : (par?"Par — simétrica respecto al eje Y":(impar?"Impar — simétrica respecto al origen":"Ninguna"));
+
+  /* --- asíntota horizontal / oblicua (los polinomios no tienen) --- */
+  R.asintotaH=null; R.asintotaObl=null;
+  if(!R.coefs){
+    const horizontal=s=>{
+      const a=f(s*1e6), b=f(s*1e7);
+      if(!def(a)||!def(b)) return null;
+      return Math.abs(a-b) < 1e-5*Math.max(1,Math.abs(a)) ? redondear(b) : null;
+    };
+    const oblicua=s=>{
+      const X1=s*1e5, X2=s*1e6, X3=s*1e7;
+      const y1=f(X1), y2=f(X2), y3=f(X3);
+      if(!def(y1)||!def(y2)||!def(y3)) return null;
+      const m=(y2-y1)/(X2-X1), b=y2-m*X2;
+      if(!def(m)||!def(b)||Math.abs(m)>1e6) return null;
+      if(Math.abs(y3-(m*X3+b)) > 1e-4*Math.abs(X3)) return null;
+      const ms=redondear(m), bs=redondear(b);
+      if(Math.abs(ms)<1e-6) return null;
+      const medio=f(s*10);                       // si la curva COINCIDE con la recta no es asíntota
+      if(def(medio) && Math.abs(medio-(ms*s*10+bs))<1e-12) return null;
+      return {m:ms, b:bs};
+    };
+    R.asintotaH = horizontal(1);
+    if(R.asintotaH===null) R.asintotaH = horizontal(-1);
+    if(R.asintotaH===null) R.asintotaObl = oblicua(1) || oblicua(-1);
+  }
+
+  /* --- extremos e inflexiones (derivadas numéricas) --- */
+  const ext=[], inf=[];
+  const pasoD=0.01;
+  const sgn = v => v>0?1:(v<0?-1:0);
+  /* localiza dónde una función auxiliar (f' o f'') cambia de signo o se anula */
+  const cruce=(g,a,b)=>{
+    const ga=g(a), gb=g(b);
+    if(!def(ga)||!def(gb)||Math.abs(ga)>1e5||Math.abs(gb)>1e5) return null;
+    const sa=sgn(ga), sb=sgn(gb);
+    if(sa===0 && sb!==0) return a;
+    if(sb===0 && sa!==0) return b;
+    if(sa*sb>=0) return null;
+    let lo=a, hi=b;
+    for(let k=0;k<60;k++){
+      const m=(lo+hi)/2, gm=g(m);
+      if(!def(gm)) break;
+      if(sgn(g(lo))*sgn(gm)<=0) hi=m; else lo=m;
+    }
+    return (lo+hi)/2;
+  };
+  /* Confirma que el cambio de signo es real y no ruido de la derivada numérica */
+  const confirmar=(g,xq,factor)=>{
+    const ga=g(xq-0.02), gb=g(xq+0.02), yq=f(xq);
+    if(!def(ga)||!def(gb)||!def(yq)) return false;
+    const piso = factor*Math.max(1,Math.abs(yq));
+    return Math.abs(ga)>piso && Math.abs(gb)>piso && sgn(ga)!==sgn(gb);
+  };
+  for(let x=-20;x<20;x+=pasoD){
+    const a=x, b=x+pasoD;
+
+    const xc=cruce(t=>d1(f,t),a,b);
+    if(xc!==null && confirmar(t=>d1(f,t),xc,1e-7)){
+      const yc=f(xc);
+      if(def(yc)&&Math.abs(yc)<1e6 && !R.asintotasV.some(p=>Math.abs(p-xc)<0.05)){
+        const s=d2(f,xc);
+        const xr = Math.abs(xc-Math.round(xc))<1e-4?Math.round(xc):Math.round(xc*1e6)/1e6;
+        if(!ext.some(e=>Math.abs(e.x-xr)<1e-3))
+          ext.push({x:xr, y:f(xr), tipo:s>0?"mínimo":(s<0?"máximo":"punto crítico")});
+      }
+    }
+
+    const xi=cruce(t=>d2(f,t),a,b);
+    if(xi!==null && confirmar(t=>d2(f,t),xi,1e-6)){
+      const yi=f(xi);
+      if(def(yi)&&Math.abs(yi)<1e6 && !R.asintotasV.some(p=>Math.abs(p-xi)<0.1)){
+        const xr=Math.abs(xi-Math.round(xi))<1e-2?Math.round(xi):Math.round(xi*1e4)/1e4;
+        if(!inf.some(e=>Math.abs(e.x-xr)<1e-2)) inf.push({x:xr,y:f(xr)});
+      }
+    }
+  }
+  R.extremos=ext; R.inflexiones=inf;
+
+  /* --- monotonía en el intervalo visible --- */
+  /* fronteras del dominio: obligan a partir los intervalos */
+  const cortes = R.asintotasV.concat(R.huecos.flat().filter(v=>v>-59.9&&v<59.9));
+  R.monotonia  = intervalosSigno(t=>d1(f,t), -12, 12, "creciente", "decreciente",
+                                 f, 1e-7, ext.map(e=>e.x).concat(cortes), cortes);
+  R.concavidad = intervalosSigno(t=>d2(f,t), -12, 12, "cóncava hacia arriba (∪)", "cóncava hacia abajo (∩)",
+                                 f, 1e-6, inf.map(p=>p.x).concat(cortes), cortes);
+  if(R.coefs && R.coefs.length<=2){
+    R.concavidad = "Ninguna — la gráfica es una recta";
+    R.inflexiones = [];
+  }
+
+  /* --- recorrido aproximado --- */
+  let mn=Infinity, mx=-Infinity;
+  for(let x=-20;x<=20;x+=0.01){ const y=f(x); if(def(y)&&Math.abs(y)<1e6){ mn=Math.min(mn,y); mx=Math.max(mx,y);} }
+  R.recorrido = (mn===Infinity)?null:{min:mn,max:mx};
+
+  /* --- tipo de función --- */
+  const t = normalizar(textoOriginal);
+  if(R.coefs){
+    const g=R.coefs.length-1;
+    R.tipo = ["Constante","Lineal (polinómica de 1.º grado)","Cuadrática (parábola)","Cúbica (polinómica de 3.º grado)",
+              "Polinómica de 4.º grado","Polinómica de 5.º grado","Polinómica de 6.º grado"][g] || "Polinómica";
+    R.grado = g;
+  }
+  else if(/sqrt|cbrt/.test(t)) R.tipo="Irracional (con radical)";
+  else if(/\//.test(t) && /x/.test(t.split("/").slice(1).join("/"))) R.tipo="Racional (cociente de expresiones)";
+  else if(/sin|cos|tan/.test(t)) R.tipo="Trigonométrica";
+  else if(/ln|log/.test(t)) R.tipo="Logarítmica";
+  else if(/exp|e\^/.test(t)) R.tipo="Exponencial";
+  else R.tipo="Función general";
+
+  R.continua = huecos.length===0 && R.asintotasV.length===0;
+  return R;
+}
+
+function intervalosSigno(g, a, b, posTxt, negTxt, f, factor, claves, cortes){
+  const tramos=[]; let sig=null, ini=a;
+  for(let x=a; x<=b; x+=0.02){
+    const v=g(x); if(!def(v)||Math.abs(v)>1e6) continue;
+    const y=f(x);
+    const piso=(factor||1e-7)*Math.max(1, def(y)?Math.abs(y):1);   // umbral de ruido numérico
+    const s = v>piso?1:(v<-piso?-1:0);
+    if(s===0) continue;
+    if(sig===null){ sig=s; ini=x; continue; }
+    if(s!==sig){ tramos.push({a:ini,b:x,s:sig}); sig=s; ini=x; }
+  }
+  if(sig!==null) tramos.push({a:ini,b:b,s:sig});
+  if(!tramos.length) return "no determinada";
+
+  /* parte los tramos en los puntos que no pertenecen al dominio */
+  const partidos=[];
+  for(const t of tramos){
+    const dentro=(cortes||[]).filter(c=>c>t.a+1e-6 && c<t.b-1e-6).sort((p,q)=>p-q);
+    let x0=t.a;
+    for(const c of dentro){ partidos.push({a:x0,b:c,s:t.s}); x0=c; }
+    partidos.push({a:x0,b:t.b,s:t.s});
+  }
+  /* descarta tramos degenerados (más angostos que la resolución del muestreo) */
+  tramos.length=0; tramos.push(...partidos.filter(t=>t.b-t.a>0.05));
+  if(!tramos.length) return "no determinada";
+  /* ajusta las fronteras a los puntos notables ya calculados y abre los extremos */
+  const ajusta=v=>{
+    if(!claves) return v;
+    for(const k of claves) if(Math.abs(k-v)<0.06) return k;
+    return v;
+  };
+  const borde=v => v<=a+1e-9 ? "−∞" : (v>=b-1e-9 ? "+∞" : fmt(ajusta(v),3));
+  return tramos.map(t=>`(${borde(t.a)}, ${borde(t.b)}) → ${t.s>0?posTxt:negTxt}`).join("<br>");
+}
+
+function dominioTexto(R){
+  const f=R.f;
+  if(R.huecos.length===0 && R.asintotasV.length===0) return "ℝ = (−∞, +∞)";
+  if(R.huecos.length===0) return "ℝ − {" + R.asintotasV.map(fmtFrac).join(", ") + "}";
+
+  const pz=[];
+  for(const [a,b] of R.huecos){
+    const abiertoIzq = a<=-59.9, abiertoDer = b>=59.9;
+    if(abiertoIzq && abiertoDer) return "vacío (la función no está definida en el intervalo analizado)";
+    if(abiertoIzq)      pz.push(`x ${def(f(b))?"≥":">"} ${fmtFrac(b)}`);
+    else if(abiertoDer) pz.push(`x ${def(f(a))?"≤":"<"} ${fmtFrac(a)}`);
+    else                pz.push(`x ∉ ${def(f(a))?"(":"["}${fmtFrac(a)}, ${fmtFrac(b)}${def(f(b))?")":"]"}`);
+  }
+  /* sólo se listan los polos que no estén ya dentro de un tramo excluido */
+  const sueltos = R.asintotasV.filter(p=>!R.huecos.some(([a,b])=>p>=a-1e-6 && p<=b+1e-6));
+  if(sueltos.length) pz.push("x ≠ " + sueltos.map(fmtFrac).join(", "));
+  return pz.join("  y  ");
+}
+/* El recorrido de un polinomio se deduce del grado y del coeficiente principal */
+function recorridoTexto(R){
+  const c=R.coefs;
+  if(c){
+    const g=c.length-1;
+    if(g===0) return "{" + fmt(c[0]) + "}";
+    if(g%2===1) return "ℝ = (−∞, +∞)";
+    const ys=R.extremos.map(e=>e.y);
+    if(ys.length) return c[0]>0 ? `[${fmt(Math.min(...ys))}, +∞)` : `(−∞, ${fmt(Math.max(...ys))}]`;
+  }
+  if(!R.recorrido) return "no determinado";
+  return `≈ [${fmt(redondear(R.recorrido.min),3)}, ${fmt(redondear(R.recorrido.max),3)}]  (en el tramo analizado)`;
+}
+/* Recorta listas largas para no saturar la interfaz */
+function lista(arr, n=8){
+  if(arr.length<=n) return arr.join("<br>");
+  return arr.slice(0,n).join("<br>") + `<br><span style="color:#6f88ad">… y ${arr.length-n} más</span>`;
+}
+
+/* ============================================================
+   4) PROCEDIMIENTO PASO A PASO
+   ============================================================ */
+function construirProcedimiento(R){
+  const P=[], E=R.expr;
+
+  P.push(paso("Identificación de la función",
+    `Se registra la expresión ingresada y se reconoce su tipo.`,
+    [`f(x) = ${E}`, `Tipo: ${R.tipo}`]));
+
+  /* dominio */
+  const dsteps=[];
+  if(R.asintotasV.length) dsteps.push(`Denominador = 0  ⟹  x = ${R.asintotasV.map(fmtFrac).join(", ")}  (valores excluidos)`);
+  if(R.huecos.length){
+    const rad = extraerRadicando(E);
+    if(rad) dsteps.push(`Condición del radical:  ${rad} ≥ 0`);
+    dsteps.push(`Zona no definida:  ${R.huecos.map(h=>`[${fmt(h[0],2)}, ${fmt(h[1],2)}]`).join(" ∪ ")}`);
+  }
+  dsteps.push(`Dom(f) = ${dominioTexto(R)}`);
+  P.push(paso("Dominio de la función",
+    R.asintotasV.length ? "Se excluyen los valores que anulan el denominador."
+    : R.huecos.length ? "Se resuelve la restricción del radicando (o del argumento) para hallar dónde existe f."
+    : "No hay denominadores ni radicales pares, por lo tanto la función existe para todo número real.",
+    dsteps));
+
+  /* corte con Y */
+  P.push(paso("Intersección con el eje Y",
+    "Se evalúa la función en x = 0.",
+    R.cortaY===null ? [`f(0) no está definida ⟹ la gráfica no corta el eje Y`]
+                    : [`f(0) = ${E.replace(/x/g,"(0)")}`, `f(0) = ${fmt(R.cortaY)}   ⟹   punto (0, ${fmt(R.cortaY)})`]));
+
+  /* raíces con desarrollo algebraico si es posible */
+  P.push(pasoRaices(R,E));
+
+  /* simetría */
+  P.push(paso("Análisis de simetría",
+    "Se compara f(−x) con f(x) y con −f(x).",
+    [`Simetría: ${R.simetria}`]));
+
+  /* asíntotas */
+  if(R.asintotasV.length || R.asintotaH!==null || R.asintotaObl){
+    const l=[];
+    R.asintotasV.forEach(p=>l.push(`Asíntota vertical:  x = ${fmtFrac(p)}   (lím f(x) → ±∞)`));
+    if(R.asintotaH!==null) l.push(`Asíntota horizontal:  y = ${fmtFrac(R.asintotaH)}   (lím f(x) cuando x → ±∞)`);
+    if(R.asintotaObl) l.push(`Asíntota oblicua:  y = ${fmt(R.asintotaObl.m)}x ${R.asintotaObl.b<0?"−":"+"} ${fmt(Math.abs(R.asintotaObl.b))}`);
+    P.push(paso("Asíntotas","Se estudian los límites en los puntos excluidos y en el infinito.",l));
+  }
+
+  /* monotonía y extremos */
+  const ms=[`f'(x) evaluada numéricamente en el intervalo visible`];
+  ms.push(R.monotonia);
+  if(R.extremos.length){
+    R.extremos.slice(0,6).forEach(e=>ms.push(`${e.tipo==="mínimo"?"Mínimo":"Máximo"} en (${fmt(e.x)}, ${fmt(e.y)})   [f'(x)=0]`));
+    if(R.extremos.length>6) ms.push(`… y ${R.extremos.length-6} extremos más (función periódica u oscilante)`);
+  }
+  else ms.push("No se detectan máximos ni mínimos relativos.");
+  P.push(paso("Monotonía y puntos extremos","Se estudia el signo de la primera derivada.",ms));
+
+  /* concavidad */
+  const cs=[R.concavidad];
+  if(R.inflexiones.length) R.inflexiones.forEach(p=>cs.push(`Punto de inflexión: (${fmt(p.x)}, ${fmt(p.y)})`));
+  else cs.push("Sin puntos de inflexión detectados.");
+  P.push(paso("Concavidad e inflexión","Se estudia el signo de la segunda derivada.",cs));
+
+  P.push(paso("Tabulación y trazado",
+    "Se construye el cuadro de valores, se ubican los pares ordenados en el plano cartesiano y se une con trazo continuo respetando el dominio y las asíntotas.",
+    ["Ver «Cuadro de valores» y la sección «Gráfica»."]));
+
+  return P;
+}
+
+function paso(titulo, texto, formulas){
+  return {titulo, texto, formulas:(formulas||[]).filter(Boolean)};
+}
+function extraerRadicando(E){
+  const s = normalizar(E);
+  const i = s.indexOf("sqrt(");
+  if(i<0) return null;
+  let d=0;
+  for(let j=i+4; j<s.length; j++){
+    if(s[j]==="(") d++;
+    else if(s[j]===")"){ d--; if(d===0) return s.slice(i+5,j); }
+  }
+  return null;
+}
+function extraerDenominador(E){
+  const s=normalizar(E); const i=s.indexOf("/"); if(i<0) return null;
+  let j=i+1;
+  if(s[j]==="("){ let d=0; for(;j<s.length;j++){ if(s[j]==="(")d++; else if(s[j]===")"){d--; if(d===0) return s.slice(i+2,j);} } }
+  let k=j; while(k<s.length && /[a-z0-9.^]/.test(s[k])) k++;
+  return s.slice(i+1,k)||null;
+}
+
+function pasoRaices(R,E){
+  const L=[];
+  const c=R.coefs;
+  if(c && c.length===2){                       // lineal:  mx + b
+    const m=c[0], b=c[1];
+    L.push(`${polinomioTexto(c)} = 0`);
+    L.push(`${fmt(m)}x = ${fmt(-b)}`);
+    L.push(`x = ${fmt(-b)} / ${fmt(m)} = ${fmtFrac(-b/m)}`);
+    L.push(`Pendiente m = ${fmtFrac(m)}  ·  Ordenada al origen b = ${fmtFrac(b)}`);
+  }
+  else if(c && c.length===3){                  // cuadrática
+    const [a,b,cc]=c, D=b*b-4*a*cc;
+    L.push(`a = ${fmt(a)},  b = ${fmt(b)},  c = ${fmt(cc)}`);
+    L.push(`Δ = b² − 4ac = (${fmt(b)})² − 4(${fmt(a)})(${fmt(cc)}) = ${fmt(D)}`);
+    if(D>0){
+      const r1=(-b-Math.sqrt(D))/(2*a), r2=(-b+Math.sqrt(D))/(2*a);
+      L.push(`Δ > 0 ⟹ dos raíces reales distintas`);
+      L.push(`x = ( ${fmt(-b)} ± √${fmt(D)} ) / ${fmt(2*a)}`);
+      L.push(`x₁ = ${fmtFrac(r1)}     x₂ = ${fmtFrac(r2)}`);
+      L.push(`Factorización: f(x) = ${fmt(a)}(x ${r1<0?"+":"−"} ${fmt(Math.abs(r1))})(x ${r2<0?"+":"−"} ${fmt(Math.abs(r2))})`);
+    } else if(casi(D,0)){
+      L.push(`Δ = 0 ⟹ una raíz real doble:  x = ${fmtFrac(-b/(2*a))}`);
+    } else {
+      L.push(`Δ < 0 ⟹ no hay raíces reales (la parábola no corta el eje X)`);
+    }
+    const xv=-b/(2*a), yv=R.f(xv);
+    L.push(`Vértice: x_v = −b/2a = ${fmtFrac(xv)} ,  y_v = f(${fmtFrac(xv)}) = ${fmt(yv)}`);
+    L.push(`Eje de simetría: x = ${fmtFrac(xv)}  ·  Concavidad: ${a>0?"hacia arriba (∪), vértice = mínimo":"hacia abajo (∩), vértice = máximo"}`);
+  }
+  else if(c && c.length>=4){                   // grado ≥ 3
+    L.push(`${polinomioTexto(c)} = 0`);
+    const fc = factorComun(c);
+    if(fc) L.push(`Factor común: f(x) = ${fc}`);
+    if(R.raices.length) L.push(`Raíces (teorema del factor / método numérico): x = ${R.raices.map(fmtFrac).join(", ")}`);
+    else L.push(`No se hallaron raíces reales en el intervalo analizado.`);
+  }
+  else{
+    const den=extraerDenominador(E), rad=extraerRadicando(E);
+    if(den) L.push(`Una fracción se anula cuando su numerador es 0 (con denominador ≠ 0).`);
+    if(rad) L.push(`√u = 0 ⟺ u = 0  ⟹  ${rad} = 0`);
+    L.push(R.raices.length ? `Raíces: x = ${R.raices.map(fmtFrac).join(", ")}` : `La función no corta el eje X en el intervalo analizado.`);
+  }
+  if(R.raices.length) L.push(`Puntos de corte: ${R.raices.map(r=>`(${fmtFrac(r)}, 0)`).join("  ,  ")}`);
+  return paso("Intersección con el eje X (raíces)","Se resuelve la ecuación f(x) = 0.",L);
+}
+function factorComun(c){
+  const g=c.length-1; let min=g;
+  for(let i=c.length-1;i>=0;i--){ if(Math.abs(c[i])>1e-12){ min=g-i; break; } }
+  if(min===0) return null;
+  const resto=c.slice(0,c.length-min);
+  return `${min>1?`x^${min}`:"x"}(${polinomioTexto(resto)})`;
+}
+
+/* ============================================================
+   5) GRAFICADOR (canvas)
+   ============================================================ */
+const cv=document.getElementById("lienzo"), ctx=cv.getContext("2d");
+const tip=document.getElementById("tooltip");
+let vista={x0:-10,x1:10,y0:-10,y1:10};
+let ACT=null;   // análisis actual
+
+function ajustarLienzo(){
+  const r=cv.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
+  cv.width=Math.max(1,Math.round(r.width*dpr));
+  cv.height=Math.max(1,Math.round(r.height*dpr));
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  return {w:r.width,h:r.height};
+}
+const X2p=(x,w)=> (x-vista.x0)/(vista.x1-vista.x0)*w;
+const Y2p=(y,h)=> h-(y-vista.y0)/(vista.y1-vista.y0)*h;
+const p2X=(px,w)=> vista.x0+px/w*(vista.x1-vista.x0);
+const p2Y=(py,h)=> vista.y0+(h-py)/h*(vista.y1-vista.y0);
+
+function pasoLindo(rango,objetivo){
+  const bruto=rango/objetivo, exp=Math.pow(10,Math.floor(Math.log10(bruto))), n=bruto/exp;
+  return (n<1.5?1:n<3?2:n<7?5:10)*exp;
+}
+
+function dibujar(){
+  const {w,h}=ajustarLienzo();
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle="#03060d"; ctx.fillRect(0,0,w,h);
+
+  const grid=document.getElementById("chkGrid").checked;
+  const sx=pasoLindo(vista.x1-vista.x0,10), sy=pasoLindo(vista.y1-vista.y0,8);
+
+  /* cuadrícula */
+  if(grid){
+    ctx.lineWidth=1;
+    ctx.strokeStyle="#0d1f3d";
+    for(let x=Math.ceil(vista.x0/sx)*sx; x<=vista.x1; x+=sx){
+      const px=Math.round(X2p(x,w))+.5; ctx.beginPath(); ctx.moveTo(px,0); ctx.lineTo(px,h); ctx.stroke();
+    }
+    for(let y=Math.ceil(vista.y0/sy)*sy; y<=vista.y1; y+=sy){
+      const py=Math.round(Y2p(y,h))+.5; ctx.beginPath(); ctx.moveTo(0,py); ctx.lineTo(w,py); ctx.stroke();
+    }
+  }
+
+  /* ejes */
+  ctx.strokeStyle="#5b8dc9"; ctx.lineWidth=1.6;
+  const py0=Y2p(0,h), px0=X2p(0,w);
+  if(py0>=0&&py0<=h){ ctx.beginPath(); ctx.moveTo(0,py0); ctx.lineTo(w,py0); ctx.stroke(); }
+  if(px0>=0&&px0<=w){ ctx.beginPath(); ctx.moveTo(px0,0); ctx.lineTo(px0,h); ctx.stroke(); }
+
+  /* marcas numéricas */
+  ctx.fillStyle="#8fb0dc"; ctx.font="11px Consolas, monospace";
+  ctx.textAlign="center"; ctx.textBaseline="top";
+  const ejeY=Math.min(Math.max(py0,2),h-16);
+  for(let x=Math.ceil(vista.x0/sx)*sx; x<=vista.x1; x+=sx){
+    if(Math.abs(x)<sx/1e6) continue;
+    ctx.fillText(fmt(x,3), X2p(x,w), ejeY+4);
+  }
+  ctx.textAlign="right"; ctx.textBaseline="middle";
+  const ejeX=Math.min(Math.max(px0,26),w-4);
+  for(let y=Math.ceil(vista.y0/sy)*sy; y<=vista.y1; y+=sy){
+    if(Math.abs(y)<sy/1e6) continue;
+    ctx.fillText(fmt(y,3), ejeX-6, Y2p(y,h));
+  }
+  ctx.fillStyle="#cfe3ff"; ctx.textAlign="left"; ctx.textBaseline="top";
+  ctx.fillText("x", w-14, Math.min(Math.max(py0,4),h-18));
+  ctx.fillText("y", Math.min(Math.max(px0+7,6),w-16), 6);
+
+  if(!ACT) return;
+  const f=ACT.f;
+
+  /* asíntotas */
+  if(document.getElementById("chkAsin").checked){
+    ctx.save(); ctx.setLineDash([7,6]); ctx.lineWidth=1.5; ctx.strokeStyle="rgba(251,113,133,.85)";
+    ACT.asintotasV.forEach(p=>{ const px=X2p(p,w); if(px>=0&&px<=w){ ctx.beginPath(); ctx.moveTo(px,0); ctx.lineTo(px,h); ctx.stroke();
+      ctx.fillStyle="rgba(251,113,133,.95)"; ctx.font="11px Consolas"; ctx.textAlign="left"; ctx.fillText("x="+fmt(p,3), px+5, 8); } });
+    if(ACT.asintotaH!==null){ const py=Y2p(ACT.asintotaH,h); if(py>=0&&py<=h){ ctx.beginPath(); ctx.moveTo(0,py); ctx.lineTo(w,py); ctx.stroke();
+      ctx.fillStyle="rgba(251,113,133,.95)"; ctx.textAlign="left"; ctx.fillText("y="+fmt(ACT.asintotaH,3), 8, py-14); } }
+    if(ACT.asintotaObl){ const m=ACT.asintotaObl.m,b=ACT.asintotaObl.b;
+      ctx.beginPath(); ctx.moveTo(0,Y2p(m*vista.x0+b,h)); ctx.lineTo(w,Y2p(m*vista.x1+b,h)); ctx.stroke(); }
+    ctx.restore();
+  }
+
+  /* curva */
+  ctx.save();
+  ctx.lineWidth=2.6; ctx.strokeStyle="#38bdf8";
+  ctx.shadowColor="rgba(56,189,248,.65)"; ctx.shadowBlur=9;
+  ctx.lineJoin="round"; ctx.lineCap="round";
+  ctx.beginPath();
+  let hay=false, prevY=null, prevPy=null;
+  const N=Math.max(400,Math.round(w*2));
+  for(let i=0;i<=N;i++){
+    const px=i*w/N, x=p2X(px,w), y=f(x);
+    if(!def(y)||Math.abs(y)>1e8){ hay=false; prevY=null; continue; }
+    const py=Y2p(y,h);
+    if(hay && prevY!==null){
+      const salto=Math.abs(py-prevPy);
+      const cambioSigno = (prevY<0)!==(y<0);
+      if(salto>h*1.6 && cambioSigno){ hay=false; }   // cruce de asíntota → corta el trazo
+    }
+    const pyc=Math.max(-1e5,Math.min(1e5,py));
+    if(!hay){ ctx.moveTo(px,pyc); hay=true; } else ctx.lineTo(px,pyc);
+    prevY=y; prevPy=py;
+  }
+  ctx.stroke(); ctx.restore();
+
+  /* puntos notables */
+  if(document.getElementById("chkPuntos").checked){
+    ACT.raices.forEach(r=>marca(X2p(r,w),Y2p(0,h),"#ffffff",`(${fmt(r,3)}, 0)`,w,h));
+    if(ACT.cortaY!==null) marca(X2p(0,w),Y2p(ACT.cortaY,h),"#5eead4",`(0, ${fmt(ACT.cortaY,3)})`,w,h);
+    ACT.extremos.forEach(e=>marca(X2p(e.x,w),Y2p(e.y,h),"#fbbf24",`${e.tipo==="mínimo"?"mín":"máx"} (${fmt(e.x,2)}, ${fmt(e.y,2)})`,w,h));
+  }
+}
+function marca(px,py,color,txt,w,h){
+  if(px<-30||px>w+30||py<-30||py>h+30) return;
+  ctx.save();
+  ctx.beginPath(); ctx.arc(px,py,5.5,0,Math.PI*2);
+  ctx.fillStyle=color; ctx.shadowColor=color; ctx.shadowBlur=10; ctx.fill();
+  ctx.lineWidth=1.6; ctx.strokeStyle="#05070c"; ctx.stroke();
+  ctx.shadowBlur=0; ctx.fillStyle=color; ctx.font="bold 11px Consolas";
+  ctx.textAlign = px>w-90 ? "right" : "left";
+  ctx.fillText(txt, px + (px>w-90?-9:9), py-9);
+  ctx.restore();
+}
+
+/* --- interacción: zoom con rueda, arrastre, tooltip --- */
+let arrastrando=false, ultX=0, ultY=0;
+cv.addEventListener("mousedown",e=>{arrastrando=true;ultX=e.offsetX;ultY=e.offsetY;cv.style.cursor="grabbing";});
+window.addEventListener("mouseup",()=>{arrastrando=false;cv.style.cursor="crosshair";});
+cv.addEventListener("mouseleave",()=>{tip.style.display="none";});
+cv.addEventListener("mousemove",e=>{
+  const r=cv.getBoundingClientRect(), w=r.width, h=r.height;
+  if(arrastrando){
+    const dx=(e.offsetX-ultX)/w*(vista.x1-vista.x0);
+    const dy=(e.offsetY-ultY)/h*(vista.y1-vista.y0);
+    vista.x0-=dx; vista.x1-=dx; vista.y0+=dy; vista.y1+=dy;
+    ultX=e.offsetX; ultY=e.offsetY;
+    document.getElementById("chkAuto").checked=false;
+    sincronizarControles(); dibujar(); return;
+  }
+  if(!ACT) return;
+  const x=p2X(e.offsetX,w), y=ACT.f(x);
+  tip.style.display="block";
+  tip.style.left=Math.min(e.offsetX+14,w-160)+"px";
+  tip.style.top=Math.max(e.offsetY-40,4)+"px";
+  tip.innerHTML = `x = ${fmt(x,3)}<br>f(x) = ${def(y)?fmt(y,4):"indefinido"}`;
+});
+cv.addEventListener("wheel",e=>{
+  e.preventDefault();
+  const r=cv.getBoundingClientRect(), w=r.width, h=r.height;
+  const cx=p2X(e.offsetX,w), cy=p2Y(e.offsetY,h);
+  const k=e.deltaY>0?1.15:1/1.15;
+  vista.x0=cx+(vista.x0-cx)*k; vista.x1=cx+(vista.x1-cx)*k;
+  vista.y0=cy+(vista.y0-cy)*k; vista.y1=cy+(vista.y1-cy)*k;
+  document.getElementById("chkAuto").checked=false;
+  sincronizarControles(); dibujar();
+},{passive:false});
+
+function sincronizarControles(){
+  xminI.value=fmt(vista.x0,3); xmaxI.value=fmt(vista.x1,3);
+  yminI.value=fmt(vista.y0,3); ymaxI.value=fmt(vista.y1,3);
+}
+function escalaYAutomatica(){
+  if(!ACT) return;
+  const f=ACT.f, vals=[];
+  for(let i=0;i<=600;i++){
+    const x=vista.x0+(vista.x1-vista.x0)*i/600, y=f(x);
+    if(def(y)&&Math.abs(y)<1e5) vals.push(y);
+  }
+  if(!vals.length){ vista.y0=-10; vista.y1=10; return; }
+  vals.sort((a,b)=>a-b);
+  // recorte de percentiles para que las asíntotas no aplasten la curva
+  const q=Math.floor(vals.length*0.02);
+  let mn=vals[q], mx=vals[vals.length-1-q];
+  if(!def(mn)||!def(mx)||mn===mx){ mn-=5; mx+=5; }
+  // limita la altura para que las funciones de crecimiento rápido no queden achatadas
+  const altoMax=5*(vista.x1-vista.x0);
+  if(mx-mn>altoMax){
+    const med=vals[Math.floor(vals.length/2)];
+    mn=Math.max(mn, med-altoMax/2);
+    mx=Math.min(mx, med+altoMax/2);
+  }
+  const m=(mx-mn)*0.15+0.5;
+  vista.y0=mn-m; vista.y1=mx+m;
+  if(vista.y0>0) vista.y0=Math.min(0,vista.y0);
+  if(vista.y1<0) vista.y1=Math.max(0,vista.y1);
+  sincronizarControles();
+}
+
+/* ============================================================
+   6) TABLA DE VALORES
+   ============================================================ */
+let datosTabla=[];
+function generarTabla(){
+  const tb=document.querySelector("#tabla tbody");
+  if(!ACT){ tb.innerHTML=`<tr><td colspan="4"><div class="vacio">Primero analiza una función.</div></td></tr>`; return; }
+  let a=parseFloat(tminI.value), b=parseFloat(tmaxI.value), p=Math.abs(parseFloat(tpasoI.value))||1;
+  if(!def(a)||!def(b)) return;
+  if(a>b){ [a,b]=[b,a]; }
+  if((b-a)/p>400) p=(b-a)/400;
+  datosTabla=[]; let html="";
+  for(let x=a; x<=b+1e-9; x+=p){
+    const xr=Math.abs(x)<1e-12?0:x, y=ACT.f(xr);
+    let cls="", val, par, ubi;
+    if(!def(y)){ cls="und"; val="no definido"; par="—"; ubi="Fuera del dominio"; }
+    else{
+      val=fmt(y,4); par=`(${fmt(xr,3)}, ${fmt(y,4)})`;
+      if(Math.abs(y)<1e-9){ cls="cero"; ubi="Raíz — sobre el eje X"; }
+      else if(y>0) ubi= xr>0?"I cuadrante":(xr<0?"II cuadrante":"Sobre el eje Y");
+      else ubi= xr>0?"IV cuadrante":(xr<0?"III cuadrante":"Sobre el eje Y");
+    }
+    datosTabla.push([fmt(xr,4), def(y)?fmt(y,6):"no definido"]);
+    html+=`<tr><td>${fmt(xr,3)}</td><td class="${cls}">${val}</td><td>${par}</td><td style="font-family:inherit;font-size:12.5px;color:#9db3d4">${ubi}</td></tr>`;
+  }
+  tb.innerHTML=html||`<tr><td colspan="4"><div class="vacio">Rango vacío.</div></td></tr>`;
+}
+
+/* ============================================================
+   7) RENDER DE PROCEDIMIENTO Y CARACTERÍSTICAS
+   ============================================================ */
+function pintarProcedimiento(R){
+  const cont=document.getElementById("procedimiento");
+  cont.innerHTML = construirProcedimiento(R).map(p=>`
+    <li class="paso">
+      <h3>${p.titulo}</h3>
+      <p>${p.texto}</p>
+      ${p.formulas.map(f=>`<div class="formula">${f}</div>`).join("")}
+    </li>`).join("");
+}
+
+function pintarCaracteristicas(R){
+  const P=[];
+  const add=(k,v,mini)=>P.push(`<div class="prop"><div class="k">${k}</div><div class="v ${mini?"mini":""}">${v}</div></div>`);
+
+  add("Función", "f(x) = "+R.expr);
+  add("Tipo", R.tipo);
+  add("Dominio", dominioTexto(R));
+  add("Recorrido", recorridoTexto(R), true);
+  add("Corte eje Y", R.cortaY===null?"no existe":`(0, ${fmt(R.cortaY)})`);
+  add("Raíces (corte eje X)", R.raices.length? lista(R.raices.map(r=>`(${fmtFrac(r)}, 0)`)) : "no corta el eje X");
+  add("Simetría", R.simetria, true);
+  add("Continuidad", R.continua ? "Continua en todo su dominio (ℝ)" : "Discontinua en los puntos excluidos", true);
+  add("Asíntota vertical", R.asintotasV.length? R.asintotasV.map(p=>"x = "+fmtFrac(p)).join("<br>") : "ninguna");
+  add("Asíntota horizontal", R.asintotaH!==null ? "y = "+fmtFrac(R.asintotaH)
+      : (R.asintotaObl? `oblicua: y = ${fmt(R.asintotaObl.m)}x ${R.asintotaObl.b<0?"−":"+"} ${fmt(Math.abs(R.asintotaObl.b))}` : "ninguna"));
+  add("Monotonía", R.monotonia, true);
+  add("Extremos relativos", R.extremos.length? lista(R.extremos.map(e=>`${e.tipo}: (${fmt(e.x,3)}, ${fmt(e.y,3)})`),6) : "no presenta", true);
+  add("Concavidad", R.concavidad, true);
+  add("Puntos de inflexión", R.inflexiones.length? lista(R.inflexiones.map(p=>`(${fmt(p.x,3)}, ${fmt(p.y,3)})`),6) : "no presenta", true);
+  if(R.coefs) add("Grado / coeficientes", `grado ${R.coefs.length-1}<br>[${R.coefs.map(c=>fmt(c)).join(", ")}]`, true);
+  document.getElementById("props").innerHTML=P.join("");
+
+  /* --- resultado --- */
+  const r=[];
+  r.push(`La expresión <b>f(x) = ${R.expr}</b> corresponde a una función <b>${R.tipo.toLowerCase()}</b>.`);
+  r.push(`Su dominio es <b>${dominioTexto(R)}</b>.`);
+  r.push(R.raices.length
+    ? `Corta al eje X en <b>${R.raices.slice(0,6).map(x=>`x = ${fmtFrac(x)}`).join(", ")}${R.raices.length>6?", …":""}</b>`
+    : `No corta al eje X en el intervalo analizado`);
+  r.push(R.cortaY!==null ? ` y al eje Y en <b>(0, ${fmt(R.cortaY)})</b>.` : ` y no corta al eje Y.`);
+  if(R.asintotasV.length) r.push(` Presenta asíntota(s) vertical(es) en <b>${R.asintotasV.map(p=>"x = "+fmtFrac(p)).join(", ")}</b>`);
+  if(R.asintotaH!==null) r.push(`${R.asintotasV.length?" y":" Presenta"} asíntota horizontal en <b>y = ${fmtFrac(R.asintotaH)}</b>`);
+  if(R.asintotasV.length||R.asintotaH!==null) r.push(`.`);
+  if(R.extremos.length){
+    r.push(` Tiene ${R.extremos.length===1?"un punto extremo":"puntos extremos"}: ` +
+      R.extremos.slice(0,4).map(e=>`<b>${e.tipo} en (${fmt(e.x,3)}, ${fmt(e.y,3)})</b>`).join(", ") +
+      (R.extremos.length>4?`, entre otros`:"")+`.`);
+  }
+  r.push(` Simetría: <b>${R.simetria.toLowerCase()}</b>. Es <b>${R.continua?"continua":"discontinua"}</b> en su recorrido analizado.`);
+  document.getElementById("resultado").style.display="block";
+  document.getElementById("resultadoTxt").innerHTML=r.join(" ");
+}
+
+/* ============================================================
+   8) CONTROL GENERAL
+   ============================================================ */
+const exprI=document.getElementById("expr");
+const xminI=document.getElementById("xmin"), xmaxI=document.getElementById("xmax");
+const yminI=document.getElementById("ymin"), ymaxI=document.getElementById("ymax");
+const tminI=document.getElementById("tmin"), tmaxI=document.getElementById("tmax"), tpasoI=document.getElementById("tpaso");
+const msg=document.getElementById("msg");
+
+function aviso(txt,tipo){ msg.className=tipo; msg.innerHTML=txt; }
+function limpiarAviso(){ msg.className=""; msg.innerHTML=""; }
+
+function ejecutar(){
+  const txt=exprI.value.trim();
+  if(!txt){ aviso("⚠ Escribe una expresión, por ejemplo <b>x^2-4</b>.","err"); return; }
+  let f;
+  try{ f=compilar(txt); }
+  catch(e){ aviso("✕ "+e.message,"err"); return; }
+  try{
+    ACT=analizar(f, normalizar(txt));
+    document.getElementById("tagFx").textContent="f(x) = "+ACT.expr;
+    leerVista();
+    if(document.getElementById("chkAuto").checked) escalaYAutomatica();
+    dibujar();
+    pintarProcedimiento(ACT);
+    pintarCaracteristicas(ACT);
+    tminI.value=fmt(Math.max(vista.x0,-20),0);
+    tmaxI.value=fmt(Math.min(vista.x1,20),0);
+    generarTabla();
+    aviso("✓ Función analizada correctamente: <b>f(x) = "+ACT.expr+"</b>","ok");
+  }catch(e){ aviso("✕ No se pudo analizar la función: "+e.message,"err"); }
+}
+function leerVista(){
+  const a=parseFloat(xminI.value), b=parseFloat(xmaxI.value);
+  const c=parseFloat(yminI.value), d=parseFloat(ymaxI.value);
+  if(def(a)&&def(b)&&a<b){ vista.x0=a; vista.x1=b; }
+  if(def(c)&&def(d)&&c<d){ vista.y0=c; vista.y1=d; }
+}
+
+document.getElementById("btnAnalizar").addEventListener("click",ejecutar);
+exprI.addEventListener("keydown",e=>{ if(e.key==="Enter") ejecutar(); });
+exprI.addEventListener("input",limpiarAviso);
+
+document.getElementById("chips").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b) return;
+  exprI.value=b.dataset.f; ejecutar();
+});
+
+[xminI,xmaxI,yminI,ymaxI].forEach(inp=>inp.addEventListener("change",()=>{
+  if(inp===yminI||inp===ymaxI) document.getElementById("chkAuto").checked=false;
+  leerVista();
+  if(document.getElementById("chkAuto").checked) escalaYAutomatica();
+  dibujar();
+}));
+["chkGrid","chkPuntos","chkAsin"].forEach(id=>document.getElementById(id).addEventListener("change",dibujar));
+document.getElementById("chkAuto").addEventListener("change",e=>{ if(e.target.checked) escalaYAutomatica(); dibujar(); });
+
+function zoom(k){
+  const cx=(vista.x0+vista.x1)/2, cy=(vista.y0+vista.y1)/2;
+  vista.x0=cx+(vista.x0-cx)*k; vista.x1=cx+(vista.x1-cx)*k;
+  vista.y0=cy+(vista.y0-cy)*k; vista.y1=cy+(vista.y1-cy)*k;
+  document.getElementById("chkAuto").checked=false;
+  sincronizarControles(); dibujar();
+}
+document.getElementById("btnZoomIn").addEventListener("click",()=>zoom(1/1.35));
+document.getElementById("btnZoomOut").addEventListener("click",()=>zoom(1.35));
+document.getElementById("btnReset").addEventListener("click",()=>{
+  vista={x0:-10,x1:10,y0:-10,y1:10};
+  document.getElementById("chkAuto").checked=true;
+  escalaYAutomatica(); sincronizarControles(); dibujar();
+});
+document.getElementById("btnPng").addEventListener("click",()=>{
+  const a=document.createElement("a");
+  a.download=(ACT?("grafica_"+ACT.expr.replace(/[^a-z0-9]/gi,"_")):"grafica")+".png";
+  a.href=cv.toDataURL("image/png"); a.click();
+});
+
+document.getElementById("btnTabla").addEventListener("click",generarTabla);
+document.getElementById("btnCsv").addEventListener("click",()=>{
+  if(!datosTabla.length) return;
+  const csv="x;f(x)\n"+datosTabla.map(r=>r.join(";")).join("\n");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"}));
+  a.download="cuadro_de_valores.csv"; a.click();
+});
+
+/* logo: viene incrustado en el HTML; el clic solo sirve para reemplazarlo */
+const slot=document.getElementById("logoSlot"), file=document.getElementById("logoFile"),
+      logoImg=document.getElementById("logoImg");
+slot.addEventListener("click",()=>file.click());
+file.addEventListener("change",e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=ev=>{ logoImg.src=ev.target.result; };   /* solo cambia la imagen: el input sigue vivo */
+  rd.readAsDataURL(f);
+});
+
+window.addEventListener("resize",()=>{ dibujar(); });
+
+/* arranque */
+exprI.value="x^2-2x-3";
+ajustarLienzo();
+ejecutar();
