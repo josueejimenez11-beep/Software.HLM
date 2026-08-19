@@ -1,0 +1,216 @@
+/* ============================================
+   Estilos solo para la pagina del RESTAURANTE
+   Colores: naranja, cafe y beige
+   ============================================ */
+
+.portada-restaurante {
+    background-image: url("../images/restaurante/hero-restaurante.svg");
+}
+
+/* En esta pagina los botones son naranjas */
+.boton-naranja {
+    background-color: #b04c1d;
+}
+
+.boton-naranja:hover {
+    background-color: #8f3d13;
+}
+
+.fondo-crema {
+    background-color: #fdf0e4;
+}
+
+/* Lista de lo que ofrece el restaurante */
+.lista-servicios {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.servicio {
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.servicio h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.servicio p {
+    font-size: 14px;
+    color: #666666;
+}
+
+/* Formas de pago */
+.pagos {
+    margin-top: 25px;
+}
+
+.pagos span {
+    display: inline-block;
+    border: 1px solid #b04c1d;
+    color: #b04c1d;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+/* ============================================
+   BOTONES PARA FILTRAR EL MENU
+   ============================================ */
+.filtros {
+    margin-bottom: 30px;
+}
+
+.filtros button {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.filtros button:hover {
+    border-color: #b04c1d;
+    color: #b04c1d;
+}
+
+/* El filtro que esta seleccionado se pinta de naranja */
+.filtros button.seleccionado {
+    background-color: #b04c1d;
+    color: #ffffff;
+    border-color: #b04c1d;
+}
+
+/* ============================================
+   PLATOS DEL MENU
+   ============================================ */
+.platos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.plato {
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.plato img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.plato-texto {
+    padding: 15px;
+}
+
+.plato h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.plato p {
+    font-size: 13px;
+    color: #666666;
+    margin-bottom: 10px;
+}
+
+.precio {
+    font-size: 17px;
+    font-weight: bold;
+    color: #b04c1d;
+}
+
+/* Etiqueta de la categoria del plato */
+.etiqueta {
+    display: inline-block;
+    background-color: #fdf0e4;
+    color: #8f3d13;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+/* ============================================
+   GALERIA DE FOTOS
+   ============================================ */
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.galeria img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.galeria img:hover {
+    opacity: 0.8;
+}
+
+/* ============================================
+   VENTANA PARA VER LA FOTO EN GRANDE
+   Empieza escondida con display none
+   ============================================ */
+.ventana-foto {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 200;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.ventana-foto img {
+    max-width: 90%;
+    max-height: 80%;
+    margin: 0 auto;
+}
+
+.cerrar {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #ffffff;
+    font-size: 35px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+
+@media (max-width: 768px) {
+
+    .lista-servicios {
+        grid-template-columns: 1fr;
+    }
+
+    .platos {
+        grid-template-columns: 1fr;
+    }
+
+    .galeria {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -3,3 +3,6 @@
 chimborazo-rey.zip
 node_modules/
 .DS_Store
+
+# Paquetes generados para entrega
+chimborazo-rey-basico.zip

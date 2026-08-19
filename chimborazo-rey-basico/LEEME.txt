@@ -1,0 +1,132 @@
+============================================
+PROYECTO: PAGINA WEB CHIMBORAZO REY
+============================================
+
+Sitio web turistico de la empresa Chimborazo Rey,
+ubicada en el sector Cruz del Arenal, via Guaranda - Ambato,
+canton Guaranda, provincia de Bolivar, Ecuador.
+
+Hecho con HTML, CSS y JavaScript. No necesita instalar nada.
+
+
+--------------------------------------------
+COMO ABRIR LA PAGINA
+--------------------------------------------
+
+Opcion 1: dar doble clic en el archivo index.html
+
+Opcion 2 (recomendada): en Visual Studio Code dar
+clic derecho sobre index.html y elegir "Open with Live Server"
+
+IMPORTANTE: no separar los archivos. Las carpetas css, js
+e images tienen que estar siempre junto a los archivos .html,
+si no, la pagina no encuentra los estilos ni las imagenes.
+
+
+--------------------------------------------
+ARCHIVOS DEL PROYECTO
+--------------------------------------------
+
+index.html          Pagina de inicio
+restaurante.html    Restaurante de Aventura
+lodge.html          Lodge Hotel
+travel.html         Travel Explore
+
+css/global.css      Estilos que usan todas las paginas
+css/inicio.css      Estilos de la pagina de inicio
+css/restaurante.css Estilos del restaurante
+css/lodge.css       Estilos del lodge
+css/travel.css      Estilos de travel explore
+
+js/idiomas.js       Los textos en espanol, ingles, frances y aleman
+js/main.js          Funciones que usan todas las paginas
+js/restaurante.js   Filtros del menu y formulario de reserva
+js/lodge.js         Formulario de hospedaje
+js/travel.js        Ventanas de actividades y formulario
+
+images/             Las fotos, separadas por seccion
+
+
+--------------------------------------------
+COMO FUNCIONA EL CAMBIO DE IDIOMA
+--------------------------------------------
+
+En el HTML cada texto tiene un atributo data-texto
+con un nombre, por ejemplo:
+
+    <a href="index.html" data-texto="nav_inicio">Inicio</a>
+
+En el archivo js/idiomas.js estan todos esos nombres
+con su traduccion en los 4 idiomas.
+
+Cuando el usuario toca un boton de idioma, la funcion
+cambiarIdioma() de main.js busca todos los elementos que
+tengan data-texto y les cambia el contenido.
+
+El idioma se guarda con localStorage, asi que si el usuario
+cambia a ingles y luego entra a otra pagina, sigue en ingles.
+La primera vez que alguien entra, la pagina se ve en espanol.
+
+
+--------------------------------------------
+LOS FORMULARIOS
+--------------------------------------------
+
+La pagina no tiene servidor ni base de datos, entonces
+los formularios no guardan la informacion en ningun lado.
+
+Lo que hacen es revisar que todos los campos esten llenos
+(si falta algo sale un aviso) y despues abren WhatsApp con
+el mensaje ya escrito para enviarlo al numero de la empresa.
+
+
+--------------------------------------------
+LO QUE TODAVIA FALTA COMPLETAR
+--------------------------------------------
+
+1. LOS PLATOS DEL MENU
+   En restaurante.html los platos dicen "Plato por definir"
+   porque hay que copiarlos del menu oficial de la empresa.
+   Estan en la seccion que empieza con <div class="platos">.
+
+2. LAS FOTOS
+   Casi todas las imagenes de la carpeta images son de
+   prueba y dicen "FOTO PENDIENTE". Hay que reemplazarlas
+   por las fotos reales dejando el mismo nombre de archivo.
+   La foto de la portada del inicio si es real.
+
+3. EL MAPA
+   En index.html, en la seccion de ubicacion, hay que poner
+   el iframe de Google Maps del negocio en lugar de la imagen.
+
+4. LAS REDES SOCIALES
+   En el pie de pagina falta poner los enlaces de Facebook,
+   Instagram y TikTok.
+
+5. LOS PRECIOS DE LAS HABITACIONES
+   No se pusieron porque la documentacion no los indica.
+   Por eso dice "Precio bajo consulta".
+
+
+--------------------------------------------
+DATOS REALES QUE SI ESTAN EN LA PAGINA
+--------------------------------------------
+
+Contacto:   Guido Castro
+Telefono:   0968596592
+Correo:     gustavocc1982@hotmail.com
+Ubicacion:  Cruz del Arenal, via Guaranda - Ambato,
+            Guaranda, Bolivar, Ecuador
+Altitud:    4.250 m s. n. m. aproximadamente
+
+Precios de las actividades (Travel Explore):
+- Cumbre Volcan Chimborazo ......... $300
+- Cumbre Volcan Carihuairazo ....... $140
+- Cabalgatas ....................... $35 a $60
+- Descenso en bicicleta ............ $50
+- Trekking nocturno ................ sin precio publicado
+
+NOTA: los niveles de dificultad que aparecen en las
+actividades son referenciales. Hay que confirmarlos con
+la documentacion oficial de la empresa antes de publicar
+la pagina, porque es informacion de seguridad.

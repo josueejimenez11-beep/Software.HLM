@@ -1,0 +1,494 @@
+/* ============================================
+   CHIMBORAZO REY
+   Estilos generales que usan todas las paginas
+   ============================================ */
+
+/* Quitamos los margenes que trae el navegador por defecto */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ffffff;
+    color: #333333;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Caja central para que el contenido no se pegue a los bordes */
+.contenedor {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ============================================
+   MENU DE NAVEGACION
+   ============================================ */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 15px 0;
+    z-index: 100;
+}
+
+/* Cuando bajamos con el scroll el JavaScript le pone esta clase */
+.navbar.blanco {
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #ffffff;
+}
+
+/* La palabra Rey va en dorado */
+.logo span {
+    color: #dfb457;
+}
+
+.navbar.blanco .logo {
+    color: #333333;
+}
+
+.navbar.blanco .logo span {
+    color: #946713;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.menu a {
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+/* La pagina en la que estamos se ve en negrita */
+.menu a.activo {
+    font-weight: bold;
+}
+
+.navbar.blanco .menu a {
+    color: #333333;
+}
+
+/* Botones de idiomas */
+.idiomas {
+    display: flex;
+    gap: 5px;
+}
+
+.idiomas button {
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.idiomas button:hover {
+    background-color: #ffffff;
+    color: #333333;
+}
+
+.navbar.blanco .idiomas button {
+    border-color: #999999;
+    color: #333333;
+}
+
+.boton-reservar {
+    background-color: #946713;
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+/* Boton de las tres rayitas para el celular */
+.boton-menu {
+    display: none;
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    font-size: 22px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ============================================
+   PORTADA (la imagen grande de arriba)
+   ============================================ */
+.portada {
+    height: 500px;
+    background-color: #333333;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+}
+
+.portada h1 {
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+.portada h1 span {
+    color: #dfb457;
+}
+
+.portada p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    max-width: 500px;
+}
+
+/* Una capa oscura para que el texto se lea sobre la foto */
+.portada {
+    position: relative;
+}
+
+.portada .contenedor {
+    position: relative;
+    z-index: 2;
+}
+
+.capa-oscura {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+}
+
+/* ============================================
+   SECCIONES Y TITULOS
+   ============================================ */
+.seccion {
+    padding: 60px 0;
+}
+
+.seccion-gris {
+    background-color: #f5f5f5;
+}
+
+.titulo {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #222222;
+}
+
+.subtitulo {
+    font-size: 16px;
+    color: #666666;
+    margin-bottom: 30px;
+}
+
+.centrado {
+    text-align: center;
+}
+
+/* ============================================
+   BOTONES
+   ============================================ */
+.boton {
+    display: inline-block;
+    background-color: #946713;
+    color: #ffffff;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.boton:hover {
+    background-color: #6b4a0d;
+}
+
+.boton-blanco {
+    background-color: #ffffff;
+    color: #333333;
+}
+
+.boton-blanco:hover {
+    background-color: #dddddd;
+}
+
+/* ============================================
+   TARJETAS (se usan en varias paginas)
+   ============================================ */
+.tarjetas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.tarjeta {
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.tarjeta:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.tarjeta img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.tarjeta-texto {
+    padding: 20px;
+}
+
+.tarjeta h3 {
+    font-size: 19px;
+    margin-bottom: 10px;
+}
+
+.tarjeta p {
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 15px;
+}
+
+/* ============================================
+   FORMULARIOS
+   ============================================ */
+.formulario {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.campo {
+    margin-bottom: 15px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.campo textarea {
+    height: 90px;
+}
+
+/* Dos campos en la misma fila */
+.fila {
+    display: flex;
+    gap: 15px;
+}
+
+.fila .campo {
+    flex: 1;
+}
+
+.aviso {
+    font-size: 13px;
+    color: #666666;
+    margin-bottom: 15px;
+}
+
+/* ============================================
+   CONTACTO
+   ============================================ */
+.datos-contacto {
+    margin-bottom: 20px;
+}
+
+.datos-contacto p {
+    margin-bottom: 8px;
+}
+
+.datos-contacto a {
+    color: #946713;
+}
+
+.botones-contacto {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ============================================
+   PIE DE PAGINA
+   ============================================ */
+.pie {
+    background-color: #222222;
+    color: #ffffff;
+    padding: 40px 0 20px 0;
+}
+
+.pie-columnas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.pie h4 {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.pie p,
+.pie li {
+    font-size: 14px;
+    color: #cccccc;
+    margin-bottom: 8px;
+}
+
+.pie a:hover {
+    text-decoration: underline;
+}
+
+.pie-abajo {
+    border-top: 1px solid #444444;
+    padding-top: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: #999999;
+}
+
+/* ============================================
+   BOTON FLOTANTE DE WHATSAPP
+   ============================================ */
+.whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    z-index: 90;
+}
+
+.whatsapp:hover {
+    background-color: #1da851;
+}
+
+/* ============================================
+   CELULARES Y TABLETS
+   ============================================ */
+@media (max-width: 768px) {
+
+    /* El menu se esconde y aparece con el boton */
+    .boton-menu {
+        display: block;
+    }
+
+    .menu {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #ffffff;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 15px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Esta clase se la pone el JavaScript al tocar el boton */
+    .menu.abierto {
+        display: flex;
+    }
+
+    .menu a {
+        color: #333333;
+    }
+
+    .idiomas button {
+        border-color: #999999;
+        color: #333333;
+    }
+
+    .portada h1 {
+        font-size: 30px;
+    }
+
+    .portada p {
+        font-size: 16px;
+    }
+
+    .titulo {
+        font-size: 24px;
+    }
+
+    /* Todo en una sola columna */
+    .tarjetas {
+        grid-template-columns: 1fr;
+    }
+
+    .pie-columnas {
+        grid-template-columns: 1fr;
+    }
+
+    .fila {
+        flex-direction: column;
+        gap: 0;
+    }
+}

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante de Aventura | Chimborazo Rey</title>
+    <meta name="description" content="Restaurante de Aventura Chimborazo Rey: comida nacional e internacional, opciones veganas, coffee shop y cerveza artesanal a 4.250 m s. n. m.">
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/restaurante.css">
+</head>
+<body>
+
+    <!-- ===== MENU DE NAVEGACION ===== -->
+    <div class="navbar" id="navbar">
+        <div class="contenedor">
+
+            <a href="index.html" class="logo">CHIMBORAZO <span>REY</span></a>
+
+            <button class="boton-menu" onclick="abrirMenu()">&#9776;</button>
+
+            <div class="menu" id="menu">
+                <a href="index.html" data-texto="nav_inicio">Inicio</a>
+                <a href="restaurante.html" class="activo" data-texto="nav_restaurante">Restaurante</a>
+                <a href="lodge.html" data-texto="nav_lodge">Lodge Hotel</a>
+                <a href="travel.html" data-texto="nav_travel">Travel Explore</a>
+                <a href="#contacto" data-texto="nav_contacto">Contacto</a>
+
+                <div class="idiomas">
+                    <button onclick="cambiarIdioma('es')" data-idioma="es">ES</button>
+                    <button onclick="cambiarIdioma('en')" data-idioma="en">EN</button>
+                    <button onclick="cambiarIdioma('fr')" data-idioma="fr">FR</button>
+                    <button onclick="cambiarIdioma('de')" data-idioma="de">DE</button>
+                </div>
+
+                <a href="#reservas" class="boton-reservar" data-texto="nav_reservar">Reservar</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== PORTADA ===== -->
+    <div class="portada portada-restaurante">
+        <div class="capa-oscura"></div>
+        <div class="contenedor">
+            <h1 data-texto="resto_titulo">Sabores en las alturas</h1>
+            <p data-texto="resto_texto">Una experiencia gastronomica a 4.250 metros sobre el nivel del mar.</p>
+            <a href="#menu" class="boton boton-naranja" data-texto="resto_boton1">Ver el menu</a>
+            <a href="#reservas" class="boton boton-blanco" data-texto="resto_boton2">Reservar mesa</a>
+        </div>
+    </div>
+
+    <!-- ===== SOBRE EL RESTAURANTE ===== -->
+    <div class="seccion">
+        <div class="contenedor">
+            <h2 class="titulo" data-texto="resto_sobre">Sobre el restaurante</h2>
+            <p data-texto="resto_p1">Ofrecemos platos nacionales e internacionales, y tambien opciones veganas y vegetarianas.</p>
+            <br>
+            <p data-texto="resto_p2">Tenemos coffee shop, cerveza artesanal Chimborazo Rey, amplios salones y un ambiente acogedor.</p>
+
+            <div class="lista-servicios">
+                <div class="servicio">
+                    <h3 data-texto="serv1_titulo">Comida nacional e internacional</h3>
+                    <p data-texto="serv1_texto">Platos ecuatorianos y tambien internacionales.</p>
+                </div>
+                <div class="servicio">
+                    <h3 data-texto="serv2_titulo">Opciones veganas</h3>
+                    <p data-texto="serv2_texto">Alternativas veganas y vegetarianas.</p>
+                </div>
+                <div class="servicio">
+                    <h3 data-texto="serv3_titulo">Coffee shop</h3>
+                    <p data-texto="serv3_texto">Cafe y bebidas calientes para el frio.</p>
+                </div>
+                <div class="servicio">
+                    <h3 data-texto="serv4_titulo">Cerveza artesanal</h3>
+                    <p data-texto="serv4_texto">Nuestra propia cerveza Chimborazo Rey.</p>
+                </div>
+                <div class="servicio">
+                    <h3 data-texto="serv5_titulo">Amplios salones</h3>
+                    <p data-texto="serv5_texto">Espacio para grupos y familias.</p>
+                </div>
+                <div class="servicio">
+                    <h3 data-texto="serv6_titulo">Ambiente acogedor</h3>
+                    <p data-texto="serv6_texto">Un lugar calido despues de la montana.</p>
+                </div>
+            </div>
+
+            <div class="pagos">
+                <h3 data-texto="pagos_titulo">Formas de pago</h3>
+                <br>
+                <span data-texto="pago1">Tarjeta</span>
+                <span data-texto="pago2">Efectivo</span>
+                <span data-texto="pago3">Transferencia</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MENU CON FILTROS ===== -->
+    <div class="seccion fondo-crema" id="menu">
+        <div class="contenedor">
+            <h2 class="titulo" data-texto="menu_titulo">Nuestro menu</h2>
+            <p class="subtitulo" data-texto="menu_texto">Usa los botones para ver los platos por categoria.</p>
+
+            <!-- Botones para filtrar. Cada uno llama a la funcion filtrarPlatos -->
+            <div class="filtros">
+                <button onclick="filtrarPlatos('todos', this)" class="seleccionado" data-texto="filtro_todos">Todos</button>
+                <button onclick="filtrarPlatos('pollo', this)" data-texto="cat_pollo">Pollo</button>
+                <button onclick="filtrarPlatos('cerdo', this)" data-texto="cat_cerdo">Cerdo</button>
+                <button onclick="filtrarPlatos('carnes', this)" data-texto="cat_carnes">Carnes</button>
+                <button onclick="filtrarPlatos('pescados', this)" data-texto="cat_pescados">Pescados</button>
+                <button onclick="filtrarPlatos('camarones', this)" data-texto="cat_camarones">Camarones</button>
+                <button onclick="filtrarPlatos('tradicional', this)" data-texto="cat_tradicional">Tradicionales</button>
+                <button onclick="filtrarPlatos('desayunos', this)" data-texto="cat_desayunos">Desayunos</button>
+                <button onclick="filtrarPlatos('almuerzos', this)" data-texto="cat_almuerzos">Almuerzos</button>
+                <button onclick="filtrarPlatos('cafeteria', this)" data-texto="cat_cafeteria">Cafeteria</button>
+            </div>
+
+            <!-- Los platos. Cada uno tiene su categoria en data-categoria -->
+            <div class="platos">
+                <div class="plato" data-categoria="pollo">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_pollo">Pollo</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="pollo">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_pollo">Pollo</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="cerdo">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_cerdo">Cerdo</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="cerdo">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_cerdo">Cerdo</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="carnes">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_carnes">Carnes</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="carnes">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_carnes">Carnes</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="pescados">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_pescados">Pescados</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="pescados">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_pescados">Pescados</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="camarones">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_camarones">Camarones</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="camarones">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_camarones">Camarones</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="tradicional">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_tradicional">Tradicionales</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="tradicional">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_tradicional">Tradicionales</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="desayunos">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_desayunos">Desayunos</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="desayunos">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_desayunos">Desayunos</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="almuerzos">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_almuerzos">Almuerzos</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="almuerzos">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_almuerzos">Almuerzos</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="cafeteria">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_cafeteria">Cafeteria</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+                <div class="plato" data-categoria="cafeteria">
+                    <img src="images/restaurante/plato-generico.svg" alt="Foto del plato pendiente">
+                    <div class="plato-texto">
+                        <span class="etiqueta" data-texto="cat_cafeteria">Cafeteria</span>
+                        <h3 data-texto="plato_pendiente">Plato por definir</h3>
+                        <p data-texto="plato_texto">Espacio reservado para un plato de esta categoria.</p>
+                        <span class="precio" data-texto="precio_pendiente">Precio por confirmar</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AVISO: hay que reemplazar estos platos por los del menu real -->
+            <p class="nota" data-texto="menu_aviso">Importante: los platos y precios se deben copiar del menu oficial de Chimborazo Rey.</p>
+        </div>
+    </div>
+
+    <!-- ===== GALERIA DE FOTOS ===== -->
+    <div class="seccion">
+        <div class="contenedor">
+            <h2 class="titulo centrado" data-texto="galeria_titulo">Galeria de fotos</h2>
+            <p class="subtitulo centrado" data-texto="galeria_texto">Haz clic en una foto para verla mas grande.</p>
+
+            <div class="galeria">
+                <img src="images/restaurante/galeria-1.svg" alt="Foto 1 del restaurante" onclick="verFoto(this)">
+                <img src="images/restaurante/galeria-2.svg" alt="Foto 2 del restaurante" onclick="verFoto(this)">
+                <img src="images/restaurante/galeria-3.svg" alt="Foto 3 del restaurante" onclick="verFoto(this)">
+                <img src="images/restaurante/galeria-4.svg" alt="Foto 4 del restaurante" onclick="verFoto(this)">
+                <img src="images/restaurante/galeria-5.svg" alt="Foto 5 del restaurante" onclick="verFoto(this)">
+                <img src="images/restaurante/galeria-6.svg" alt="Foto 6 del restaurante" onclick="verFoto(this)">
+                <img src="images/restaurante/galeria-7.svg" alt="Foto 7 del restaurante" onclick="verFoto(this)">
+                <img src="images/restaurante/galeria-8.svg" alt="Foto 8 del restaurante" onclick="verFoto(this)">
+            </div>
+        </div>
+    </div>
+
+    <!-- Ventana para ver la foto en grande. Empieza escondida. -->
+    <div class="ventana-foto" id="ventanaFoto">
+        <button class="cerrar" onclick="cerrarFoto()">&times;</button>
+        <img id="fotoGrande" src="" alt="Foto ampliada">
+    </div>
+
+    <!-- ===== RESERVAR MESA ===== -->
+    <div class="seccion fondo-crema" id="reservas">
+        <div class="contenedor">
+            <h2 class="titulo" data-texto="reserva_titulo">Reservar una mesa</h2>
+
+            <div class="formulario">
+                <!-- onsubmit llama a la funcion que revisa los datos -->
+                <form onsubmit="return reservarMesa()">
+
+                    <div class="fila">
+                        <div class="campo">
+                            <label for="nombre" data-texto="form_nombre">Nombre completo</label>
+                            <input type="text" id="nombre">
+                        </div>
+                        <div class="campo">
+                            <label for="telefono" data-texto="form_telefono">Telefono</label>
+                            <input type="text" id="telefono">
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="correo" data-texto="form_correo">Correo electronico</label>
+                        <input type="text" id="correo">
+                    </div>
+
+                    <div class="fila">
+                        <div class="campo">
+                            <label for="personas" data-texto="form_personas">Numero de personas</label>
+                            <input type="number" id="personas" value="2" min="1">
+                        </div>
+                        <div class="campo">
+                            <label for="fecha" data-texto="form_fecha">Fecha</label>
+                            <input type="date" id="fecha">
+                        </div>
+                        <div class="campo">
+                            <label for="hora" data-texto="form_hora">Hora</label>
+                            <input type="time" id="hora">
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="comentarios" data-texto="form_comentarios">Comentarios</label>
+                        <textarea id="comentarios"></textarea>
+                    </div>
+
+                    <p class="aviso" data-texto="form_aviso">Este formulario no guarda datos en ningun servidor.</p>
+
+                    <button type="submit" class="boton boton-naranja" data-texto="form_enviar">Enviar solicitud</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CONTACTO ===== -->
+    <div class="seccion" id="contacto">
+        <div class="contenedor">
+            <h2 class="titulo centrado" data-texto="contacto_titulo">Contactanos</h2>
+
+            <div class="datos-contacto centrado">
+                <p><b data-texto="contacto_info">Informacion</b>: Guido Castro</p>
+                <p><b data-texto="contacto_tel">Telefono</b>: <a href="tel:+593968596592">0968596592</a></p>
+                <p><b data-texto="contacto_correo">Correo</b>: <a href="mailto:gustavocc1982@hotmail.com">gustavocc1982@hotmail.com</a></p>
+            </div>
+
+            <div class="botones-contacto" style="justify-content: center;">
+                <a href="tel:+593968596592" class="boton boton-naranja" data-texto="boton_llamar">Llamar</a>
+                <a href="https://wa.me/593968596592" target="_blank" class="boton boton-naranja" data-texto="boton_whatsapp">WhatsApp</a>
+                <a href="mailto:gustavocc1982@hotmail.com" class="boton boton-naranja" data-texto="boton_correo">Enviar correo</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PIE DE PAGINA ===== -->
+    <div class="pie">
+        <div class="contenedor">
+            <div class="pie-columnas">
+
+                <div>
+                    <h4>CHIMBORAZO REY</h4>
+                    <p>Restaurante &middot; Lodge &middot; Travel Explore</p>
+                    <!-- REDES SOCIALES: falta poner los enlaces reales -->
+                    <p>Facebook &middot; Instagram &middot; TikTok</p>
+                </div>
+
+                <div>
+                    <h4 data-texto="pie_nav">Navegacion</h4>
+                    <ul>
+                        <li><a href="index.html" data-texto="nav_inicio">Inicio</a></li>
+                        <li><a href="restaurante.html" data-texto="nav_restaurante">Restaurante</a></li>
+                        <li><a href="lodge.html" data-texto="nav_lodge">Lodge Hotel</a></li>
+                        <li><a href="travel.html" data-texto="nav_travel">Travel Explore</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 data-texto="pie_contacto">Contacto</h4>
+                    <p>Guido Castro</p>
+                    <p><a href="tel:+593968596592">0968596592</a></p>
+                    <p><a href="mailto:gustavocc1982@hotmail.com">gustavocc1982@hotmail.com</a></p>
+                    <p>Cruz del Arenal, Guaranda, Bolivar</p>
+                </div>
+
+            </div>
+
+            <div class="pie-abajo">
+                <p>&copy; <span id="anio">2026</span> Chimborazo Rey. <span data-texto="pie_derechos">Todos los derechos reservados.</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== BOTON DE WHATSAPP ===== -->
+    <a href="https://wa.me/593968596592" target="_blank" class="whatsapp" data-texto="wa_flotante">Escribenos</a>
+
+    <script src="js/idiomas.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/restaurante.js"></script>
+</body>
+</html>

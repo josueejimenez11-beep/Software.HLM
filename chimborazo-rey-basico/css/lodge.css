@@ -1,0 +1,159 @@
+/* ============================================
+   Estilos solo para la pagina del LODGE HOTEL
+   Colores: cafe, beige y dorado
+   ============================================ */
+
+.portada-lodge {
+    background-image: url("../images/lodge/hero-lodge.svg");
+}
+
+.fondo-beige {
+    background-color: #f7efe3;
+}
+
+/* ============================================
+   HABITACIONES
+   ============================================ */
+.habitaciones {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.habitacion {
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.habitacion img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.habitacion-texto {
+    padding: 20px;
+}
+
+.habitacion h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.habitacion p {
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 15px;
+}
+
+/* Los servicios que tiene cada habitacion */
+.etiquetas span {
+    display: inline-block;
+    border: 1px solid #cccccc;
+    color: #666666;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+/* Aviso de que el precio se consulta */
+.precio-consulta {
+    display: block;
+    font-size: 13px;
+    color: #888888;
+    font-style: italic;
+    margin: 15px 0 10px 0;
+}
+
+/* ============================================
+   SERVICIOS DEL HOTEL
+   ============================================ */
+.servicios-hotel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.servicio-hotel {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+.servicio-hotel h3 {
+    font-size: 15px;
+    color: #6c4c26;
+}
+
+/* ============================================
+   FOTOS DEL LODGE
+   ============================================ */
+.galeria-lodge {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.galeria-lodge img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Recomendaciones al lado del formulario */
+.recomendaciones {
+    background-color: #eedfc6;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.recomendaciones h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.recomendaciones li {
+    font-size: 14px;
+    color: #555555;
+    margin-bottom: 10px;
+}
+
+.recomendaciones li:before {
+    content: "> ";
+    color: #8e6533;
+    font-weight: bold;
+}
+
+/* El formulario y las recomendaciones uno al lado del otro */
+.reserva {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+
+    .habitaciones {
+        grid-template-columns: 1fr;
+    }
+
+    .servicios-hotel {
+        grid-template-columns: 1fr;
+    }
+
+    .galeria-lodge {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .reserva {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Explore | Chimborazo Rey</title>
+    <meta name="description" content="Travel Explore Chimborazo Rey: ascenso al Chimborazo y al Carihuairazo, cabalgatas, descenso en bicicleta y trekking nocturno con guias especializados.">
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/travel.css">
+</head>
+<body>
+
+    <!-- ===== MENU DE NAVEGACION ===== -->
+    <div class="navbar" id="navbar">
+        <div class="contenedor">
+
+            <a href="index.html" class="logo">CHIMBORAZO <span>REY</span></a>
+
+            <button class="boton-menu" onclick="abrirMenu()">&#9776;</button>
+
+            <div class="menu" id="menu">
+                <a href="index.html" data-texto="nav_inicio">Inicio</a>
+                <a href="restaurante.html" data-texto="nav_restaurante">Restaurante</a>
+                <a href="lodge.html" data-texto="nav_lodge">Lodge Hotel</a>
+                <a href="travel.html" class="activo" data-texto="nav_travel">Travel Explore</a>
+                <a href="#contacto" data-texto="nav_contacto">Contacto</a>
+
+                <div class="idiomas">
+                    <button onclick="cambiarIdioma('es')" data-idioma="es">ES</button>
+                    <button onclick="cambiarIdioma('en')" data-idioma="en">EN</button>
+                    <button onclick="cambiarIdioma('fr')" data-idioma="fr">FR</button>
+                    <button onclick="cambiarIdioma('de')" data-idioma="de">DE</button>
+                </div>
+
+                <a href="#consultas" class="boton-reservar" data-texto="nav_reservar">Reservar</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== PORTADA ===== -->
+    <div class="portada portada-travel">
+        <div class="capa-oscura"></div>
+        <div class="contenedor">
+            <h1 data-texto="travel_titulo">La montana te espera</h1>
+            <p data-texto="travel_texto">Experiencias en el paramo andino con guias especializados y equipo de montana.</p>
+            <a href="#actividades" class="boton boton-azul" data-texto="travel_boton">Ver actividades</a>
+        </div>
+    </div>
+
+    <!-- ===== ACTIVIDADES ===== -->
+    <div class="seccion" id="actividades">
+        <div class="contenedor">
+            <h2 class="titulo centrado" data-texto="act_titulo">Nuestras actividades</h2>
+            <p class="subtitulo centrado">Chimborazo Rey Travel Explore</p>
+
+            <div class="actividades">
+                <div class="actividad">
+                    <img src="images/travel/actividad-cumbre-chimborazo.svg" alt="Foto de la actividad">
+                    <div class="actividad-texto">
+                        <span class="nivel nivel-medio-alto" data-texto="nivel_medio_alto">Medio - Alto</span>
+                        <h3 data-texto="act1_titulo">Cumbre Volcan Chimborazo</h3>
+                        <p data-texto="act1_texto">Ascenso a la cumbre del volcan mas alto del Ecuador.</p>
+
+                        <div class="actividad-datos">
+                            <b data-texto="act_precio">Precio</b>: <span class="precio-azul">$300</span>
+                        </div>
+
+                        <button class="boton boton-azul" onclick="verActividad('chimborazo')" data-texto="act_ver">Ver detalle</button>
+                        <button class="boton" onclick="elegirActividad('chimborazo')" data-texto="act_consultar">Consultar</button>
+                    </div>
+                </div>
+                <div class="actividad">
+                    <img src="images/travel/actividad-carihuairazo.svg" alt="Foto de la actividad">
+                    <div class="actividad-texto">
+                        <span class="nivel nivel-medio" data-texto="nivel_medio">Medio</span>
+                        <h3 data-texto="act2_titulo">Cumbre Volcan Carihuairazo</h3>
+                        <p data-texto="act2_texto">Ascenso a la cumbre central del Carihuairazo, vecino del Chimborazo.</p>
+
+                        <div class="actividad-datos">
+                            <b data-texto="act_precio">Precio</b>: <span class="precio-azul">$140</span>
+                        </div>
+
+                        <button class="boton boton-azul" onclick="verActividad('carihuairazo')" data-texto="act_ver">Ver detalle</button>
+                        <button class="boton" onclick="elegirActividad('carihuairazo')" data-texto="act_consultar">Consultar</button>
+                    </div>
+                </div>
+                <div class="actividad">
+                    <img src="images/travel/actividad-cabalgatas.svg" alt="Foto de la actividad">
+                    <div class="actividad-texto">
+                        <span class="nivel nivel-bajo" data-texto="nivel_bajo">Bajo</span>
+                        <h3 data-texto="act3_titulo">Cabalgatas</h3>
+                        <p data-texto="act3_texto">Rutas a caballo hacia aguas termales, miradores, las antenas, el Carihuairazo y la Laguna Congelada.</p>
+
+                        <div class="actividad-datos">
+                            <b data-texto="act_precio">Precio</b>: <span class="precio-azul">$35 - $60</span>
+                        </div>
+
+                        <button class="boton boton-azul" onclick="verActividad('cabalgatas')" data-texto="act_ver">Ver detalle</button>
+                        <button class="boton" onclick="elegirActividad('cabalgatas')" data-texto="act_consultar">Consultar</button>
+                    </div>
+                </div>
+                <div class="actividad">
+                    <img src="images/travel/actividad-ciclismo.svg" alt="Foto de la actividad">
+                    <div class="actividad-texto">
+                        <span class="nivel nivel-bajo-medio" data-texto="nivel_bajo_medio">Bajo - Medio</span>
+                        <h3 data-texto="act4_titulo">Descenso en bicicleta</h3>
+                        <p data-texto="act4_texto">Bajada en bicicleta desde las alturas del Chimborazo.</p>
+
+                        <div class="actividad-datos">
+                            <b data-texto="act_precio">Precio</b>: <span class="precio-azul">$50</span>
+                        </div>
+
+                        <button class="boton boton-azul" onclick="verActividad('bicicleta')" data-texto="act_ver">Ver detalle</button>
+                        <button class="boton" onclick="elegirActividad('bicicleta')" data-texto="act_consultar">Consultar</button>
+                    </div>
+                </div>
+                <div class="actividad">
+                    <img src="images/travel/actividad-trekking-nocturno.svg" alt="Foto de la actividad">
+                    <div class="actividad-texto">
+                        <span class="nivel nivel-bajo-medio" data-texto="nivel_bajo_medio">Bajo - Medio</span>
+                        <h3 data-texto="act5_titulo">Trekking nocturno</h3>
+                        <p data-texto="act5_texto">Caminata de noche para ver las constelaciones y escuchar las historias de la zona.</p>
+
+                        <div class="actividad-datos">
+                            <b data-texto="act_precio">Precio</b>: <span data-texto="act_sin_precio">Precio bajo consulta</span>
+                        </div>
+
+                        <button class="boton boton-azul" onclick="verActividad('trekking')" data-texto="act_ver">Ver detalle</button>
+                        <button class="boton" onclick="elegirActividad('trekking')" data-texto="act_consultar">Consultar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ventana con el detalle de: Cumbre Volcan Chimborazo -->
+    <div class="ventana" id="chimborazo">
+        <div class="ventana-caja">
+            <button class="cerrar-ventana" onclick="cerrarActividad('chimborazo')">&times;</button>
+
+            <span class="nivel nivel-medio-alto" data-texto="nivel_medio_alto">Medio - Alto</span>
+            <h2 data-texto="act1_titulo">Cumbre Volcan Chimborazo</h2>
+            <p data-texto="act1_texto">Ascenso a la cumbre del volcan mas alto del Ecuador.</p>
+
+            <h4 data-texto="act_incluye">Que incluye</h4>
+            <ul>
+                <li>Guia de alta montana</li>
+                <li>Equipo tecnico de montana</li>
+                <li>Primeros auxilios</li>
+            </ul>
+
+            <h4 data-texto="act_equipo">Equipo</h4>
+            <ul>
+                <li>Casco</li>
+                <li>Arnes</li>
+                <li>Cuerdas</li>
+                <li>Piolet</li>
+                <li>Crampones</li>
+                <li>Linterna frontal</li>
+            </ul>
+
+            <h4 data-texto="act_recomendaciones">Recomendaciones</h4>
+            <ul>
+                <li>Aclimatacion previa a la altura</li>
+                <li>Buena condicion fisica</li>
+                <li>Ropa termica y proteccion solar</li>
+            </ul>
+
+            <h4 data-texto="act_precio">Precio</h4>
+            <p class="precio-azul">$300</p>
+
+            <br>
+            <button class="boton boton-azul" onclick="cerrarActividad('chimborazo')" data-texto="act_cerrar">Cerrar</button>
+        </div>
+    </div>
+    <!-- Ventana con el detalle de: Cumbre Volcan Carihuairazo -->
+    <div class="ventana" id="carihuairazo">
+        <div class="ventana-caja">
+            <button class="cerrar-ventana" onclick="cerrarActividad('carihuairazo')">&times;</button>
+
+            <span class="nivel nivel-medio" data-texto="nivel_medio">Medio</span>
+            <h2 data-texto="act2_titulo">Cumbre Volcan Carihuairazo</h2>
+            <p data-texto="act2_texto">Ascenso a la cumbre central del Carihuairazo, vecino del Chimborazo.</p>
+
+            <h4 data-texto="act_incluye">Que incluye</h4>
+            <ul>
+                <li>Guia especializado</li>
+                <li>Equipo de montana</li>
+                <li>Primeros auxilios</li>
+            </ul>
+
+            <h4 data-texto="act_equipo">Equipo</h4>
+            <ul>
+                <li>Casco</li>
+                <li>Arnes</li>
+                <li>Cuerdas</li>
+                <li>Bastones de trekking</li>
+            </ul>
+
+            <h4 data-texto="act_recomendaciones">Recomendaciones</h4>
+            <ul>
+                <li>Aclimatacion previa</li>
+                <li>Ropa abrigada e impermeable</li>
+            </ul>
+
+            <h4 data-texto="act_precio">Precio</h4>
+            <p class="precio-azul">$140</p>
+
+            <br>
+            <button class="boton boton-azul" onclick="cerrarActividad('carihuairazo')" data-texto="act_cerrar">Cerrar</button>
+        </div>
+    </div>
+    <!-- Ventana con el detalle de: Cabalgatas -->
+    <div class="ventana" id="cabalgatas">
+        <div class="ventana-caja">
+            <button class="cerrar-ventana" onclick="cerrarActividad('cabalgatas')">&times;</button>
+
+            <span class="nivel nivel-bajo" data-texto="nivel_bajo">Bajo</span>
+            <h2 data-texto="act3_titulo">Cabalgatas</h2>
+            <p data-texto="act3_texto">Rutas a caballo hacia aguas termales, miradores, las antenas, el Carihuairazo y la Laguna Congelada.</p>
+
+            <h4 data-texto="act_incluye">Que incluye</h4>
+            <ul>
+                <li>Caballo y montura</li>
+                <li>Guia acompanante</li>
+                <li>Casco</li>
+            </ul>
+
+            <h4 data-texto="act_recomendaciones">Recomendaciones</h4>
+            <ul>
+                <li>Ropa comoda y abrigada</li>
+                <li>Proteccion solar y agua</li>
+                <li>No se necesita experiencia</li>
+            </ul>
+
+            <h4 data-texto="act_precio">Precio</h4>
+            <p class="precio-azul">$35 - $60</p>
+
+            <br>
+            <button class="boton boton-azul" onclick="cerrarActividad('cabalgatas')" data-texto="act_cerrar">Cerrar</button>
+        </div>
+    </div>
+    <!-- Ventana con el detalle de: Descenso en bicicleta -->
+    <div class="ventana" id="bicicleta">
+        <div class="ventana-caja">
+            <button class="cerrar-ventana" onclick="cerrarActividad('bicicleta')">&times;</button>
+
+            <span class="nivel nivel-bajo-medio" data-texto="nivel_bajo_medio">Bajo - Medio</span>
+            <h2 data-texto="act4_titulo">Descenso en bicicleta</h2>
+            <p data-texto="act4_texto">Bajada en bicicleta desde las alturas del Chimborazo.</p>
+
+            <h4 data-texto="act_incluye">Que incluye</h4>
+            <ul>
+                <li>Bicicleta de montana</li>
+                <li>Casco y proteccion</li>
+                <li>Guia acompanante</li>
+                <li>Transporte</li>
+            </ul>
+
+            <h4 data-texto="act_recomendaciones">Recomendaciones</h4>
+            <ul>
+                <li>Ropa cortaviento y guantes</li>
+                <li>Gafas de proteccion</li>
+            </ul>
+
+            <h4 data-texto="act_precio">Precio</h4>
+            <p class="precio-azul">$50</p>
+
+            <br>
+            <button class="boton boton-azul" onclick="cerrarActividad('bicicleta')" data-texto="act_cerrar">Cerrar</button>
+        </div>
+    </div>
+    <!-- Ventana con el detalle de: Trekking nocturno -->
+    <div class="ventana" id="trekking">
+        <div class="ventana-caja">
+            <button class="cerrar-ventana" onclick="cerrarActividad('trekking')">&times;</button>
+
+            <span class="nivel nivel-bajo-medio" data-texto="nivel_bajo_medio">Bajo - Medio</span>
+            <h2 data-texto="act5_titulo">Trekking nocturno</h2>
+            <p data-texto="act5_texto">Caminata de noche para ver las constelaciones y escuchar las historias de la zona.</p>
+
+            <h4 data-texto="act_incluye">Que incluye</h4>
+            <ul>
+                <li>Guia acompanante</li>
+                <li>Linterna frontal</li>
+                <li>Bastones de trekking</li>
+            </ul>
+
+            <h4 data-texto="act_recomendaciones">Recomendaciones</h4>
+            <ul>
+                <li>Ropa termica y abrigo</li>
+                <li>Zapatos de trekking</li>
+            </ul>
+
+            <h4 data-texto="act_precio">Precio</h4>
+            <p data-texto="act_sin_precio">Precio bajo consulta</p>
+
+            <br>
+            <button class="boton boton-azul" onclick="cerrarActividad('trekking')" data-texto="act_cerrar">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- ===== SEGURIDAD ===== -->
+    <div class="seccion fondo-celeste">
+        <div class="contenedor">
+            <h2 class="titulo" data-texto="seguridad_titulo">Seguridad</h2>
+            <p class="subtitulo" data-texto="seguridad_texto">Cada salida se planifica con guias, equipo de montana y acompanamiento.</p>
+
+            <ul class="lista-seguridad">
+                    <li data-texto="seg1">Guias especializados</li>
+                    <li data-texto="seg2">Guias certificados cuando corresponde</li>
+                    <li data-texto="seg3">Primeros auxilios</li>
+                    <li data-texto="seg4">Transporte en algunas actividades</li>
+                    <li data-texto="seg5">Equipo de montana</li>
+                    <li data-texto="seg6">Cascos</li>
+                    <li data-texto="seg7">Arnes</li>
+                    <li data-texto="seg8">Cuerdas</li>
+                    <li data-texto="seg9">Piolet</li>
+                    <li data-texto="seg10">Crampones</li>
+                    <li data-texto="seg11">Linterna frontal</li>
+                    <li data-texto="seg12">Bastones de trekking</li>
+            </ul>
+
+            <!-- Aviso importante: no se puede decir que no hay riesgos -->
+            <p class="aviso-riesgo" data-texto="seguridad_aviso">Importante: ninguna actividad de montana esta libre de riesgos.</p>
+        </div>
+    </div>
+
+    <!-- ===== NIVELES DE DIFICULTAD ===== -->
+    <div class="seccion">
+        <div class="contenedor">
+            <h2 class="titulo centrado" data-texto="niveles_titulo">Niveles de dificultad</h2>
+            <p class="subtitulo centrado">&nbsp;</p>
+
+            <div class="tabla-niveles">
+                <div>
+                    <span class="nivel nivel-bajo" data-texto="nivel_bajo">Bajo</span>
+                    <p data-texto="nivel_bajo_txt">Para casi todos los visitantes, sin experiencia previa.</p>
+                </div>
+                <div>
+                    <span class="nivel nivel-bajo-medio" data-texto="nivel_bajo_medio">Bajo - Medio</span>
+                    <p data-texto="nivel_bajo_medio_txt">Necesita condicion fisica basica.</p>
+                </div>
+                <div>
+                    <span class="nivel nivel-medio" data-texto="nivel_medio">Medio</span>
+                    <p data-texto="nivel_medio_txt">Necesita buena condicion fisica y adaptacion a la altura.</p>
+                </div>
+                <div>
+                    <span class="nivel nivel-medio-alto" data-texto="nivel_medio_alto">Medio - Alto</span>
+                    <p data-texto="nivel_medio_alto_txt">Actividad exigente de alta montana.</p>
+                </div>
+            </div>
+
+            <p class="nota" data-texto="niveles_nota">Estos niveles son referenciales y se confirman al momento de reservar.</p>
+        </div>
+    </div>
+
+    <!-- ===== CONSULTAR UNA ACTIVIDAD ===== -->
+    <div class="seccion fondo-celeste" id="consultas">
+        <div class="contenedor">
+            <h2 class="titulo" data-texto="consulta_titulo">Consultar una actividad</h2>
+
+            <div class="formulario">
+                <form onsubmit="return consultarActividad()">
+
+                    <div class="fila">
+                        <div class="campo">
+                            <label for="nombre" data-texto="form_nombre">Nombre completo</label>
+                            <input type="text" id="nombre">
+                        </div>
+                        <div class="campo">
+                            <label for="telefono" data-texto="form_telefono">Telefono</label>
+                            <input type="text" id="telefono">
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="correo" data-texto="form_correo">Correo electronico</label>
+                        <input type="text" id="correo">
+                    </div>
+
+                    <div class="campo">
+                        <label for="actividad" data-texto="form_actividad">Actividad que te interesa</label>
+                        <select id="actividad">
+                            <option value="" data-texto="form_elegir">Elige una opcion</option>
+                                    <option value="chimborazo" data-texto="act1_titulo">Cumbre Volcan Chimborazo</option>
+                                    <option value="carihuairazo" data-texto="act2_titulo">Cumbre Volcan Carihuairazo</option>
+                                    <option value="cabalgatas" data-texto="act3_titulo">Cabalgatas</option>
+                                    <option value="bicicleta" data-texto="act4_titulo">Descenso en bicicleta</option>
+                                    <option value="trekking" data-texto="act5_titulo">Trekking nocturno</option>
+                        </select>
+                    </div>
+
+                    <div class="fila">
+                        <div class="campo">
+                            <label for="participantes" data-texto="form_participantes">Numero de participantes</label>
+                            <input type="number" id="participantes" value="2" min="1">
+                        </div>
+                        <div class="campo">
+                            <label for="fecha" data-texto="form_fecha">Fecha</label>
+                            <input type="date" id="fecha">
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="comentarios" data-texto="form_comentarios">Comentarios</label>
+                        <textarea id="comentarios"></textarea>
+                    </div>
+
+                    <p class="aviso" data-texto="form_aviso">Este formulario no guarda datos en ningun servidor.</p>
+
+                    <button type="submit" class="boton boton-azul" data-texto="form_enviar">Enviar solicitud</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CONTACTO ===== -->
+    <div class="seccion" id="contacto">
+        <div class="contenedor">
+            <h2 class="titulo centrado" data-texto="contacto_titulo">Contactanos</h2>
+
+            <div class="datos-contacto centrado">
+                <p><b data-texto="contacto_info">Informacion</b>: Guido Castro</p>
+                <p><b data-texto="contacto_tel">Telefono</b>: <a href="tel:+593968596592">0968596592</a></p>
+                <p><b data-texto="contacto_correo">Correo</b>: <a href="mailto:gustavocc1982@hotmail.com">gustavocc1982@hotmail.com</a></p>
+            </div>
+
+            <div class="botones-contacto" style="justify-content: center;">
+                <a href="tel:+593968596592" class="boton boton-azul" data-texto="boton_llamar">Llamar</a>
+                <a href="https://wa.me/593968596592" target="_blank" class="boton boton-azul" data-texto="boton_whatsapp">WhatsApp</a>
+                <a href="mailto:gustavocc1982@hotmail.com" class="boton boton-azul" data-texto="boton_correo">Enviar correo</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PIE DE PAGINA ===== -->
+    <div class="pie">
+        <div class="contenedor">
+            <div class="pie-columnas">
+
+                <div>
+                    <h4>CHIMBORAZO REY</h4>
+                    <p>Restaurante &middot; Lodge &middot; Travel Explore</p>
+                    <!-- REDES SOCIALES: falta poner los enlaces reales -->
+                    <p>Facebook &middot; Instagram &middot; TikTok</p>
+                </div>
+
+                <div>
+                    <h4 data-texto="pie_nav">Navegacion</h4>
+                    <ul>
+                        <li><a href="index.html" data-texto="nav_inicio">Inicio</a></li>
+                        <li><a href="restaurante.html" data-texto="nav_restaurante">Restaurante</a></li>
+                        <li><a href="lodge.html" data-texto="nav_lodge">Lodge Hotel</a></li>
+                        <li><a href="travel.html" data-texto="nav_travel">Travel Explore</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 data-texto="pie_contacto">Contacto</h4>
+                    <p>Guido Castro</p>
+                    <p><a href="tel:+593968596592">0968596592</a></p>
+                    <p><a href="mailto:gustavocc1982@hotmail.com">gustavocc1982@hotmail.com</a></p>
+                    <p>Cruz del Arenal, Guaranda, Bolivar</p>
+                </div>
+
+            </div>
+
+            <div class="pie-abajo">
+                <p>&copy; <span id="anio">2026</span> Chimborazo Rey. <span data-texto="pie_derechos">Todos los derechos reservados.</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== BOTON DE WHATSAPP ===== -->
+    <a href="https://wa.me/593968596592" target="_blank" class="whatsapp" data-texto="wa_flotante">Escribenos</a>
+
+    <script src="js/idiomas.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/travel.js"></script>
+</body>
+</html>

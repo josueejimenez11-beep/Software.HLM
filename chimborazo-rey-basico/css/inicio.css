@@ -1,0 +1,188 @@
+/* ============================================
+   Estilos solo para la pagina de INICIO
+   Colores: blanco, gris, beige y cafe
+   ============================================ */
+
+/* Foto de la portada */
+.portada-inicio {
+    background-image: url("../images/inicio/hero-chimborazo.jpg");
+    height: 550px;
+}
+
+/* Lista de las cosas que ofrece Chimborazo Rey */
+.lista-puntos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.lista-puntos li {
+    font-size: 15px;
+    color: #555555;
+}
+
+/* Le ponemos un guion de color antes de cada punto */
+.lista-puntos li:before {
+    content: "- ";
+    color: #946713;
+    font-weight: bold;
+}
+
+/* Bloque de texto con imagen al lado */
+.dos-columnas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.dos-columnas img {
+    border-radius: 8px;
+}
+
+/* Mision y vision */
+.cajas-mision {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.caja-mision {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-left: 4px solid #946713;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.caja-mision h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.caja-mision p {
+    color: #555555;
+    margin-bottom: 15px;
+}
+
+.caja-mision li {
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 5px;
+}
+
+.caja-mision li:before {
+    content: "* ";
+    color: #946713;
+}
+
+/* Los 5 valores de la empresa */
+.valores {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.valor {
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.valor h3 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.valor p {
+    font-size: 14px;
+    color: #666666;
+}
+
+/* A cada valor le puse un color diferente */
+.valor-verde {
+    background-color: #e8f3ea;
+    border-color: #2f6b4f;
+}
+
+.valor-azul {
+    background-color: #e7f0f7;
+    border-color: #1e5f8c;
+}
+
+.valor-naranja {
+    background-color: #fbeee4;
+    border-color: #b0521f;
+}
+
+.valor-dorado {
+    background-color: #f8f0dc;
+    border-color: #8a6012;
+}
+
+.valor-rojo {
+    background-color: #f7e9e6;
+    border-color: #9b3b2c;
+}
+
+/* Tabla con los datos de la ubicacion */
+.tabla-ubicacion {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tabla-ubicacion td {
+    padding: 10px;
+    border-bottom: 1px solid #dddddd;
+    font-size: 15px;
+}
+
+/* La primera columna va en negrita */
+.tabla-ubicacion td:first-child {
+    font-weight: bold;
+    width: 40%;
+}
+
+.caja-mapa {
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.caja-mapa img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.nota {
+    font-size: 13px;
+    color: #888888;
+    margin-top: 10px;
+}
+
+/* En celulares todo va en una sola columna */
+@media (max-width: 768px) {
+
+    .portada-inicio {
+        height: 450px;
+    }
+
+    .dos-columnas {
+        grid-template-columns: 1fr;
+    }
+
+    .cajas-mision {
+        grid-template-columns: 1fr;
+    }
+
+    .valores {
+        grid-template-columns: 1fr;
+    }
+
+    .lista-puntos {
+        grid-template-columns: 1fr;
+    }
+}

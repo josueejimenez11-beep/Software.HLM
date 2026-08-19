@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chimborazo Rey | Restaurante, Lodge y Turismo de Aventura</title>
+    <meta name="description" content="Chimborazo Rey: restaurante, lodge hotel y turismo de aventura a los pies del Nevado Chimborazo, en Cruz del Arenal, Guaranda, Bolivar, Ecuador.">
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/inicio.css">
+</head>
+<body>
+
+    <!-- ===== MENU DE NAVEGACION ===== -->
+    <div class="navbar" id="navbar">
+        <div class="contenedor">
+
+            <a href="index.html" class="logo">CHIMBORAZO <span>REY</span></a>
+
+            <button class="boton-menu" onclick="abrirMenu()">&#9776;</button>
+
+            <div class="menu" id="menu">
+                <a href="index.html" class="activo" data-texto="nav_inicio">Inicio</a>
+                <a href="restaurante.html" data-texto="nav_restaurante">Restaurante</a>
+                <a href="lodge.html" data-texto="nav_lodge">Lodge Hotel</a>
+                <a href="travel.html" data-texto="nav_travel">Travel Explore</a>
+                <a href="#contacto" data-texto="nav_contacto">Contacto</a>
+
+                <div class="idiomas">
+                    <button onclick="cambiarIdioma('es')" data-idioma="es">ES</button>
+                    <button onclick="cambiarIdioma('en')" data-idioma="en">EN</button>
+                    <button onclick="cambiarIdioma('fr')" data-idioma="fr">FR</button>
+                    <button onclick="cambiarIdioma('de')" data-idioma="de">DE</button>
+                </div>
+
+                <a href="#contacto" class="boton-reservar" data-texto="nav_reservar">Reservar</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== PORTADA ===== -->
+    <div class="portada portada-inicio">
+        <div class="capa-oscura"></div>
+        <div class="contenedor">
+            <h1>CHIMBORAZO <span>REY</span></h1>
+            <p data-texto="portada_sub">Una experiencia en las alturas del Ecuador</p>
+            <p data-texto="portada_texto">Gastronomia, hospedaje y aventura a los pies del Nevado Chimborazo.</p>
+            <a href="#experiencias" class="boton" data-texto="portada_boton1">Conocer mas</a>
+            <a href="#contacto" class="boton boton-blanco" data-texto="portada_boton2">Reservar</a>
+        </div>
+    </div>
+
+    <!-- ===== EL DESTINO ===== -->
+    <div class="seccion">
+        <div class="contenedor">
+            <h2 class="titulo" data-texto="destino_titulo">Mucho mas que un destino</h2>
+
+            <div class="dos-columnas">
+                <div>
+                    <p data-texto="destino_p1">Chimborazo Rey ofrece una experiencia turistica completa en uno de los paisajes mas impresionantes del Ecuador.</p>
+                    <br>
+                    <p data-texto="destino_p2">Trabajamos junto a la comunidad de Cruz del Arenal, en la via Guaranda - Ambato.</p>
+
+                    <ul class="lista-puntos">
+                        <li data-texto="punto1">Restaurante de aventura</li>
+                        <li data-texto="punto2">Lodge Hotel</li>
+                        <li data-texto="punto3">Turismo de aventura</li>
+                        <li data-texto="punto4">Cultura andina</li>
+                        <li data-texto="punto5">Naturaleza</li>
+                        <li data-texto="punto6">Gastronomia</li>
+                        <li data-texto="punto7">Hospitalidad</li>
+                        <li data-texto="punto8">Turismo comunitario</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <img src="images/inicio/destino-paramo.svg" alt="Paramo andino cerca del Chimborazo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== LAS TRES AREAS ===== -->
+    <div class="seccion seccion-gris" id="experiencias">
+        <div class="contenedor">
+            <h2 class="titulo centrado" data-texto="exp_titulo">Nuestras tres areas</h2>
+            <p class="subtitulo centrado">Restaurante &middot; Lodge &middot; Travel Explore</p>
+
+            <div class="tarjetas">
+
+                <div class="tarjeta">
+                    <img src="images/inicio/card-restaurante.svg" alt="Restaurante de Chimborazo Rey">
+                    <div class="tarjeta-texto">
+                        <h3 data-texto="exp1_titulo">Restaurante de Aventura</h3>
+                        <p data-texto="exp1_texto">Comida nacional e internacional, opciones veganas, coffee shop y cerveza artesanal propia.</p>
+                        <a href="restaurante.html" class="boton" data-texto="exp1_boton">Ver restaurante</a>
+                    </div>
+                </div>
+
+                <div class="tarjeta">
+                    <img src="images/inicio/card-lodge.svg" alt="Lodge Hotel de Chimborazo Rey">
+                    <div class="tarjeta-texto">
+                        <h3 data-texto="exp2_titulo">Lodge Hotel</h3>
+                        <p data-texto="exp2_texto">Habitaciones familiares, grupales y matrimoniales con calefaccion y vista al nevado.</p>
+                        <a href="lodge.html" class="boton" data-texto="exp2_boton">Ver Lodge</a>
+                    </div>
+                </div>
+
+                <div class="tarjeta">
+                    <img src="images/inicio/card-travel.svg" alt="Actividades de aventura">
+                    <div class="tarjeta-texto">
+                        <h3 data-texto="exp3_titulo">Travel Explore</h3>
+                        <p data-texto="exp3_texto">Ascensos, cabalgatas, ciclismo y trekking nocturno con guias especializados.</p>
+                        <a href="travel.html" class="boton" data-texto="exp3_boton">Ver aventuras</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SOBRE NOSOTROS ===== -->
+    <div class="seccion">
+        <div class="contenedor">
+            <div class="dos-columnas">
+                <div>
+                    <img src="images/inicio/sobre-chimborazo-rey.svg" alt="Instalaciones de Chimborazo Rey">
+                </div>
+                <div>
+                    <h2 class="titulo" data-texto="nosotros_titulo">Sobre nosotros</h2>
+                    <p data-texto="nosotros_p1">Chimborazo Rey esta ubicado en un punto estrategico de la via Guaranda - Ambato.</p>
+                    <br>
+                    <p data-texto="nosotros_p2">Queremos ser un referente turistico de Guaranda y de la provincia de Bolivar.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MISION Y VISION ===== -->
+    <div class="seccion seccion-gris">
+        <div class="contenedor">
+            <div class="cajas-mision">
+
+                <div class="caja-mision">
+                    <h3 data-texto="mision_titulo">Mision</h3>
+                    <p data-texto="mision_texto">Brindar una experiencia turistica completa y de calidad.</p>
+                    <ul>
+                        <li data-texto="mision1">Hospedaje calido y seguro</li>
+                        <li data-texto="mision2">Gastronomia de altura</li>
+                        <li data-texto="mision3">Experiencias con guias</li>
+                        <li data-texto="mision4">Desarrollo sostenible</li>
+                    </ul>
+                </div>
+
+                <div class="caja-mision">
+                    <h3 data-texto="vision_titulo">Vision 2030</h3>
+                    <p data-texto="vision_texto">Ser un referente de turismo comunitario y sostenible de Bolivar.</p>
+                    <ul>
+                        <li data-texto="vision1">Excelencia en el servicio</li>
+                        <li data-texto="vision2">Impacto economico local</li>
+                        <li data-texto="vision3">Valoracion cultural</li>
+                        <li data-texto="vision4">Cuidado del ambiente</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== VALORES ===== -->
+    <div class="seccion">
+        <div class="contenedor">
+            <h2 class="titulo centrado" data-texto="valores_titulo">Nuestros valores</h2>
+            <p class="subtitulo centrado">Chimborazo Rey</p>
+
+            <div class="valores">
+
+                <div class="valor valor-verde">
+                    <h3 data-texto="valor1_titulo">Sostenibilidad</h3>
+                    <p data-texto="valor1_texto">Cuidamos el paramo que nos rodea.</p>
+                </div>
+
+                <div class="valor valor-azul">
+                    <h3 data-texto="valor2_titulo">Comunidad</h3>
+                    <p data-texto="valor2_texto">Trabajamos con la comunidad de Cruz del Arenal.</p>
+                </div>
+
+                <div class="valor valor-naranja">
+                    <h3 data-texto="valor3_titulo">Hospitalidad</h3>
+                    <p data-texto="valor3_texto">Recibimos a cada visitante como parte de la familia.</p>
+                </div>
+
+                <div class="valor valor-dorado">
+                    <h3 data-texto="valor4_titulo">Excelencia</h3>
+                    <p data-texto="valor4_texto">Mejoramos siempre nuestros servicios.</p>
+                </div>
+
+                <div class="valor valor-rojo">
+                    <h3 data-texto="valor5_titulo">Cultura</h3>
+                    <p data-texto="valor5_texto">Valoramos y compartimos la cultura andina.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== UBICACION ===== -->
+    <div class="seccion seccion-gris">
+        <div class="contenedor">
+            <h2 class="titulo" data-texto="ubicacion_titulo">Donde estamos</h2>
+            <p class="subtitulo" data-texto="ubicacion_texto">Estamos en el sector Cruz del Arenal, en la via Guaranda - Ambato.</p>
+
+            <div class="dos-columnas">
+                <div>
+                    <!-- Tabla con los datos de la ubicacion -->
+                    <table class="tabla-ubicacion">
+                        <tr>
+                            <td data-texto="ubi_pais">Pais</td>
+                            <td>Ecuador</td>
+                        </tr>
+                        <tr>
+                            <td data-texto="ubi_provincia">Provincia</td>
+                            <td>Bolivar</td>
+                        </tr>
+                        <tr>
+                            <td data-texto="ubi_canton">Canton</td>
+                            <td>Guaranda</td>
+                        </tr>
+                        <tr>
+                            <td data-texto="ubi_sector">Sector</td>
+                            <td>Cruz del Arenal</td>
+                        </tr>
+                        <tr>
+                            <td data-texto="ubi_via">Via</td>
+                            <td>Guaranda - Ambato</td>
+                        </tr>
+                        <tr>
+                            <td data-texto="ubi_altitud">Altitud</td>
+                            <td data-texto="ubi_altitud_dato">4.250 m s. n. m. aprox.</td>
+                        </tr>
+                    </table>
+
+                    <a href="https://www.google.com/maps/search/?api=1&query=Cruz+del+Arenal+Guaranda+Bolivar+Ecuador"
+                       target="_blank" class="boton" data-texto="boton_mapa">Como llegar</a>
+                </div>
+
+                <div>
+                    <!-- AQUI VA EL MAPA:
+                         hay que reemplazar esta imagen por el iframe
+                         de Google Maps del negocio -->
+                    <div class="caja-mapa">
+                        <img src="images/inicio/ubicacion-mapa.svg" alt="Mapa de la ubicacion">
+                    </div>
+                    <p class="nota" data-texto="ubi_nota">Nota: aqui se debe colocar el mapa oficial de Google Maps.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CONTACTO ===== -->
+    <div class="seccion" id="contacto">
+        <div class="contenedor">
+            <h2 class="titulo centrado" data-texto="contacto_titulo">Contactanos</h2>
+            <p class="subtitulo centrado" data-texto="contacto_texto">Escribenos para reservar una mesa, consultar hospedaje o planificar tu aventura.</p>
+
+            <div class="datos-contacto centrado">
+                <p><b data-texto="contacto_info">Informacion</b>: Guido Castro</p>
+                <p><b data-texto="contacto_tel">Telefono</b>: <a href="tel:+593968596592">0968596592</a></p>
+                <p><b data-texto="contacto_correo">Correo</b>: <a href="mailto:gustavocc1982@hotmail.com">gustavocc1982@hotmail.com</a></p>
+                <p>Cruz del Arenal &middot; Guaranda &middot; Bolivar &middot; Ecuador</p>
+            </div>
+
+            <div class="botones-contacto" style="justify-content: center;">
+                <a href="tel:+593968596592" class="boton" data-texto="boton_llamar">Llamar</a>
+                <a href="https://wa.me/593968596592" target="_blank" class="boton" data-texto="boton_whatsapp">WhatsApp</a>
+                <a href="mailto:gustavocc1982@hotmail.com" class="boton" data-texto="boton_correo">Enviar correo</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PIE DE PAGINA ===== -->
+    <div class="pie">
+        <div class="contenedor">
+            <div class="pie-columnas">
+
+                <div>
+                    <h4>CHIMBORAZO REY</h4>
+                    <p>Restaurante &middot; Lodge &middot; Travel Explore</p>
+                    <!-- REDES SOCIALES: falta poner los enlaces reales -->
+                    <p>Facebook &middot; Instagram &middot; TikTok</p>
+                </div>
+
+                <div>
+                    <h4 data-texto="pie_nav">Navegacion</h4>
+                    <ul>
+                        <li><a href="index.html" data-texto="nav_inicio">Inicio</a></li>
+                        <li><a href="restaurante.html" data-texto="nav_restaurante">Restaurante</a></li>
+                        <li><a href="lodge.html" data-texto="nav_lodge">Lodge Hotel</a></li>
+                        <li><a href="travel.html" data-texto="nav_travel">Travel Explore</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 data-texto="pie_contacto">Contacto</h4>
+                    <p>Guido Castro</p>
+                    <p><a href="tel:+593968596592">0968596592</a></p>
+                    <p><a href="mailto:gustavocc1982@hotmail.com">gustavocc1982@hotmail.com</a></p>
+                    <p>Cruz del Arenal, Guaranda, Bolivar</p>
+                </div>
+
+            </div>
+
+            <div class="pie-abajo">
+                <!-- El ano lo pone el JavaScript automaticamente -->
+                <p>&copy; <span id="anio">2026</span> Chimborazo Rey. <span data-texto="pie_derechos">Todos los derechos reservados.</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== BOTON DE WHATSAPP ===== -->
+    <a href="https://wa.me/593968596592" target="_blank" class="whatsapp" data-texto="wa_flotante">Escribenos</a>
+
+    <!-- Los archivos de JavaScript van al final -->
+    <script src="js/idiomas.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

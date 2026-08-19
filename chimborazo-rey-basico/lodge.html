@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lodge Hotel | Chimborazo Rey</title>
+    <meta name="description" content="Lodge Hotel Chimborazo Rey: habitaciones familiares, grupales y matrimoniales con calefaccion, seguridad 24 horas y vista al Nevado Chimborazo.">
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/lodge.css">
+</head>
+<body>
+
+    <!-- ===== MENU DE NAVEGACION ===== -->
+    <div class="navbar" id="navbar">
+        <div class="contenedor">
+
+            <a href="index.html" class="logo">CHIMBORAZO <span>REY</span></a>
+
+            <button class="boton-menu" onclick="abrirMenu()">&#9776;</button>
+
+            <div class="menu" id="menu">
+                <a href="index.html" data-texto="nav_inicio">Inicio</a>
+                <a href="restaurante.html" data-texto="nav_restaurante">Restaurante</a>
+                <a href="lodge.html" class="activo" data-texto="nav_lodge">Lodge Hotel</a>
+                <a href="travel.html" data-texto="nav_travel">Travel Explore</a>
+                <a href="#contacto" data-texto="nav_contacto">Contacto</a>
+
+                <div class="idiomas">
+                    <button onclick="cambiarIdioma('es')" data-idioma="es">ES</button>
+                    <button onclick="cambiarIdioma('en')" data-idioma="en">EN</button>
+                    <button onclick="cambiarIdioma('fr')" data-idioma="fr">FR</button>
+                    <button onclick="cambiarIdioma('de')" data-idioma="de">DE</button>
+                </div>
+
+                <a href="#reservas" class="boton-reservar" data-texto="nav_reservar">Reservar</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== PORTADA ===== -->
+    <div class="portada portada-lodge">
+        <div class="capa-oscura"></div>
+        <div class="contenedor">
+            <h1 data-texto="lodge_titulo">Descansa entre las montanas</h1>
+            <p data-texto="lodge_texto">Hospedaje a unos 4.250 metros sobre el nivel del mar, a las faldas del Chimborazo.</p>
+            <a href="#reservas" class="boton" data-texto="lodge_boton">Consultar disponibilidad</a>
+        </div>
+    </div>
+
+    <!-- ===== HABITACIONES ===== -->
+    <div class="seccion">
+        <div class="contenedor">
+            <h2 class="titulo centrado" data-texto="hab_titulo">Nuestras habitaciones</h2>
+            <p class="subtitulo centrado">Chimborazo Rey Lodge Hotel</p>
+
+            <div class="habitaciones">
+                <div class="habitacion">
+                    <img src="images/lodge/habitacion-familiar.svg" alt="Habitacion del Lodge Hotel">
+                    <div class="habitacion-texto">
+                        <h3 data-texto="hab1_titulo">Habitaciones familiares</h3>
+                        <p data-texto="hab1_texto">Espacios amplios para que la familia descanse junta.</p>
+                        <div class="etiquetas">
+                            <span data-texto="sh1">Calefaccion</span>
+                            <span data-texto="sh4">Internet</span>
+                            <span data-texto="sh5">Television por cable</span>
+                            <span data-texto="sh9">Vista al nevado</span>
+                        </div>
+                        <!-- No ponemos precio porque la documentacion no lo indica -->
+                        <span class="precio-consulta" data-texto="hab_precio">Precio bajo consulta.</span>
+                        <button class="boton" onclick="elegirHabitacion('familiar')" data-texto="hab_boton">Consultar</button>
+                    </div>
+                </div>
+                <div class="habitacion">
+                    <img src="images/lodge/habitacion-grupal.svg" alt="Habitacion del Lodge Hotel">
+                    <div class="habitacion-texto">
+                        <h3 data-texto="hab2_titulo">Habitaciones grupales</h3>
+                        <p data-texto="hab2_texto">Ideales para grupos de viajeros y expediciones.</p>
+                        <div class="etiquetas">
+                            <span data-texto="sh1">Calefaccion</span>
+                            <span data-texto="sh2">Seguridad 24 horas</span>
+                            <span data-texto="sh6">Area de cocina</span>
+                            <span data-texto="sh7">Sala de estar</span>
+                        </div>
+                        <!-- No ponemos precio porque la documentacion no lo indica -->
+                        <span class="precio-consulta" data-texto="hab_precio">Precio bajo consulta.</span>
+                        <button class="boton" onclick="elegirHabitacion('grupal')" data-texto="hab_boton">Consultar</button>
+                    </div>
+                </div>
+                <div class="habitacion">
+                    <img src="images/lodge/habitacion-matrimonial.svg" alt="Habitacion del Lodge Hotel">
+                    <div class="habitacion-texto">
+                        <h3 data-texto="hab3_titulo">Habitaciones matrimoniales</h3>
+                        <p data-texto="hab3_texto">Un espacio comodo y calido para parejas.</p>
+                        <div class="etiquetas">
+                            <span data-texto="sh1">Calefaccion</span>
+                            <span data-texto="sh4">Internet</span>
+                            <span data-texto="sh5">Television por cable</span>
+                            <span data-texto="sh9">Vista al nevado</span>
+                        </div>
+                        <!-- No ponemos precio porque la documentacion no lo indica -->
+                        <span class="precio-consulta" data-texto="hab_precio">Precio bajo consulta.</span>
+                        <button class="boton" onclick="elegirHabitacion('matrimonial')" data-texto="hab_boton">Consultar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SERVICIOS DEL HOTEL ===== -->
+    <div class="seccion fondo-beige">
+        <div class="contenedor">
+            <h2 class="titulo centrado" data-texto="servicios_titulo">Servicios del hotel</h2>
+            <p class="subtitulo centrado">&nbsp;</p>
+
+            <div class="servicios-hotel">
+                <div class="servicio-hotel">
+                    <h3 data-texto="sh1">Calefaccion</h3>
+                </div>
+                <div class="servicio-hotel">
+                    <h3 data-texto="sh2">Seguridad 24 horas</h3>
+                </div>
+                <div class="servicio-hotel">
+                    <h3 data-texto="sh3">Camaras de seguridad</h3>
+                </div>
+                <div class="servicio-hotel">
+                    <h3 data-texto="sh4">Internet</h3>
+                </div>
+                <div class="servicio-hotel">
+                    <h3 data-texto="sh5">Television por cable</h3>
+                </div>
+                <div class="servicio-hotel">
+                    <h3 data-texto="sh6">Area de cocina</h3>
+                </div>
+                <div class="servicio-hotel">
+                    <h3 data-texto="sh7">Sala de estar</h3>
+                </div>
+                <div class="servicio-hotel">
+                    <h3 data-texto="sh8">Paquetes turisticos</h3>
+                </div>
+                <div class="servicio-hotel">
+                    <h3 data-texto="sh9">Vista al nevado</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOTOS ===== -->
+    <div class="seccion">
+        <div class="contenedor">
+            <h2 class="titulo centrado" data-texto="galeria_titulo">Galeria de fotos</h2>
+            <p class="subtitulo centrado">&nbsp;</p>
+
+            <div class="galeria-lodge">
+                <img src="images/lodge/galeria-1.svg" alt="Foto 1 del Lodge">
+                <img src="images/lodge/galeria-2.svg" alt="Foto 2 del Lodge">
+                <img src="images/lodge/galeria-3.svg" alt="Foto 3 del Lodge">
+                <img src="images/lodge/galeria-4.svg" alt="Foto 4 del Lodge">
+                <img src="images/lodge/galeria-5.svg" alt="Foto 5 del Lodge">
+                <img src="images/lodge/galeria-6.svg" alt="Foto 6 del Lodge">
+                <img src="images/lodge/galeria-7.svg" alt="Foto 7 del Lodge">
+                <img src="images/lodge/galeria-8.svg" alt="Foto 8 del Lodge">
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SOLICITAR HOSPEDAJE ===== -->
+    <div class="seccion fondo-beige" id="reservas">
+        <div class="contenedor">
+            <h2 class="titulo" data-texto="reserva_lodge">Solicitar hospedaje</h2>
+
+            <div class="reserva">
+
+                <div class="formulario">
+                    <form onsubmit="return solicitarHospedaje()">
+
+                        <div class="fila">
+                            <div class="campo">
+                                <label for="nombre" data-texto="form_nombre">Nombre completo</label>
+                                <input type="text" id="nombre">
+                            </div>
+                            <div class="campo">
+                                <label for="nacionalidad" data-texto="form_nacionalidad">Nacionalidad</label>
+                                <input type="text" id="nacionalidad">
+                            </div>
+                        </div>
+
+                        <div class="fila">
+                            <div class="campo">
+                                <label for="telefono" data-texto="form_telefono">Telefono</label>
+                                <input type="text" id="telefono">
+                            </div>
+                            <div class="campo">
+                                <label for="correo" data-texto="form_correo">Correo electronico</label>
+                                <input type="text" id="correo">
+                            </div>
+                        </div>
+
+                        <div class="fila">
+                            <div class="campo">
+                                <label for="tipo" data-texto="form_tipo">Tipo de habitacion</label>
+                                <select id="tipo">
+                                    <option value="" data-texto="form_elegir">Elige una opcion</option>
+                                    <option value="familiar" data-texto="hab1_titulo">Habitaciones familiares</option>
+                                    <option value="grupal" data-texto="hab2_titulo">Habitaciones grupales</option>
+                                    <option value="matrimonial" data-texto="hab3_titulo">Habitaciones matrimoniales</option>
+                                </select>
+                            </div>
+                            <div class="campo">
+                                <label for="huespedes" data-texto="form_huespedes">Numero de huespedes</label>
+                                <input type="number" id="huespedes" value="2" min="1">
+                            </div>
+                        </div>
+
+                        <div class="fila">
+                            <div class="campo">
+                                <label for="entrada" data-texto="form_entrada">Fecha de entrada</label>
+                                <input type="date" id="entrada">
+                            </div>
+                            <div class="campo">
+                                <label for="salida" data-texto="form_salida">Fecha de salida</label>
+                                <input type="date" id="salida">
+                            </div>
+                        </div>
+
+                        <div class="campo">
+                            <label for="comentarios" data-texto="form_comentarios">Comentarios</label>
+                            <textarea id="comentarios"></textarea>
+                        </div>
+
+                        <p class="aviso" data-texto="form_aviso">Este formulario no guarda datos en ningun servidor.</p>
+
+                        <button type="submit" class="boton" data-texto="form_enviar">Enviar solicitud</button>
+                    </form>
+                </div>
+
+                <div class="recomendaciones">
+                    <h3 data-texto="reco_titulo">Recomendaciones</h3>
+                    <ul>
+                        <li data-texto="reco1">Llega con tiempo y descansa antes de subir.</li>
+                        <li data-texto="reco2">Toma bastante agua durante el dia.</li>
+                        <li data-texto="reco3">Trae ropa abrigada, las noches son frias.</li>
+                        <li data-texto="reco4">Preguntanos por los paquetes turisticos.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CONTACTO ===== -->
+    <div class="seccion" id="contacto">
+        <div class="contenedor">
+            <h2 class="titulo centrado" data-texto="contacto_titulo">Contactanos</h2>
+
+            <div class="datos-contacto centrado">
+                <p><b data-texto="contacto_info">Informacion</b>: Guido Castro</p>
+                <p><b data-texto="contacto_tel">Telefono</b>: <a href="tel:+593968596592">0968596592</a></p>
+                <p><b data-texto="contacto_correo">Correo</b>: <a href="mailto:gustavocc1982@hotmail.com">gustavocc1982@hotmail.com</a></p>
+            </div>
+
+            <div class="botones-contacto" style="justify-content: center;">
+                <a href="tel:+593968596592" class="boton " data-texto="boton_llamar">Llamar</a>
+                <a href="https://wa.me/593968596592" target="_blank" class="boton " data-texto="boton_whatsapp">WhatsApp</a>
+                <a href="mailto:gustavocc1982@hotmail.com" class="boton " data-texto="boton_correo">Enviar correo</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PIE DE PAGINA ===== -->
+    <div class="pie">
+        <div class="contenedor">
+            <div class="pie-columnas">
+
+                <div>
+                    <h4>CHIMBORAZO REY</h4>
+                    <p>Restaurante &middot; Lodge &middot; Travel Explore</p>
+                    <!-- REDES SOCIALES: falta poner los enlaces reales -->
+                    <p>Facebook &middot; Instagram &middot; TikTok</p>
+                </div>
+
+                <div>
+                    <h4 data-texto="pie_nav">Navegacion</h4>
+                    <ul>
+                        <li><a href="index.html" data-texto="nav_inicio">Inicio</a></li>
+                        <li><a href="restaurante.html" data-texto="nav_restaurante">Restaurante</a></li>
+                        <li><a href="lodge.html" data-texto="nav_lodge">Lodge Hotel</a></li>
+                        <li><a href="travel.html" data-texto="nav_travel">Travel Explore</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 data-texto="pie_contacto">Contacto</h4>
+                    <p>Guido Castro</p>
+                    <p><a href="tel:+593968596592">0968596592</a></p>
+                    <p><a href="mailto:gustavocc1982@hotmail.com">gustavocc1982@hotmail.com</a></p>
+                    <p>Cruz del Arenal, Guaranda, Bolivar</p>
+                </div>
+
+            </div>
+
+            <div class="pie-abajo">
+                <p>&copy; <span id="anio">2026</span> Chimborazo Rey. <span data-texto="pie_derechos">Todos los derechos reservados.</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== BOTON DE WHATSAPP ===== -->
+    <a href="https://wa.me/593968596592" target="_blank" class="whatsapp" data-texto="wa_flotante">Escribenos</a>
+
+    <script src="js/idiomas.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/lodge.js"></script>
+</body>
+</html>

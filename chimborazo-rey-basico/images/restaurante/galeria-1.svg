@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-label="FOTO PENDIENTE · Preparación">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf3e9"/>
+      <stop offset="1" stop-color="#f6e0c8"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b4703a"/>
+      <stop offset="1" stop-color="#7b4b2a"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#sky)"/>
+  <circle cx="720" cy="240" r="90" fill="#ffffff" opacity=".55"/>
+  <path d="M0 1200 L0 744 L162 600 L270 696 L744.7 541.5 L900 720 L900 1200 Z" fill="#e0a86a" opacity=".75"/>
+  <path d="M0 1200 L0 936.0 L138.8 720.0 L330.6 332.8 L512.4 792.0 L900 864.0 L900 1200 Z" fill="url(#ground)"/>
+  
+  <rect x="297.72" y="96" width="305" height="38" rx="19"
+        fill="#000000" opacity=".38"/>
+  <text x="450" y="122" text-anchor="middle"
+        font-family="Georgia, serif" font-size="18" fill="#ffffff" opacity=".9"
+        letter-spacing="1">FOTO PENDIENTE · Preparación</text>
+</svg>
